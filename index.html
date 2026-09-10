@@ -275,9 +275,11 @@
     overflow: hidden;
     background: #fff;
   }
+  .hero-portrait picture { display: block; }
   .hero-portrait img {
     display: block;
     width: 100%;
+    height: auto;
     aspect-ratio: 3 / 4;
     object-fit: cover;
     object-position: center top;
@@ -721,9 +723,11 @@ const CONTENT = {
   // 히어로에서 직무 아래 소개
   intro: "센서와 하드웨어를 다루는 임베디드 소프트웨어에서 출발해, AI 인식 결과를 로봇 제어와 3D·VR 환경으로 연결하는 시스템을 만듭니다.",
 
-  // 프로필 사진: 이 파일명으로 사진을 이 폴더에 넣으면 자동으로 적용됩니다.
-  // 파일이 없거나 이름이 다르면 아래 monogram 글자가 대신 보입니다.
+  // 프로필 사진. 이 폴더에 있는 파일명을 적습니다.
+  // photoWebp 는 용량이 절반인 대체본입니다. 없으면 "" 로 비우세요.
+  // 사진을 아예 쓰지 않으려면 photo 를 "" 로 비우면 monogram 글자가 나옵니다.
   photo: "profile.jpg",
+  photoWebp: "profile.webp",
   monogram: "권",
 
   /* ── 연락처 ─────────────────────────────────────────────────── */
@@ -1028,10 +1032,25 @@ const CONTENT = {
     if (CONTENT.photo) {
       var img = el("img");
       img.alt = CONTENT.name + " 프로필 사진";
+      img.width = 720;
+      img.height = 960;
+      img.decoding = "async";
       // 사진 파일이 없으면 깨진 이미지 대신 이름 글자를 보여준다
       img.addEventListener("error", showFallback, { once: true });
       img.src = CONTENT.photo;
-      add(figure, img);
+
+      if (CONTENT.photoWebp) {
+        // WebP 를 읽을 수 있는 브라우저는 가벼운 쪽을, 나머지는 위의 사진을 쓴다
+        var picture = document.createElement("picture");
+        var source = document.createElement("source");
+        source.type = "image/webp";
+        source.srcset = CONTENT.photoWebp;
+        picture.appendChild(source);
+        picture.appendChild(img);
+        add(figure, picture);
+      } else {
+        add(figure, img);
+      }
     } else {
       showFallback();
     }
