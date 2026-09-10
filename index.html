@@ -272,6 +272,9 @@
   }
 
   .hero-portrait {
+    width: 100%;
+    max-width: 380px;
+    margin-left: auto;
     aspect-ratio: 4 / 5;
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
@@ -347,7 +350,7 @@
 
   .skill-groups {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: 20px;
   }
 
@@ -552,7 +555,12 @@
 
   /* ---------- certifications ---------- */
 
-  .cert-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+  .cert-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 360px));
+    justify-content: start;
+    gap: 20px;
+  }
 
   .cert {
     padding: 26px;
