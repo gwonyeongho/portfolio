@@ -1,0 +1,1073 @@
+<title>권영호 포트폴리오</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+
+<style>
+  :root {
+    --accent: #c97855;
+    --accent-soft: #f1ddd2;
+    --accent-strong: #9f573c;
+    --background: #fffdfa;
+    --surface: #ffffff;
+    --surface-soft: #f8f5ef;
+    --surface-muted: #ebe4da;
+    --border: #e5ded5;
+    --border-strong: #d5cabe;
+    --text-primary: #25231f;
+    --text-secondary: #716b63;
+    --text-subtle: #9a9187;
+    --font-sans: "Pretendard Variable", Pretendard, "IBM Plex Sans KR", -apple-system,
+      BlinkMacSystemFont, system-ui, sans-serif;
+    --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    --max-width: 1220px;
+    --header-height: 74px;
+    --radius-sm: 6px;
+    --radius-md: 8px;
+    --radius-lg: 10px;
+    --shadow: 0 18px 48px rgba(75, 57, 43, 0.08);
+    --shadow-soft: 0 2px 10px rgba(75, 57, 43, 0.05);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--background);
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+    font-size: 16px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4, p, ul, ol, li, figure { margin: 0; padding: 0; }
+  ul, ol { list-style: none; }
+  a { color: inherit; text-decoration: none; }
+  h1, h2, h3 { text-wrap: balance; letter-spacing: -0.02em; }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: var(--radius-sm);
+  }
+
+  /* ---------- intro overlay ---------- */
+
+  .intro {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    background: var(--background);
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    transition: opacity 0.7s ease, visibility 0.7s ease;
+  }
+  .intro.is-dismissed { opacity: 0; visibility: hidden; pointer-events: none; }
+
+  .intro-center { position: relative; z-index: 2; text-align: center; padding: 0 24px; }
+
+  .intro-eyebrow {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    letter-spacing: 0.02em;
+  }
+
+  .intro-name {
+    margin-top: 14px;
+    font-size: clamp(4rem, 13vw, 8.5rem);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.045em;
+  }
+
+  .intro-cta { margin-top: 34px; }
+
+  .intro-chips {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .chip {
+    position: absolute;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 6px 12px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    box-shadow: var(--shadow-soft);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    animation: drift 7s ease-in-out infinite alternate;
+  }
+  .chip svg { width: 13px; height: 13px; stroke: var(--accent); flex: none; }
+
+  @keyframes drift {
+    from { transform: translateY(-7px); }
+    to { transform: translateY(7px); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .chip { animation: none; }
+  }
+
+  /* ---------- header ---------- */
+
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    height: var(--header-height);
+    background: rgba(255, 253, 250, 0.88);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .header-inner {
+    max-width: var(--max-width);
+    height: 100%;
+    margin: 0 auto;
+    padding: 0 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+  }
+
+  .header-mark {
+    font-size: 1.0625rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  .site-nav {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .site-nav::-webkit-scrollbar { display: none; }
+
+  .site-nav a {
+    padding: 7px 11px;
+    border-radius: var(--radius-sm);
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    transition: color 0.2s ease, background 0.2s ease;
+  }
+  .site-nav a:hover { color: var(--text-primary); background: var(--surface-soft); }
+  .site-nav a.is-active { color: var(--accent-strong); background: var(--accent-soft); }
+
+  /* ---------- shared layout ---------- */
+
+  .wrap {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  .section { padding: 96px 0; border-top: 1px solid var(--border); }
+  .section:first-of-type { border-top: none; }
+
+  .section-eyebrow {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .section-title {
+    margin-top: 10px;
+    font-size: clamp(1.875rem, 4vw, 2.5rem);
+    font-weight: 700;
+  }
+
+  .section-lede {
+    margin-top: 14px;
+    max-width: 62ch;
+    color: var(--text-secondary);
+  }
+
+  .section-body { margin-top: 48px; }
+
+  /* ---------- buttons ---------- */
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 11px 20px;
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-md);
+    background: var(--surface);
+    color: var(--text-primary);
+    font-family: inherit;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+  }
+  .btn:hover { background: var(--surface-soft); border-color: var(--text-subtle); }
+  .btn:active { transform: translateY(1px); }
+
+  .btn-primary {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+  }
+  .btn-primary:hover { background: var(--accent-strong); border-color: var(--accent-strong); }
+
+  /* ---------- hero ---------- */
+
+  .hero { padding: 88px 0 96px; }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+    gap: 64px;
+    align-items: center;
+  }
+
+  .hero-name {
+    font-size: clamp(3rem, 7vw, 4.75rem);
+    font-weight: 800;
+    line-height: 1.02;
+    letter-spacing: -0.045em;
+  }
+
+  .hero-role {
+    margin-top: 18px;
+    font-size: clamp(1.375rem, 2.6vw, 1.875rem);
+    font-weight: 600;
+    line-height: 1.35;
+    color: var(--text-primary);
+  }
+
+  .hero-tagline {
+    margin-top: 22px;
+    max-width: 46ch;
+    color: var(--text-secondary);
+  }
+
+  .hero-actions {
+    margin-top: 34px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .hero-portrait {
+    aspect-ratio: 4 / 5;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    background:
+      radial-gradient(120% 90% at 70% 8%, var(--accent-soft) 0%, transparent 62%),
+      var(--surface-soft);
+    box-shadow: var(--shadow);
+    display: grid;
+    place-content: center;
+    gap: 12px;
+    text-align: center;
+    padding: 32px;
+  }
+
+  .portrait-monogram {
+    font-size: clamp(3.5rem, 7vw, 5rem);
+    font-weight: 800;
+    letter-spacing: -0.05em;
+    color: var(--accent-strong);
+    line-height: 1;
+  }
+
+  .portrait-caption {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-subtle);
+  }
+
+  /* ---------- about ---------- */
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    gap: 56px;
+    align-items: start;
+  }
+
+  .prose { display: flex; flex-direction: column; gap: 18px; }
+  .prose p { max-width: 60ch; color: var(--text-secondary); }
+  .prose strong { color: var(--text-primary); font-weight: 600; }
+
+  .focus-list {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    background: var(--surface);
+    overflow: hidden;
+  }
+
+  .focus-list li {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+  }
+  .focus-list li:last-child { border-bottom: none; }
+
+  .focus-index {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--accent);
+    flex: none;
+  }
+
+  .focus-label { font-weight: 600; font-size: 0.9375rem; }
+  .focus-note { display: block; font-size: 0.8125rem; color: var(--text-secondary); font-weight: 400; }
+
+  /* ---------- skills ---------- */
+
+  .skill-groups {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+  }
+
+  .skill-group {
+    padding: 24px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    background: var(--surface);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .skill-group h3 {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-subtle);
+  }
+
+  .tag-row { display: flex; flex-wrap: wrap; gap: 7px; }
+
+  .skill-rows { display: flex; flex-direction: column; }
+
+  .skill-rows li {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    align-items: center;
+    gap: 14px;
+    padding: 11px 0;
+    border-bottom: 1px dashed var(--border);
+  }
+  .skill-rows li:last-child { border-bottom: none; }
+
+  .skill-name { font-size: 0.9375rem; font-weight: 600; }
+
+  .level-meter { display: flex; gap: 3px; }
+  .level-meter i {
+    width: 16px;
+    height: 5px;
+    border-radius: 2px;
+    background: var(--surface-muted);
+  }
+  .level-meter i.on { background: var(--accent); }
+
+  .level-label {
+    min-width: 2.5em;
+    text-align: right;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+  }
+
+  .tag {
+    padding: 5px 11px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--surface-soft);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+  }
+
+  /* ---------- projects ---------- */
+
+  .project-list { display: flex; flex-direction: column; gap: 24px; }
+
+  .project {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    background: var(--surface);
+    box-shadow: var(--shadow-soft);
+    padding: 32px;
+    display: grid;
+    grid-template-columns: 180px minmax(0, 1fr);
+    gap: 40px;
+  }
+
+  .project-meta { display: flex; flex-direction: column; gap: 12px; }
+
+  .project-date {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    color: var(--text-secondary);
+    letter-spacing: 0.02em;
+  }
+
+  .status {
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+  .status-live { background: var(--accent-soft); color: var(--accent-strong); }
+  .status-done { background: var(--surface-muted); color: var(--text-secondary); }
+
+  .project-role {
+    font-size: 0.8125rem;
+    color: var(--text-secondary);
+  }
+  .project-role span {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-subtle);
+    margin-bottom: 3px;
+  }
+
+  .project-title { font-size: 1.625rem; font-weight: 700; }
+  .project-subtitle { margin-top: 6px; font-size: 1rem; font-weight: 600; color: var(--accent-strong); }
+  .project-summary { margin-top: 14px; max-width: 62ch; color: var(--text-secondary); }
+
+  .bullets { margin-top: 20px; display: flex; flex-direction: column; gap: 9px; }
+  .bullets li {
+    position: relative;
+    padding-left: 17px;
+    font-size: 0.9375rem;
+    color: var(--text-secondary);
+  }
+  .bullets li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.65em;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+
+  .project-tags { margin-top: 22px; }
+
+  .project-links { margin-top: 24px; display: flex; flex-wrap: wrap; gap: 10px; }
+
+  .link-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-md);
+    font-size: 0.875rem;
+    font-weight: 600;
+    transition: background 0.2s ease;
+  }
+  .link-pill:hover { background: var(--surface-soft); }
+
+  /* ---------- timeline ---------- */
+
+  .timeline { display: flex; flex-direction: column; }
+
+  .timeline-item {
+    display: grid;
+    grid-template-columns: 200px minmax(0, 1fr);
+    gap: 40px;
+    padding: 32px 0;
+    border-top: 1px solid var(--border);
+  }
+  .timeline-item:first-child { border-top: none; padding-top: 0; }
+
+  .timeline-date {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    color: var(--text-secondary);
+    letter-spacing: 0.02em;
+  }
+
+  .timeline-org { font-size: 1.25rem; font-weight: 700; }
+  .timeline-sub { margin-top: 4px; font-size: 0.9375rem; font-weight: 600; color: var(--accent-strong); }
+  .timeline-desc { margin-top: 12px; max-width: 62ch; color: var(--text-secondary); }
+
+  .stat-row {
+    margin-top: 18px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .stat {
+    padding: 10px 16px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    background: var(--surface-soft);
+    font-variant-numeric: tabular-nums;
+  }
+  .stat dt {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-subtle);
+  }
+  .stat dd { margin: 2px 0 0; font-size: 0.9375rem; font-weight: 600; }
+
+  /* ---------- certifications ---------- */
+
+  .cert-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+
+  .cert {
+    padding: 26px;
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: var(--radius-lg);
+    background: var(--surface);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .cert-date { font-family: var(--font-mono); font-size: 0.8125rem; color: var(--text-secondary); }
+  .cert-name { font-size: 1.1875rem; font-weight: 700; }
+  .cert-issuer { font-size: 0.9375rem; color: var(--text-secondary); }
+
+  /* ---------- contact ---------- */
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+  }
+
+  .contact-card {
+    padding: 24px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    background: var(--surface);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .contact-card dt {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-subtle);
+  }
+  .contact-card dd { margin: 0; font-size: 1.0625rem; font-weight: 600; word-break: break-all; }
+  .contact-card dd a { border-bottom: 1px solid var(--border-strong); }
+  .contact-card dd a:hover { color: var(--accent-strong); border-color: var(--accent); }
+
+  .site-footer {
+    padding: 40px 0 56px;
+    border-top: 1px solid var(--border);
+    font-size: 0.8125rem;
+    color: var(--text-subtle);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: space-between;
+  }
+
+  /* ---------- responsive ---------- */
+
+  @media (max-width: 960px) {
+    .hero-grid { grid-template-columns: 1fr; gap: 40px; }
+    .hero-portrait { max-width: 320px; }
+    .about-grid { grid-template-columns: 1fr; gap: 36px; }
+    .project { grid-template-columns: 1fr; gap: 24px; padding: 26px; }
+    .timeline-item { grid-template-columns: 1fr; gap: 14px; }
+  }
+
+  @media (max-width: 720px) {
+    .wrap, .header-inner { padding: 0 20px; }
+    .section { padding: 68px 0; }
+    .hero { padding: 56px 0 68px; }
+    .header-mark { display: none; }
+    .site-nav { width: 100%; justify-content: flex-start; }
+    .chip { display: none; }
+    .chip.chip-keep { display: inline-flex; }
+  }
+</style>
+
+<div class="intro" id="intro">
+  <div class="intro-chips" aria-hidden="true">
+    <span class="chip chip-keep" style="top: 9%; left: 6%; animation-delay: -0.4s;">C / C++</span>
+    <span class="chip" style="top: 17%; left: 62%; animation-delay: -2.1s;">Python</span>
+    <span class="chip" style="top: 26%; left: 80%; animation-delay: -3.3s;">Linux</span>
+    <span class="chip chip-keep" style="top: 34%; left: 12%; animation-delay: -1.2s;">ROS2</span>
+    <span class="chip" style="top: 46%; left: 84%; animation-delay: -4.6s;">Unreal Engine 5</span>
+    <span class="chip" style="top: 58%; left: 4%; animation-delay: -2.8s;">Raspberry Pi</span>
+    <span class="chip" style="top: 68%; left: 70%; animation-delay: -1.7s;">MATLAB / Simulink</span>
+    <span class="chip" style="top: 76%; left: 20%; animation-delay: -5.2s;">VR / XR</span>
+    <span class="chip" style="top: 85%; left: 58%; animation-delay: -3.9s;">로봇 통신 제어</span>
+    <span class="chip" style="top: 13%; left: 34%; animation-delay: -4.2s;">스마트기기</span>
+  </div>
+  <div class="intro-center">
+    <p class="intro-eyebrow">임베디드 · 로보틱스 · AI 소프트웨어 개발자</p>
+    <h1 class="intro-name">권영호</h1>
+    <div class="intro-cta">
+      <button class="btn btn-primary" type="button" id="intro-enter">포트폴리오 보기 ↗</button>
+    </div>
+  </div>
+</div>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="header-mark" href="#hero">권영호</a>
+    <nav class="site-nav" aria-label="섹션 이동">
+      <a href="#about">소개</a>
+      <a href="#skills">기술 스택</a>
+      <a href="#projects">프로젝트</a>
+      <a href="#experience">경험</a>
+      <a href="#certifications">자격증</a>
+      <a href="#contact">연락처</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero wrap" id="hero">
+    <div class="hero-grid">
+      <div>
+        <h1 class="hero-name">권영호</h1>
+        <p class="hero-role">Embedded / Robotics / AI Software Developer</p>
+        <p class="hero-tagline">
+          센서와 하드웨어에서 출발해 AI 인식과 3D·VR 환경으로 이어지는
+          시스템을 설계하고 구현하는 개발자입니다.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#projects">프로젝트 보기</a>
+          <a class="btn" href="https://github.com/gwonyeongho" target="_blank" rel="noopener">GitHub ↗</a>
+          <a class="btn" href="#contact">연락처</a>
+        </div>
+      </div>
+      <figure class="hero-portrait">
+        <span class="portrait-monogram">YH</span>
+        <figcaption class="portrait-caption">Kwon Yeongho</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="section" id="about">
+    <div class="wrap">
+      <span class="section-eyebrow">About</span>
+      <h2 class="section-title">소개</h2>
+      <div class="section-body about-grid">
+        <div class="prose">
+          <p>
+            세종대학교 <strong>지능기전공학부 스마트기기전공</strong>에서 하드웨어와
+            소프트웨어가 함께 동작하는 시스템을 공부했습니다. 센서·제어·통신 같은
+            기전 요소와 그 위에 올라가는 소프트웨어를 함께 다루는 것이 전공의 중심이었습니다.
+          </p>
+          <p>
+            현재 <strong>삼성청년SW·AI아카데미(SSAFY) 15기</strong>에서 자료구조와
+            알고리즘, Linux·Raspberry Pi 임베디드 실습, 인공지능, ROS2 기반 로봇
+            통신 제어까지 이어지는 과정을 이수하고 있습니다. 가장 익숙한 언어는
+            <strong>C/C++</strong>이고, Python과 ROS2로 로봇·AI 쪽 작업을 합니다.
+          </p>
+          <p>
+            모델을 돌려보는 것에서 멈추지 않고, <strong>AI의 출력이 실제로 사용자에게
+            닿는 지점까지</strong> 연결하는 과정에 관심이 있습니다. 무엇이 관측이고
+            무엇이 추정인지 구분해서 보여주는 설계처럼, 사용자가 결과를 신뢰할 수 있게
+            만드는 부분을 중요하게 생각합니다.
+          </p>
+        </div>
+        <ul class="focus-list">
+          <li>
+            <span class="focus-index">01</span>
+            <span class="focus-label">Embedded &amp; Smart Device
+              <span class="focus-note">센서·제어·통신을 다루는 기기 소프트웨어</span>
+            </span>
+          </li>
+          <li>
+            <span class="focus-index">02</span>
+            <span class="focus-label">Robotics
+              <span class="focus-note">ROS2 기반 로봇 통신과 제어</span>
+            </span>
+          </li>
+          <li>
+            <span class="focus-index">03</span>
+            <span class="focus-label">AI &amp; 3D · VR
+              <span class="focus-note">생성 모델을 Unreal Engine 인터페이스로 연결</span>
+            </span>
+          </li>
+          <li>
+            <span class="focus-index">04</span>
+            <span class="focus-label">Team Collaboration
+              <span class="focus-note">Git·Jira 기반 협업과 문서화</span>
+            </span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="skills">
+    <div class="wrap">
+      <span class="section-eyebrow">Skills</span>
+      <h2 class="section-title">기술 스택</h2>
+      <p class="section-lede">
+        전공과 SSAFY 과정, 팀 프로젝트에서 사용해 온 언어와 도구입니다.
+        활용수준은 초급 · 중급 · 고급 세 단계로 표기했습니다.
+      </p>
+      <div class="section-body skill-groups">
+        <div class="skill-group">
+          <h3>언어 / Languages</h3>
+          <ul class="skill-rows">
+            <li>
+              <span class="skill-name">C / C++</span>
+              <span class="level-meter" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i></span>
+              <span class="level-label">고급</span>
+            </li>
+            <li>
+              <span class="skill-name">Python</span>
+              <span class="level-meter" aria-hidden="true"><i class="on"></i><i class="on"></i><i></i></span>
+              <span class="level-label">중급</span>
+            </li>
+            <li>
+              <span class="skill-name">Java</span>
+              <span class="level-meter" aria-hidden="true"><i class="on"></i><i></i><i></i></span>
+              <span class="level-label">초급</span>
+            </li>
+          </ul>
+        </div>
+        <div class="skill-group">
+          <h3>공학용 / Engineering</h3>
+          <ul class="skill-rows">
+            <li>
+              <span class="skill-name">ROS2</span>
+              <span class="level-meter" aria-hidden="true"><i class="on"></i><i class="on"></i><i></i></span>
+              <span class="level-label">중급</span>
+            </li>
+            <li>
+              <span class="skill-name">MATLAB / Simulink</span>
+              <span class="level-meter" aria-hidden="true"><i class="on"></i><i></i><i></i></span>
+              <span class="level-label">초급</span>
+            </li>
+          </ul>
+        </div>
+        <div class="skill-group">
+          <h3>임베디드 / Embedded</h3>
+          <div class="tag-row">
+            <span class="tag">Linux</span>
+            <span class="tag">Raspberry Pi</span>
+            <span class="tag">로봇 통신 제어</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h3>3D / XR</h3>
+          <div class="tag-row">
+            <span class="tag">Unreal Engine 5</span>
+            <span class="tag">Blender</span>
+            <span class="tag">Pico 4</span>
+            <span class="tag">Meta Quest 2</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h3>웹 / Web</h3>
+          <div class="tag-row">
+            <span class="tag">프론트엔드</span>
+            <span class="tag">백엔드</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h3>협업 / Collaboration</h3>
+          <div class="tag-row">
+            <span class="tag">Git</span>
+            <span class="tag">GitLab</span>
+            <span class="tag">Jira</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="projects">
+    <div class="wrap">
+      <span class="section-eyebrow">Projects</span>
+      <h2 class="section-title">프로젝트</h2>
+      <p class="section-lede">
+        AI 파이프라인과 사용자 인터페이스를 하나의 흐름으로 잇는 팀 프로젝트를 중심으로 정리했습니다.
+      </p>
+      <div class="section-body project-list">
+
+        <article class="project">
+          <div class="project-meta">
+            <p class="project-date">2026</p>
+            <span class="status status-live">진행 중</span>
+            <p class="project-role">
+              <span>Team</span>
+              7명 · 5주
+            </p>
+            <p class="project-role">
+              <span>Course</span>
+              SSAFY 15기
+            </p>
+          </div>
+          <div>
+            <h3 class="project-title">문화유산 AI 복원 · VR 박물관</h3>
+            <p class="project-subtitle">사진 한 장에서 3D 유물을 만들고, AI가 결손부를 복원해 VR로 전시한다</p>
+            <p class="project-summary">
+              사진을 2D→3D 생성 모델로 3D 유물로 만들고, AI 에이전트가 결손부를 복원한 뒤,
+              무엇이 실제 관측이고 무엇이 AI 추정인지 구분해서 VR 박물관에 전시하는 프로젝트입니다.
+              AI 출력을 역사적 정답이 아니라 검증 가능한 복원 가설로 다룹니다.
+            </p>
+            <ul class="bullets">
+              <li>사진을 유일한 관측 근거로 두고 손상 상태와 복원 상태를 2단계 AI 추정으로 분리해 설계</li>
+              <li>Blender MCP를 이용한 메시 편집으로 결손부 복원 파이프라인 구성</li>
+              <li>Unreal Engine 5 기반 VR 클라이언트에서 원본·복원 상태를 토글로 비교하는 전시 인터랙션 구현</li>
+              <li>Pico 4를 주력 기기로, Meta Quest 2를 보조 기기로 대응하는 빌드 환경 구성</li>
+            </ul>
+            <div class="project-tags tag-row">
+              <span class="tag">Unreal Engine 5</span>
+              <span class="tag">Blender MCP</span>
+              <span class="tag">Python</span>
+              <span class="tag">2D→3D Generation</span>
+              <span class="tag">Pico 4</span>
+              <span class="tag">Meta Quest 2</span>
+              <span class="tag">GitLab</span>
+              <span class="tag">Jira</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="project">
+          <div class="project-meta">
+            <p class="project-date">2024</p>
+            <span class="status status-done">완료</span>
+            <p class="project-role">
+              <span>Course</span>
+              세종대학교 캡스톤 디자인
+            </p>
+          </div>
+          <div>
+            <h3 class="project-title">Capstone Web Application</h3>
+            <p class="project-subtitle">학부 캡스톤 디자인 웹 애플리케이션</p>
+            <p class="project-summary">
+              지능기전공학부 캡스톤 디자인 과정에서 진행한 웹 애플리케이션 프로젝트입니다.
+            </p>
+            <div class="project-links">
+              <a class="link-pill" href="https://github.com/gwonyeongho/Capstone_Webapp_" target="_blank" rel="noopener">GitHub 저장소 ↗</a>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="experience">
+    <div class="wrap">
+      <span class="section-eyebrow">Experience</span>
+      <h2 class="section-title">경험</h2>
+      <div class="section-body timeline">
+
+        <article class="timeline-item">
+          <p class="timeline-date">2026.01 – 2026.12</p>
+          <div>
+            <h3 class="timeline-org">삼성청년SW·AI아카데미(SSAFY)</h3>
+            <p class="timeline-sub">15기 · 삼성전자</p>
+            <p class="timeline-desc">
+              프로그래밍 기초부터 임베디드·AI·로봇, 프론트엔드와 백엔드까지
+              소프트웨어 개발 전 영역을 다루는 교육 과정을 이수하고 있습니다.
+            </p>
+            <dl class="stat-row">
+              <div class="stat">
+                <dt>Institute</dt>
+                <dd>삼성전자</dd>
+              </div>
+              <div class="stat">
+                <dt>Training</dt>
+                <dd>925 Hours</dd>
+              </div>
+            </dl>
+            <ul class="bullets">
+              <li>프로그래밍 — 자료구조와 알고리즘 학습</li>
+              <li>임베디드 — Linux와 Raspberry Pi 환경의 임베디드 실습</li>
+              <li>AI — 인공지능 학습</li>
+              <li>로봇 — ROS2 기반 로봇 통신 제어</li>
+              <li>웹 — 프론트엔드 · 백엔드 프로그래밍</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="timeline-item">
+          <p class="timeline-date">2018.03 – 2025.02</p>
+          <div>
+            <h3 class="timeline-org">세종대학교</h3>
+            <p class="timeline-sub">지능기전공학부 스마트기기전공 · 학사</p>
+            <p class="timeline-desc">
+              센서·제어·통신 등 기전 요소와 그 위에서 동작하는 소프트웨어를 함께 다루는
+              전공에서 스마트기기 시스템을 공부했습니다.
+            </p>
+            <dl class="stat-row">
+              <div class="stat">
+                <dt>Total</dt>
+                <dd>130학점 · GPA 3.45 / 4.5</dd>
+              </div>
+              <div class="stat">
+                <dt>Major</dt>
+                <dd>72학점 · GPA 3.62 / 4.5</dd>
+              </div>
+              <div class="stat">
+                <dt>Graduated</dt>
+                <dd>2025.02.14</dd>
+              </div>
+            </dl>
+          </div>
+        </article>
+
+        <article class="timeline-item">
+          <p class="timeline-date">2014.03 – 2017.02</p>
+          <div>
+            <h3 class="timeline-org">삼일고등학교</h3>
+            <p class="timeline-sub">졸업</p>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="certifications">
+    <div class="wrap">
+      <span class="section-eyebrow">Certifications</span>
+      <h2 class="section-title">자격증</h2>
+      <div class="section-body cert-list">
+        <article class="cert">
+          <p class="cert-date">2025.12.24</p>
+          <h3 class="cert-name">산업안전</h3>
+          <p class="cert-issuer">한국산업인력공단</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="contact">
+    <div class="wrap">
+      <span class="section-eyebrow">Contact</span>
+      <h2 class="section-title">연락처</h2>
+      <p class="section-lede">
+        프로젝트나 채용 관련 문의는 이메일로 연락 주시면 가장 빠르게 확인합니다.
+      </p>
+      <dl class="section-body contact-grid">
+        <div class="contact-card">
+          <dt>Email</dt>
+          <dd><a href="mailto:dudgh2030@naver.com">dudgh2030@naver.com</a></dd>
+        </div>
+        <div class="contact-card">
+          <dt>Phone</dt>
+          <dd>010-5642-8529</dd>
+        </div>
+        <div class="contact-card">
+          <dt>GitHub</dt>
+          <dd><a href="https://github.com/gwonyeongho" target="_blank" rel="noopener">github.com/gwonyeongho</a></dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer wrap">
+  <span>© 2026 권영호</span>
+  <span>Embedded · Robotics · AI Software Developer</span>
+</footer>
+
+<script>
+  (function () {
+    var intro = document.getElementById("intro");
+    var enter = document.getElementById("intro-enter");
+    var dismissed = false;
+
+    function dismiss() {
+      if (dismissed) return;
+      dismissed = true;
+      intro.classList.add("is-dismissed");
+      intro.setAttribute("aria-hidden", "true");
+      window.removeEventListener("wheel", dismiss);
+      window.removeEventListener("touchmove", dismiss);
+      window.removeEventListener("keydown", onKey);
+    }
+
+    function onKey(e) {
+      if (e.key === "Escape" || e.key === "Enter" || e.key === " " || e.key === "PageDown" ||
+          e.key === "ArrowDown") {
+        dismiss();
+      }
+    }
+
+    if (enter) {
+      enter.addEventListener("click", function () {
+        dismiss();
+        var target = document.getElementById("hero");
+        if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    }
+    window.addEventListener("wheel", dismiss, { passive: true });
+    window.addEventListener("touchmove", dismiss, { passive: true });
+    window.addEventListener("keydown", onKey);
+
+    var links = Array.prototype.slice.call(document.querySelectorAll(".site-nav a"));
+    var sections = links
+      .map(function (a) { return document.querySelector(a.getAttribute("href")); })
+      .filter(Boolean);
+
+    function setActive() {
+      var pos = window.scrollY + (window.innerHeight * 0.3);
+      var current = null;
+      sections.forEach(function (s) {
+        if (s.offsetTop <= pos) current = s;
+      });
+      links.forEach(function (a) {
+        a.classList.toggle("is-active", !!current && a.getAttribute("href") === "#" + current.id);
+      });
+    }
+
+    var ticking = false;
+    window.addEventListener("scroll", function () {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(function () { setActive(); ticking = false; });
+    }, { passive: true });
+    setActive();
+  })();
+</script>
