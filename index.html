@@ -634,24 +634,23 @@
     .chip { display: none; }
     .chip.chip-keep { display: inline-flex; }
   }
+
+  /* ---------- profile photo (CONTENT.photo 를 채우면 적용됨) ---------- */
+
+  .hero-portrait.has-photo { padding: 0; overflow: hidden; }
+  .hero-portrait.has-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
 </style>
 
 <div class="intro" id="intro">
-  <div class="intro-chips" aria-hidden="true">
-    <span class="chip chip-keep" style="top: 9%; left: 6%; animation-delay: -0.4s;">C / C++</span>
-    <span class="chip" style="top: 17%; left: 62%; animation-delay: -2.1s;">Python</span>
-    <span class="chip" style="top: 26%; left: 80%; animation-delay: -3.3s;">Linux</span>
-    <span class="chip chip-keep" style="top: 34%; left: 12%; animation-delay: -1.2s;">ROS2</span>
-    <span class="chip" style="top: 46%; left: 84%; animation-delay: -4.6s;">Unreal Engine 5</span>
-    <span class="chip" style="top: 58%; left: 4%; animation-delay: -2.8s;">Raspberry Pi</span>
-    <span class="chip" style="top: 68%; left: 70%; animation-delay: -1.7s;">MATLAB / Simulink</span>
-    <span class="chip" style="top: 76%; left: 20%; animation-delay: -5.2s;">VR / XR</span>
-    <span class="chip" style="top: 85%; left: 58%; animation-delay: -3.9s;">로봇 통신 제어</span>
-    <span class="chip" style="top: 13%; left: 34%; animation-delay: -4.2s;">스마트기기</span>
-  </div>
+  <div class="intro-chips" id="intro-chips" aria-hidden="true"></div>
   <div class="intro-center">
-    <p class="intro-eyebrow">임베디드 · 로보틱스 · AI 소프트웨어 개발자</p>
-    <h1 class="intro-name">권영호</h1>
+    <p class="intro-eyebrow" id="intro-eyebrow"></p>
+    <h1 class="intro-name" id="intro-name"></h1>
     <div class="intro-cta">
       <button class="btn btn-primary" type="button" id="intro-enter">포트폴리오 보기 ↗</button>
     </div>
@@ -660,422 +659,601 @@
 
 <header class="site-header">
   <div class="header-inner">
-    <a class="header-mark" href="#hero">권영호</a>
-    <nav class="site-nav" aria-label="섹션 이동">
-      <a href="#about">소개</a>
-      <a href="#skills">기술 스택</a>
-      <a href="#projects">프로젝트</a>
-      <a href="#experience">경험</a>
-      <a href="#certifications">자격증</a>
-      <a href="#contact">연락처</a>
-    </nav>
+    <a class="header-mark" href="#hero" id="header-mark"></a>
+    <nav class="site-nav" id="site-nav" aria-label="섹션 이동"></nav>
   </div>
 </header>
 
-<main>
-  <section class="hero wrap" id="hero">
-    <div class="hero-grid">
-      <div>
-        <h1 class="hero-name">권영호</h1>
-        <p class="hero-role">Embedded / Robotics / AI Software Developer</p>
-        <p class="hero-tagline">
-          센서와 하드웨어에서 출발해 AI 인식과 3D·VR 환경으로 이어지는
-          시스템을 설계하고 구현하는 개발자입니다.
-        </p>
-        <div class="hero-actions">
-          <a class="btn btn-primary" href="#projects">프로젝트 보기</a>
-          <a class="btn" href="https://github.com/gwonyeongho" target="_blank" rel="noopener">GitHub ↗</a>
-          <a class="btn" href="#contact">연락처</a>
-        </div>
-      </div>
-      <figure class="hero-portrait">
-        <span class="portrait-monogram">YH</span>
-        <figcaption class="portrait-caption">Kwon Yeongho</figcaption>
-      </figure>
-    </div>
-  </section>
+<main id="main"></main>
 
-  <section class="section" id="about">
-    <div class="wrap">
-      <span class="section-eyebrow">About</span>
-      <h2 class="section-title">소개</h2>
-      <div class="section-body about-grid">
-        <div class="prose">
-          <p>
-            세종대학교 <strong>지능기전공학부 스마트기기전공</strong>에서 하드웨어와
-            소프트웨어가 함께 동작하는 시스템을 공부했습니다. 센서·제어·통신 같은
-            기전 요소와 그 위에 올라가는 소프트웨어를 함께 다루는 것이 전공의 중심이었습니다.
-          </p>
-          <p>
-            현재 <strong>삼성청년SW·AI아카데미(SSAFY) 15기</strong>에서 자료구조와
-            알고리즘, Linux·Raspberry Pi 임베디드 실습, 인공지능, ROS2 기반 로봇
-            통신 제어까지 이어지는 과정을 이수하고 있습니다. 가장 익숙한 언어는
-            <strong>C/C++</strong>이고, Python과 ROS2로 로봇·AI 쪽 작업을 합니다.
-          </p>
-          <p>
-            모델을 돌려보는 것에서 멈추지 않고, <strong>AI의 출력이 실제로 사용자에게
-            닿는 지점까지</strong> 연결하는 과정에 관심이 있습니다. 무엇이 관측이고
-            무엇이 추정인지 구분해서 보여주는 설계처럼, 사용자가 결과를 신뢰할 수 있게
-            만드는 부분을 중요하게 생각합니다.
-          </p>
-        </div>
-        <ul class="focus-list">
-          <li>
-            <span class="focus-index">01</span>
-            <span class="focus-label">Embedded &amp; Smart Device
-              <span class="focus-note">센서·제어·통신을 다루는 기기 소프트웨어</span>
-            </span>
-          </li>
-          <li>
-            <span class="focus-index">02</span>
-            <span class="focus-label">Robotics
-              <span class="focus-note">ROS2 기반 로봇 통신과 제어</span>
-            </span>
-          </li>
-          <li>
-            <span class="focus-index">03</span>
-            <span class="focus-label">AI &amp; 3D · VR
-              <span class="focus-note">생성 모델을 Unreal Engine 인터페이스로 연결</span>
-            </span>
-          </li>
-          <li>
-            <span class="focus-index">04</span>
-            <span class="focus-label">Team Collaboration
-              <span class="focus-note">Git·Jira 기반 협업과 문서화</span>
-            </span>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <section class="section" id="skills">
-    <div class="wrap">
-      <span class="section-eyebrow">Skills</span>
-      <h2 class="section-title">기술 스택</h2>
-      <p class="section-lede">
-        전공과 SSAFY 과정, 팀 프로젝트에서 사용해 온 언어와 도구입니다.
-        활용수준은 초급 · 중급 · 고급 세 단계로 표기했습니다.
-      </p>
-      <div class="section-body skill-groups">
-        <div class="skill-group">
-          <h3>언어 / Languages</h3>
-          <ul class="skill-rows">
-            <li>
-              <span class="skill-name">C / C++</span>
-              <span class="level-meter" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i></span>
-              <span class="level-label">고급</span>
-            </li>
-            <li>
-              <span class="skill-name">Python</span>
-              <span class="level-meter" aria-hidden="true"><i class="on"></i><i class="on"></i><i></i></span>
-              <span class="level-label">중급</span>
-            </li>
-            <li>
-              <span class="skill-name">Java</span>
-              <span class="level-meter" aria-hidden="true"><i class="on"></i><i></i><i></i></span>
-              <span class="level-label">초급</span>
-            </li>
-          </ul>
-        </div>
-        <div class="skill-group">
-          <h3>공학용 / Engineering</h3>
-          <ul class="skill-rows">
-            <li>
-              <span class="skill-name">ROS2</span>
-              <span class="level-meter" aria-hidden="true"><i class="on"></i><i class="on"></i><i></i></span>
-              <span class="level-label">중급</span>
-            </li>
-            <li>
-              <span class="skill-name">MATLAB / Simulink</span>
-              <span class="level-meter" aria-hidden="true"><i class="on"></i><i></i><i></i></span>
-              <span class="level-label">초급</span>
-            </li>
-          </ul>
-        </div>
-        <div class="skill-group">
-          <h3>임베디드 / Embedded</h3>
-          <div class="tag-row">
-            <span class="tag">Linux</span>
-            <span class="tag">Raspberry Pi</span>
-            <span class="tag">로봇 통신 제어</span>
-          </div>
-        </div>
-        <div class="skill-group">
-          <h3>3D / XR</h3>
-          <div class="tag-row">
-            <span class="tag">Unreal Engine 5</span>
-            <span class="tag">Blender</span>
-            <span class="tag">Pico 4</span>
-            <span class="tag">Meta Quest 2</span>
-          </div>
-        </div>
-        <div class="skill-group">
-          <h3>웹 / Web</h3>
-          <div class="tag-row">
-            <span class="tag">프론트엔드</span>
-            <span class="tag">백엔드</span>
-          </div>
-        </div>
-        <div class="skill-group">
-          <h3>협업 / Collaboration</h3>
-          <div class="tag-row">
-            <span class="tag">Git</span>
-            <span class="tag">GitLab</span>
-            <span class="tag">Jira</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section" id="projects">
-    <div class="wrap">
-      <span class="section-eyebrow">Projects</span>
-      <h2 class="section-title">프로젝트</h2>
-      <p class="section-lede">
-        AI 파이프라인과 사용자 인터페이스를 하나의 흐름으로 잇는 팀 프로젝트를 중심으로 정리했습니다.
-      </p>
-      <div class="section-body project-list">
-
-        <article class="project">
-          <div class="project-meta">
-            <p class="project-date">2026</p>
-            <span class="status status-live">진행 중</span>
-            <p class="project-role">
-              <span>Team</span>
-              7명 · 5주
-            </p>
-            <p class="project-role">
-              <span>Course</span>
-              SSAFY 15기
-            </p>
-          </div>
-          <div>
-            <h3 class="project-title">문화유산 AI 복원 · VR 박물관</h3>
-            <p class="project-subtitle">사진 한 장에서 3D 유물을 만들고, AI가 결손부를 복원해 VR로 전시한다</p>
-            <p class="project-summary">
-              사진을 2D→3D 생성 모델로 3D 유물로 만들고, AI 에이전트가 결손부를 복원한 뒤,
-              무엇이 실제 관측이고 무엇이 AI 추정인지 구분해서 VR 박물관에 전시하는 프로젝트입니다.
-              AI 출력을 역사적 정답이 아니라 검증 가능한 복원 가설로 다룹니다.
-            </p>
-            <ul class="bullets">
-              <li>사진을 유일한 관측 근거로 두고 손상 상태와 복원 상태를 2단계 AI 추정으로 분리해 설계</li>
-              <li>Blender MCP를 이용한 메시 편집으로 결손부 복원 파이프라인 구성</li>
-              <li>Unreal Engine 5 기반 VR 클라이언트에서 원본·복원 상태를 토글로 비교하는 전시 인터랙션 구현</li>
-              <li>Pico 4를 주력 기기로, Meta Quest 2를 보조 기기로 대응하는 빌드 환경 구성</li>
-            </ul>
-            <div class="project-tags tag-row">
-              <span class="tag">Unreal Engine 5</span>
-              <span class="tag">Blender MCP</span>
-              <span class="tag">Python</span>
-              <span class="tag">2D→3D Generation</span>
-              <span class="tag">Pico 4</span>
-              <span class="tag">Meta Quest 2</span>
-              <span class="tag">GitLab</span>
-              <span class="tag">Jira</span>
-            </div>
-          </div>
-        </article>
-
-        <article class="project">
-          <div class="project-meta">
-            <p class="project-date">2024</p>
-            <span class="status status-done">완료</span>
-            <p class="project-role">
-              <span>Course</span>
-              세종대학교 캡스톤 디자인
-            </p>
-          </div>
-          <div>
-            <h3 class="project-title">Capstone Web Application</h3>
-            <p class="project-subtitle">학부 캡스톤 디자인 웹 애플리케이션</p>
-            <p class="project-summary">
-              지능기전공학부 캡스톤 디자인 과정에서 진행한 웹 애플리케이션 프로젝트입니다.
-            </p>
-            <div class="project-links">
-              <a class="link-pill" href="https://github.com/gwonyeongho/Capstone_Webapp_" target="_blank" rel="noopener">GitHub 저장소 ↗</a>
-            </div>
-          </div>
-        </article>
-
-      </div>
-    </div>
-  </section>
-
-  <section class="section" id="experience">
-    <div class="wrap">
-      <span class="section-eyebrow">Experience</span>
-      <h2 class="section-title">경험</h2>
-      <div class="section-body timeline">
-
-        <article class="timeline-item">
-          <p class="timeline-date">2026.01 – 2026.12</p>
-          <div>
-            <h3 class="timeline-org">삼성청년SW·AI아카데미(SSAFY)</h3>
-            <p class="timeline-sub">15기 · 삼성전자</p>
-            <p class="timeline-desc">
-              프로그래밍 기초부터 임베디드·AI·로봇, 프론트엔드와 백엔드까지
-              소프트웨어 개발 전 영역을 다루는 교육 과정을 이수하고 있습니다.
-            </p>
-            <dl class="stat-row">
-              <div class="stat">
-                <dt>Institute</dt>
-                <dd>삼성전자</dd>
-              </div>
-              <div class="stat">
-                <dt>Training</dt>
-                <dd>925 Hours</dd>
-              </div>
-            </dl>
-            <ul class="bullets">
-              <li>프로그래밍 — 자료구조와 알고리즘 학습</li>
-              <li>임베디드 — Linux와 Raspberry Pi 환경의 임베디드 실습</li>
-              <li>AI — 인공지능 학습</li>
-              <li>로봇 — ROS2 기반 로봇 통신 제어</li>
-              <li>웹 — 프론트엔드 · 백엔드 프로그래밍</li>
-            </ul>
-          </div>
-        </article>
-
-        <article class="timeline-item">
-          <p class="timeline-date">2018.03 – 2025.02</p>
-          <div>
-            <h3 class="timeline-org">세종대학교</h3>
-            <p class="timeline-sub">지능기전공학부 스마트기기전공 · 학사</p>
-            <p class="timeline-desc">
-              센서·제어·통신 등 기전 요소와 그 위에서 동작하는 소프트웨어를 함께 다루는
-              전공에서 스마트기기 시스템을 공부했습니다.
-            </p>
-            <dl class="stat-row">
-              <div class="stat">
-                <dt>Total</dt>
-                <dd>130학점 · GPA 3.45 / 4.5</dd>
-              </div>
-              <div class="stat">
-                <dt>Major</dt>
-                <dd>72학점 · GPA 3.62 / 4.5</dd>
-              </div>
-              <div class="stat">
-                <dt>Graduated</dt>
-                <dd>2025.02.14</dd>
-              </div>
-            </dl>
-          </div>
-        </article>
-
-        <article class="timeline-item">
-          <p class="timeline-date">2014.03 – 2017.02</p>
-          <div>
-            <h3 class="timeline-org">삼일고등학교</h3>
-            <p class="timeline-sub">졸업</p>
-          </div>
-        </article>
-
-      </div>
-    </div>
-  </section>
-
-  <section class="section" id="certifications">
-    <div class="wrap">
-      <span class="section-eyebrow">Certifications</span>
-      <h2 class="section-title">자격증</h2>
-      <div class="section-body cert-list">
-        <article class="cert">
-          <p class="cert-date">2025.12.24</p>
-          <h3 class="cert-name">산업안전기사</h3>
-          <p class="cert-issuer">한국산업인력공단</p>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <section class="section" id="contact">
-    <div class="wrap">
-      <span class="section-eyebrow">Contact</span>
-      <h2 class="section-title">연락처</h2>
-      <p class="section-lede">
-        프로젝트나 채용 관련 문의는 이메일로 연락 주시면 가장 빠르게 확인합니다.
-      </p>
-      <dl class="section-body contact-grid">
-        <div class="contact-card">
-          <dt>Email</dt>
-          <dd><a href="mailto:dudgh2030@naver.com">dudgh2030@naver.com</a></dd>
-        </div>
-        <div class="contact-card">
-          <dt>Phone</dt>
-          <dd>010-5642-8529</dd>
-        </div>
-        <div class="contact-card">
-          <dt>GitHub</dt>
-          <dd><a href="https://github.com/gwonyeongho" target="_blank" rel="noopener">github.com/gwonyeongho</a></dd>
-        </div>
-      </dl>
-    </div>
-  </section>
-</main>
-
-<footer class="site-footer wrap">
-  <span>© 2026 권영호</span>
-  <span>Embedded · Robotics · AI Software Developer</span>
-</footer>
+<footer class="site-footer wrap" id="site-footer"></footer>
 
 <script>
-  (function () {
-    var intro = document.getElementById("intro");
-    var enter = document.getElementById("intro-enter");
-    var dismissed = false;
+/* ==========================================================================
+   여기만 고치면 사이트 내용이 바뀝니다.
+   아래 CONTENT 객체가 페이지의 모든 글과 목록을 담고 있습니다.
+   HTML이나 CSS는 건드리지 않아도 됩니다.
 
-    function dismiss() {
-      if (dismissed) return;
-      dismissed = true;
-      intro.classList.add("is-dismissed");
-      intro.setAttribute("aria-hidden", "true");
-      window.removeEventListener("wheel", dismiss);
-      window.removeEventListener("touchmove", dismiss);
-      window.removeEventListener("keydown", onKey);
+   기본 규칙
+   - 글자는 반드시 따옴표 "" 로 감쌉니다.
+   - 항목과 항목 사이에는 쉼표 , 를 넣습니다.
+   - 목록 [ ... ] 에서 항목을 지우면 화면에서도 사라집니다.
+   - 어떤 섹션의 목록을 완전히 비우면 그 섹션과 메뉴가 함께 사라집니다.
+   ========================================================================== */
+
+const CONTENT = {
+
+  /* ── 기본 정보 ───────────────────────────────────────────────── */
+
+  name: "권영호",
+  nameEn: "Kwon Yeongho",
+  role: "Embedded / Robotics / AI Software Developer",
+
+  // 인트로 화면 이름 위에 작게 들어가는 줄
+  introEyebrow: "임베디드 · 로보틱스 · AI 소프트웨어 개발자",
+
+  // 이름 아래 소개 한두 문장
+  tagline: "센서와 하드웨어에서 출발해 AI 인식과 3D·VR 환경으로 이어지는 시스템을 설계하고 구현하는 개발자입니다.",
+
+  // 프로필 사진: 사진 파일을 이 폴더에 넣고 파일명을 적으세요. 예) "profile.jpg"
+  // 비워두면 아래 monogram 글자가 대신 보입니다.
+  photo: "",
+  monogram: "YH",
+
+  /* ── 연락처 ─────────────────────────────────────────────────── */
+
+  contact: {
+    email: "dudgh2030@naver.com",
+    phone: "010-5642-8529",   // 공개하지 않으려면 "" 로 비우세요
+    github: "gwonyeongho",    // 아이디만. 주소는 자동으로 만들어집니다
+  },
+
+  /* ── 인트로 화면에 떠다니는 키워드 ──────────────────────────── */
+
+  introChips: [
+    "C / C++", "Python", "Linux", "ROS2", "Unreal Engine 5",
+    "Raspberry Pi", "MATLAB / Simulink", "VR / XR", "로봇 통신 제어", "스마트기기",
+  ],
+
+  /* ── 소개 ───────────────────────────────────────────────────── */
+
+  about: {
+    // 문단을 늘리거나 줄이려면 이 목록에서 추가·삭제하세요
+    paragraphs: [
+      "세종대학교 지능기전공학부 스마트기기전공에서 하드웨어와 소프트웨어가 함께 동작하는 시스템을 공부했습니다. 센서·제어·통신 같은 기전 요소와 그 위에 올라가는 소프트웨어를 함께 다루는 것이 전공의 중심이었습니다.",
+      "현재 삼성청년SW·AI아카데미(SSAFY) 15기에서 자료구조와 알고리즘, Linux·Raspberry Pi 임베디드 실습, 인공지능, ROS2 기반 로봇 통신 제어까지 이어지는 과정을 이수하고 있습니다. 가장 익숙한 언어는 C/C++이고, Python과 ROS2로 로봇·AI 쪽 작업을 합니다.",
+      "모델을 돌려보는 것에서 멈추지 않고, AI의 출력이 실제로 사용자에게 닿는 지점까지 연결하는 과정에 관심이 있습니다. 무엇이 관측이고 무엇이 추정인지 구분해서 보여주는 설계처럼, 사용자가 결과를 신뢰할 수 있게 만드는 부분을 중요하게 생각합니다.",
+    ],
+    // 오른쪽에 번호와 함께 보이는 관심 분야
+    focus: [
+      { label: "Embedded & Smart Device", note: "센서·제어·통신을 다루는 기기 소프트웨어" },
+      { label: "Robotics", note: "ROS2 기반 로봇 통신과 제어" },
+      { label: "AI & 3D · VR", note: "생성 모델을 Unreal Engine 인터페이스로 연결" },
+      { label: "Team Collaboration", note: "Git·Jira 기반 협업과 문서화" },
+    ],
+  },
+
+  /* ── 기술 스택 ──────────────────────────────────────────────── */
+  /* 카드는 두 가지 형태로 만들 수 있습니다.
+     levels — 활용수준 막대를 함께 보여줍니다. level 은 1(초급) 2(중급) 3(고급).
+     tags   — 이름만 알약 모양으로 나열합니다.                                 */
+
+  skills: [
+    {
+      title: "언어 / Languages",
+      levels: [
+        { name: "C / C++", level: 3 },
+        { name: "Python", level: 2 },
+        { name: "Java", level: 1 },
+      ],
+    },
+    {
+      title: "공학용 / Engineering",
+      levels: [
+        { name: "ROS2", level: 2 },
+        { name: "MATLAB / Simulink", level: 1 },
+      ],
+    },
+    { title: "임베디드 / Embedded", tags: ["Linux", "Raspberry Pi", "로봇 통신 제어"] },
+    { title: "3D / XR", tags: ["Unreal Engine 5", "Blender", "Pico 4", "Meta Quest 2"] },
+    { title: "웹 / Web", tags: ["프론트엔드", "백엔드"] },
+    { title: "협업 / Collaboration", tags: ["Git", "GitLab", "Jira"] },
+  ],
+
+  /* ── 프로젝트 ───────────────────────────────────────────────── */
+  /* 프로젝트를 추가하려면 { ... } 한 덩어리를 복사해서 아래에 붙이고 내용만 바꾸세요.
+     status.kind 는 "live"(진행 중, 강조됨) 또는 "done"(완료) 입니다.
+     쓰지 않을 항목은 지워도 됩니다. links 가 없으면 버튼이 안 보입니다.        */
+
+  projects: [
+    {
+      date: "2026",
+      status: { label: "진행 중", kind: "live" },
+      meta: [
+        { label: "Team", value: "7명 · 5주" },
+        { label: "Course", value: "SSAFY 15기" },
+      ],
+      title: "문화유산 AI 복원 · VR 박물관",
+      subtitle: "사진 한 장에서 3D 유물을 만들고, AI가 결손부를 복원해 VR로 전시한다",
+      summary: "사진을 2D→3D 생성 모델로 3D 유물로 만들고, AI 에이전트가 결손부를 복원한 뒤, 무엇이 실제 관측이고 무엇이 AI 추정인지 구분해서 VR 박물관에 전시하는 프로젝트입니다. AI 출력을 역사적 정답이 아니라 검증 가능한 복원 가설로 다룹니다.",
+      bullets: [
+        "사진을 유일한 관측 근거로 두고 손상 상태와 복원 상태를 2단계 AI 추정으로 분리해 설계",
+        "Blender MCP를 이용한 메시 편집으로 결손부 복원 파이프라인 구성",
+        "Unreal Engine 5 기반 VR 클라이언트에서 원본·복원 상태를 토글로 비교하는 전시 인터랙션 구현",
+        "Pico 4를 주력 기기로, Meta Quest 2를 보조 기기로 대응하는 빌드 환경 구성",
+      ],
+      tags: ["Unreal Engine 5", "Blender MCP", "Python", "2D→3D Generation", "Pico 4", "Meta Quest 2", "GitLab", "Jira"],
+      links: [],
+    },
+    {
+      date: "2024",
+      status: { label: "완료", kind: "done" },
+      meta: [
+        { label: "Course", value: "세종대학교 캡스톤 디자인" },
+      ],
+      title: "Capstone Web Application",
+      subtitle: "학부 캡스톤 디자인 웹 애플리케이션",
+      summary: "지능기전공학부 캡스톤 디자인 과정에서 진행한 웹 애플리케이션 프로젝트입니다.",
+      bullets: [],
+      tags: [],
+      links: [
+        { label: "GitHub 저장소", url: "https://github.com/gwonyeongho/Capstone_Webapp_" },
+      ],
+    },
+  ],
+
+  /* ── 경험 · 학력 ────────────────────────────────────────────── */
+
+  experience: [
+    {
+      date: "2026.01 – 2026.12",
+      org: "삼성청년SW·AI아카데미(SSAFY)",
+      sub: "15기 · 삼성전자",
+      desc: "프로그래밍 기초부터 임베디드·AI·로봇, 프론트엔드와 백엔드까지 소프트웨어 개발 전 영역을 다루는 교육 과정을 이수하고 있습니다.",
+      stats: [
+        { label: "Institute", value: "삼성전자" },
+        { label: "Training", value: "925 Hours" },
+      ],
+      bullets: [
+        "프로그래밍 — 자료구조와 알고리즘 학습",
+        "임베디드 — Linux와 Raspberry Pi 환경의 임베디드 실습",
+        "AI — 인공지능 학습",
+        "로봇 — ROS2 기반 로봇 통신 제어",
+        "웹 — 프론트엔드 · 백엔드 프로그래밍",
+      ],
+    },
+    {
+      date: "2018.03 – 2025.02",
+      org: "세종대학교",
+      sub: "지능기전공학부 스마트기기전공 · 학사",
+      desc: "센서·제어·통신 등 기전 요소와 그 위에서 동작하는 소프트웨어를 함께 다루는 전공에서 스마트기기 시스템을 공부했습니다.",
+      stats: [
+        { label: "Total", value: "130학점 · GPA 3.45 / 4.5" },
+        { label: "Major", value: "72학점 · GPA 3.62 / 4.5" },
+        { label: "Graduated", value: "2025.02.14" },
+      ],
+      bullets: [],
+    },
+  ],
+
+  /* ── 자격증 ─────────────────────────────────────────────────── */
+
+  certifications: [
+    { date: "2025.12.24", name: "산업안전기사", issuer: "한국산업인력공단" },
+  ],
+
+};
+
+/* ==========================================================================
+   여기부터는 위 내용을 화면에 그리는 코드입니다. 고치지 않아도 됩니다.
+   ========================================================================== */
+
+(function () {
+  "use strict";
+
+  var LEVEL_NAMES = { 1: "초급", 2: "중급", 3: "고급" };
+
+  function el(tag, cls, text) {
+    var node = document.createElement(tag);
+    if (cls) node.className = cls;
+    if (text !== undefined && text !== null && text !== "") node.textContent = text;
+    return node;
+  }
+
+  function add(parent, child) {
+    if (child) parent.appendChild(child);
+    return parent;
+  }
+
+  function tagRow(items, extraClass) {
+    if (!items || !items.length) return null;
+    var row = el("div", extraClass ? extraClass + " tag-row" : "tag-row");
+    items.forEach(function (t) { add(row, el("span", "tag", t)); });
+    return row;
+  }
+
+  function bulletList(items) {
+    if (!items || !items.length) return null;
+    var ul = el("ul", "bullets");
+    items.forEach(function (b) { add(ul, el("li", null, b)); });
+    return ul;
+  }
+
+  function statRow(items) {
+    if (!items || !items.length) return null;
+    var dl = el("dl", "stat-row");
+    items.forEach(function (s) {
+      var box = el("div", "stat");
+      add(box, el("dt", null, s.label));
+      add(box, el("dd", null, s.value));
+      add(dl, box);
+    });
+    return dl;
+  }
+
+  function sectionShell(id, eyebrow, title, lede) {
+    var section = el("section", "section");
+    section.id = id;
+    var wrap = el("div", "wrap");
+    add(wrap, el("span", "section-eyebrow", eyebrow));
+    add(wrap, el("h2", "section-title", title));
+    if (lede) add(wrap, el("p", "section-lede", lede));
+    var body = el("div", "section-body");
+    add(wrap, body);
+    add(section, wrap);
+    return { section: section, body: body };
+  }
+
+  /* ---------- intro ---------- */
+
+  function renderIntro() {
+    document.getElementById("intro-eyebrow").textContent = CONTENT.introEyebrow;
+    document.getElementById("intro-name").textContent = CONTENT.name;
+    document.getElementById("header-mark").textContent = CONTENT.name;
+    document.title = CONTENT.name + " 포트폴리오";
+
+    // 칩을 가장자리에 흩뿌린다. 가운데 글자와 겹치지 않는 자리만 쓴다.
+    var spots = [
+      [9, 6], [17, 62], [26, 80], [34, 12], [46, 84],
+      [58, 4], [68, 70], [76, 20], [85, 58], [13, 34],
+      [90, 12], [40, 92],
+    ];
+    var box = document.getElementById("intro-chips");
+    (CONTENT.introChips || []).forEach(function (label, i) {
+      var spot = spots[i % spots.length];
+      var chip = el("span", i < 4 ? "chip chip-keep" : "chip", label);
+      chip.style.top = spot[0] + "%";
+      chip.style.left = spot[1] + "%";
+      chip.style.animationDelay = (-(i * 0.73) % 7).toFixed(2) + "s";
+      add(box, chip);
+    });
+  }
+
+  /* ---------- hero ---------- */
+
+  function renderHero() {
+    var section = el("section", "hero wrap");
+    section.id = "hero";
+    var grid = el("div", "hero-grid");
+
+    var left = el("div");
+    add(left, el("h1", "hero-name", CONTENT.name));
+    add(left, el("p", "hero-role", CONTENT.role));
+    if (CONTENT.tagline) add(left, el("p", "hero-tagline", CONTENT.tagline));
+
+    var actions = el("div", "hero-actions");
+    if (CONTENT.projects && CONTENT.projects.length) {
+      var a1 = el("a", "btn btn-primary", "프로젝트 보기");
+      a1.href = "#projects";
+      add(actions, a1);
     }
+    if (CONTENT.contact && CONTENT.contact.github) {
+      var a2 = el("a", "btn", "GitHub ↗");
+      a2.href = "https://github.com/" + CONTENT.contact.github;
+      a2.target = "_blank";
+      a2.rel = "noopener";
+      add(actions, a2);
+    }
+    var a3 = el("a", "btn", "연락처");
+    a3.href = "#contact";
+    add(actions, a3);
+    add(left, actions);
+    add(grid, left);
 
-    function onKey(e) {
-      if (e.key === "Escape" || e.key === "Enter" || e.key === " " || e.key === "PageDown" ||
-          e.key === "ArrowDown") {
-        dismiss();
+    var figure = el("figure", "hero-portrait");
+    if (CONTENT.photo) {
+      figure.classList.add("has-photo");
+      var img = el("img");
+      img.src = CONTENT.photo;
+      img.alt = CONTENT.name + " 프로필 사진";
+      add(figure, img);
+    } else {
+      add(figure, el("span", "portrait-monogram", CONTENT.monogram));
+      add(figure, el("figcaption", "portrait-caption", CONTENT.nameEn));
+    }
+    add(grid, figure);
+
+    add(section, grid);
+    return section;
+  }
+
+  /* ---------- about ---------- */
+
+  function renderAbout() {
+    var about = CONTENT.about;
+    if (!about || !(about.paragraphs || []).length) return null;
+
+    var shell = sectionShell("about", "About", "소개");
+    shell.body.classList.add("about-grid");
+
+    var prose = el("div", "prose");
+    about.paragraphs.forEach(function (p) { add(prose, el("p", null, p)); });
+    add(shell.body, prose);
+
+    if ((about.focus || []).length) {
+      var list = el("ul", "focus-list");
+      about.focus.forEach(function (f, i) {
+        var li = el("li");
+        add(li, el("span", "focus-index", String(i + 1).padStart(2, "0")));
+        var label = el("span", "focus-label", f.label);
+        if (f.note) add(label, el("span", "focus-note", f.note));
+        add(li, label);
+        add(list, li);
+      });
+      add(shell.body, list);
+    }
+    return shell.section;
+  }
+
+  /* ---------- skills ---------- */
+
+  function renderSkills() {
+    if (!(CONTENT.skills || []).length) return null;
+
+    var shell = sectionShell(
+      "skills", "Skills", "기술 스택",
+      "전공과 SSAFY 과정, 팀 프로젝트에서 사용해 온 언어와 도구입니다. 활용수준은 초급 · 중급 · 고급 세 단계로 표기했습니다."
+    );
+    shell.body.classList.add("skill-groups");
+
+    CONTENT.skills.forEach(function (group) {
+      var card = el("div", "skill-group");
+      add(card, el("h3", null, group.title));
+
+      if ((group.levels || []).length) {
+        var rows = el("ul", "skill-rows");
+        group.levels.forEach(function (s) {
+          var li = el("li");
+          add(li, el("span", "skill-name", s.name));
+          var meter = el("span", "level-meter");
+          meter.setAttribute("aria-hidden", "true");
+          for (var i = 1; i <= 3; i++) add(meter, el("i", i <= s.level ? "on" : null));
+          add(li, meter);
+          add(li, el("span", "level-label", LEVEL_NAMES[s.level] || ""));
+          add(rows, li);
+        });
+        add(card, rows);
       }
+      add(card, tagRow(group.tags));
+      add(shell.body, card);
+    });
+    return shell.section;
+  }
+
+  /* ---------- projects ---------- */
+
+  function renderProjects() {
+    if (!(CONTENT.projects || []).length) return null;
+
+    var shell = sectionShell(
+      "projects", "Projects", "프로젝트",
+      "AI 파이프라인과 사용자 인터페이스를 하나의 흐름으로 잇는 팀 프로젝트를 중심으로 정리했습니다."
+    );
+    shell.body.classList.add("project-list");
+
+    CONTENT.projects.forEach(function (p) {
+      var card = el("article", "project");
+
+      var meta = el("div", "project-meta");
+      if (p.date) add(meta, el("p", "project-date", p.date));
+      if (p.status) {
+        add(meta, el("span", "status status-" + (p.status.kind || "done"), p.status.label));
+      }
+      (p.meta || []).forEach(function (m) {
+        var row = el("p", "project-role");
+        add(row, el("span", null, m.label));
+        row.appendChild(document.createTextNode(m.value));
+        add(meta, row);
+      });
+      add(card, meta);
+
+      var body = el("div");
+      add(body, el("h3", "project-title", p.title));
+      if (p.subtitle) add(body, el("p", "project-subtitle", p.subtitle));
+      if (p.summary) add(body, el("p", "project-summary", p.summary));
+      add(body, bulletList(p.bullets));
+      add(body, tagRow(p.tags, "project-tags"));
+
+      if ((p.links || []).length) {
+        var links = el("div", "project-links");
+        p.links.forEach(function (l) {
+          var a = el("a", "link-pill", l.label + " ↗");
+          a.href = l.url;
+          a.target = "_blank";
+          a.rel = "noopener";
+          add(links, a);
+        });
+        add(body, links);
+      }
+      add(card, body);
+      add(shell.body, card);
+    });
+    return shell.section;
+  }
+
+  /* ---------- experience ---------- */
+
+  function renderExperience() {
+    if (!(CONTENT.experience || []).length) return null;
+
+    var shell = sectionShell("experience", "Experience", "경험");
+    shell.body.classList.add("timeline");
+
+    CONTENT.experience.forEach(function (x) {
+      var item = el("article", "timeline-item");
+      add(item, el("p", "timeline-date", x.date));
+      var body = el("div");
+      add(body, el("h3", "timeline-org", x.org));
+      if (x.sub) add(body, el("p", "timeline-sub", x.sub));
+      if (x.desc) add(body, el("p", "timeline-desc", x.desc));
+      add(body, statRow(x.stats));
+      add(body, bulletList(x.bullets));
+      add(item, body);
+      add(shell.body, item);
+    });
+    return shell.section;
+  }
+
+  /* ---------- certifications ---------- */
+
+  function renderCertifications() {
+    if (!(CONTENT.certifications || []).length) return null;
+
+    var shell = sectionShell("certifications", "Certifications", "자격증");
+    shell.body.classList.add("cert-list");
+
+    CONTENT.certifications.forEach(function (c) {
+      var card = el("article", "cert");
+      if (c.date) add(card, el("p", "cert-date", c.date));
+      add(card, el("h3", "cert-name", c.name));
+      if (c.issuer) add(card, el("p", "cert-issuer", c.issuer));
+      add(shell.body, card);
+    });
+    return shell.section;
+  }
+
+  /* ---------- contact ---------- */
+
+  function renderContact() {
+    var c = CONTENT.contact || {};
+    var shell = sectionShell(
+      "contact", "Contact", "연락처",
+      "프로젝트나 채용 관련 문의는 이메일로 연락 주시면 가장 빠르게 확인합니다."
+    );
+    shell.body.classList.add("contact-grid");
+    var dl = shell.body;
+    dl.classList.add("contact-grid");
+
+    function card(label, value, href) {
+      var box = el("div", "contact-card");
+      add(box, el("dt", null, label));
+      var dd = el("dd");
+      if (href) {
+        var a = el("a", null, value);
+        a.href = href;
+        if (href.indexOf("http") === 0) { a.target = "_blank"; a.rel = "noopener"; }
+        add(dd, a);
+      } else {
+        dd.textContent = value;
+      }
+      add(box, dd);
+      return box;
     }
 
-    if (enter) {
-      enter.addEventListener("click", function () {
-        dismiss();
-        var target = document.getElementById("hero");
-        if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
-      });
+    if (c.email) add(dl, card("Email", c.email, "mailto:" + c.email));
+    if (c.phone) add(dl, card("Phone", c.phone));
+    if (c.github) {
+      add(dl, card("GitHub", "github.com/" + c.github, "https://github.com/" + c.github));
     }
-    window.addEventListener("wheel", dismiss, { passive: true });
-    window.addEventListener("touchmove", dismiss, { passive: true });
-    window.addEventListener("keydown", onKey);
+    return shell.section;
+  }
 
-    var links = Array.prototype.slice.call(document.querySelectorAll(".site-nav a"));
-    var sections = links
-      .map(function (a) { return document.querySelector(a.getAttribute("href")); })
-      .filter(Boolean);
+  /* ---------- assemble ---------- */
 
-    function setActive() {
-      var pos = window.scrollY + (window.innerHeight * 0.3);
-      var current = null;
-      sections.forEach(function (s) {
-        if (s.offsetTop <= pos) current = s;
-      });
-      links.forEach(function (a) {
-        a.classList.toggle("is-active", !!current && a.getAttribute("href") === "#" + current.id);
-      });
+  renderIntro();
+
+  var main = document.getElementById("main");
+  var navItems = [];
+
+  add(main, renderHero());
+
+  [
+    ["about", "소개", renderAbout],
+    ["skills", "기술 스택", renderSkills],
+    ["projects", "프로젝트", renderProjects],
+    ["experience", "경험", renderExperience],
+    ["certifications", "자격증", renderCertifications],
+    ["contact", "연락처", renderContact],
+  ].forEach(function (entry) {
+    var node = entry[2]();
+    if (!node) return;
+    add(main, node);
+    navItems.push({ id: entry[0], label: entry[1] });
+  });
+
+  var nav = document.getElementById("site-nav");
+  navItems.forEach(function (item) {
+    var a = el("a", null, item.label);
+    a.href = "#" + item.id;
+    add(nav, a);
+  });
+
+  var footer = document.getElementById("site-footer");
+  add(footer, el("span", null, "© " + new Date().getFullYear() + " " + CONTENT.name));
+  add(footer, el("span", null, CONTENT.role));
+
+  /* ---------- behavior ---------- */
+
+  var intro = document.getElementById("intro");
+  var enter = document.getElementById("intro-enter");
+  var dismissed = false;
+
+  function dismiss() {
+    if (dismissed) return;
+    dismissed = true;
+    intro.classList.add("is-dismissed");
+    intro.setAttribute("aria-hidden", "true");
+    window.removeEventListener("wheel", dismiss);
+    window.removeEventListener("touchmove", dismiss);
+    window.removeEventListener("keydown", onKey);
+  }
+
+  function onKey(e) {
+    if (e.key === "Escape" || e.key === "Enter" || e.key === " " ||
+        e.key === "PageDown" || e.key === "ArrowDown") {
+      dismiss();
     }
+  }
 
-    var ticking = false;
-    window.addEventListener("scroll", function () {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(function () { setActive(); ticking = false; });
-    }, { passive: true });
-    setActive();
-  })();
+  enter.addEventListener("click", function () {
+    dismiss();
+    var target = document.getElementById("hero");
+    if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+  window.addEventListener("wheel", dismiss, { passive: true });
+  window.addEventListener("touchmove", dismiss, { passive: true });
+  window.addEventListener("keydown", onKey);
+
+  var links = Array.prototype.slice.call(nav.querySelectorAll("a"));
+  var sections = links
+    .map(function (a) { return document.getElementById(a.getAttribute("href").slice(1)); })
+    .filter(Boolean);
+
+  function setActive() {
+    var pos = window.scrollY + window.innerHeight * 0.3;
+    var current = null;
+    sections.forEach(function (s) { if (s.offsetTop <= pos) current = s; });
+    links.forEach(function (a) {
+      a.classList.toggle("is-active", !!current && a.getAttribute("href") === "#" + current.id);
+    });
+  }
+
+  var ticking = false;
+  window.addEventListener("scroll", function () {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(function () { setActive(); ticking = false; });
+  }, { passive: true });
+  setActive();
+})();
 </script>
