@@ -700,9 +700,9 @@ const CONTENT = {
   // 이름 아래 소개 한두 문장
   tagline: "센서와 하드웨어에서 출발해 AI 인식과 3D·VR 환경으로 이어지는 시스템을 설계하고 구현하는 개발자입니다.",
 
-  // 프로필 사진: 사진 파일을 이 폴더에 넣고 파일명을 적으세요. 예) "profile.jpg"
-  // 비워두면 아래 monogram 글자가 대신 보입니다.
-  photo: "",
+  // 프로필 사진: 이 파일명으로 사진을 이 폴더에 넣으면 자동으로 적용됩니다.
+  // 파일이 없거나 이름이 다르면 아래 monogram 글자가 대신 보입니다.
+  photo: "profile.jpg",
   monogram: "YH",
 
   /* ── 연락처 ─────────────────────────────────────────────────── */
@@ -966,15 +966,24 @@ const CONTENT = {
     add(grid, left);
 
     var figure = el("figure", "hero-portrait");
+
+    function showMonogram() {
+      figure.classList.remove("has-photo");
+      figure.textContent = "";
+      add(figure, el("span", "portrait-monogram", CONTENT.monogram));
+      add(figure, el("figcaption", "portrait-caption", CONTENT.nameEn));
+    }
+
     if (CONTENT.photo) {
       figure.classList.add("has-photo");
       var img = el("img");
-      img.src = CONTENT.photo;
       img.alt = CONTENT.name + " 프로필 사진";
+      // 사진 파일이 없으면 깨진 이미지 대신 모노그램을 보여준다
+      img.addEventListener("error", showMonogram, { once: true });
+      img.src = CONTENT.photo;
       add(figure, img);
     } else {
-      add(figure, el("span", "portrait-monogram", CONTENT.monogram));
-      add(figure, el("figcaption", "portrait-caption", CONTENT.nameEn));
+      showMonogram();
     }
     add(grid, figure);
 

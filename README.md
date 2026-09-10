@@ -97,3 +97,14 @@ Framework Preset 을 **Other**, Build Command 와 Output Directory 를 비운 �
 | Contact | 이메일 · 전화 · GitHub |
 
 섹션 순서는 `index.html` 아래쪽 `renderAbout`, `renderSkills` ... 목록의 순서를 바꾸면 된다.
+
+## 프로필 사진 넣기
+
+사진 파일 이름을 `profile.jpg` 로 바꿔서 이 폴더에 넣고 push 하면 된다.
+파일이 없거나 이름이 다르면 모노글램 글자가 대신 보이므로 깨진 이미지가 나오지는 않는다.
+
+```powershell
+cd C:\Users\SSAFY\source\repos\portfolio; git add -A; git commit -m "프로필 사진 추가"; git push
+```
+
+다른 이름이나 png 를 쓰려면 `index.html` 의 `photo:` 값을 그 파일명으로 바꾼다.
