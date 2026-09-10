@@ -63,9 +63,14 @@
     display: grid;
     place-items: center;
     overflow: hidden;
-    transition: opacity 0.7s ease, visibility 0.7s ease;
+    transition: opacity 0.6s ease;
   }
-  .intro.is-dismissed { opacity: 0; visibility: hidden; pointer-events: none; }
+  .intro.is-dismissed { opacity: 0; pointer-events: none; }
+  .intro[hidden] { display: none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .intro { transition: none; }
+  }
 
   .intro-center { position: relative; z-index: 2; text-align: center; padding: 0 24px; }
 
@@ -1213,9 +1218,17 @@ const CONTENT = {
     dismissed = true;
     intro.classList.add("is-dismissed");
     intro.setAttribute("aria-hidden", "true");
+    // 트랜지션이 끝나면 완전히 제거한다. 배경 탭처럼 트랜지션이
+    // 진행되지 않는 상황에서도 타이머가 확실히 숨긴다.
+    intro.addEventListener("transitionend", hide, { once: true });
+    setTimeout(hide, 700);
     window.removeEventListener("wheel", dismiss);
     window.removeEventListener("touchmove", dismiss);
     window.removeEventListener("keydown", onKey);
+  }
+
+  function hide() {
+    intro.hidden = true;
   }
 
   function onKey(e) {
