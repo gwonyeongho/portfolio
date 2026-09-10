@@ -1,7 +1,7 @@
 <title>권영호 포트폴리오</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 
 <style>
@@ -9,6 +9,7 @@
     --accent: #c97855;
     --accent-soft: #f1ddd2;
     --accent-strong: #9f573c;
+    --accent-line: #ead1c4;
     --background: #fffdfa;
     --surface: #ffffff;
     --surface-soft: #f8f5ef;
@@ -27,7 +28,6 @@
     --radius-md: 8px;
     --radius-lg: 10px;
     --shadow: 0 18px 48px rgba(75, 57, 43, 0.08);
-    --shadow-soft: 0 2px 10px rgba(75, 57, 43, 0.05);
   }
 
   * { box-sizing: border-box; }
@@ -42,629 +42,649 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  h1, h2, h3, h4, p, ul, ol, li, figure { margin: 0; padding: 0; }
+  h1, h2, h3, h4, p, ul, ol, li, figure, dl, dd, dt { margin: 0; padding: 0; }
   ul, ol { list-style: none; }
   a { color: inherit; text-decoration: none; }
-  h1, h2, h3 { text-wrap: balance; letter-spacing: -0.02em; }
+  h1, h2, h3 { text-wrap: balance; letter-spacing: 0; }
 
   :focus-visible {
-    outline: 2px solid var(--accent);
+    outline: 3px solid var(--accent-soft);
     outline-offset: 3px;
     border-radius: var(--radius-sm);
   }
 
-  /* ---------- intro overlay ---------- */
+  .wrap {
+    width: 100%;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 32px;
+  }
 
-  .intro {
+  /* ---------- 등장 애니메이션 ---------- */
+
+  @keyframes revealUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal { animation: revealUp 0.64s both; }
+
+  /* ---------- 인트로 커버 ---------- */
+
+  @keyframes floatRight {
+    from { transform: translateY(-8px); }
+    50%  { transform: translate(calc(50vw + 11rem), 8px); }
+    to   { transform: translate(calc(100vw + 44rem), -8px); }
+  }
+
+  @keyframes floatLeft {
+    from { transform: translateY(8px); }
+    50%  { transform: translate(calc(-50vw - 11rem), -8px); }
+    to   { transform: translate(calc(-100vw - 44rem), 8px); }
+  }
+
+  .intro-cover {
     position: fixed;
     inset: 0;
     z-index: 100;
-    background: var(--background);
     display: grid;
     place-items: center;
+    min-height: 100dvh;
+    padding: 32px;
     overflow: hidden;
+    background:
+      radial-gradient(circle at 78% 18%, rgba(201, 120, 85, 0.043), transparent 27rem),
+      radial-gradient(circle at 14% 74%, rgba(154, 145, 135, 0.059), transparent 24rem),
+      var(--background);
+    opacity: 1;
     transition: opacity 0.6s ease;
   }
-  .intro.is-dismissed { opacity: 0; pointer-events: none; }
-  .intro[hidden] { display: none; }
+  .intro-cover.is-closing { opacity: 0; pointer-events: none; }
+  .intro-cover[hidden] { display: none; }
 
-  @media (prefers-reduced-motion: reduce) {
-    .intro { transition: none; }
-  }
-
-  .intro-center { position: relative; z-index: 2; text-align: center; padding: 0 24px; }
-
-  .intro-eyebrow {
-    font-size: 0.9375rem;
-    font-weight: 600;
-    color: var(--text-secondary);
-    letter-spacing: 0.02em;
-  }
-
-  .intro-name {
-    margin-top: 14px;
-    font-size: clamp(4rem, 13vw, 8.5rem);
-    font-weight: 800;
-    line-height: 1;
-    letter-spacing: -0.045em;
-  }
-
-  .intro-cta { margin-top: 34px; }
-
-  .intro-chips {
+  .intro-floating {
     position: absolute;
     inset: 0;
-    z-index: 1;
+    z-index: 0;
     pointer-events: none;
+    user-select: none;
   }
 
-  .chip {
+  .floating-keyword {
     position: absolute;
+    top: var(--lane);
     display: inline-flex;
     align-items: center;
     gap: 7px;
-    padding: 6px 12px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 999px;
-    box-shadow: var(--shadow-soft);
-    font-size: 0.75rem;
+    min-height: 32px;
+    padding: 5px 11px;
+    border: 1px solid rgba(201, 120, 85, 0.42);
+    border-radius: var(--radius-sm);
+    background: rgba(255, 254, 250, 0.9);
+    color: #8f4c34;
+    font-size: 0.82rem;
+    font-weight: 700;
+    white-space: nowrap;
+    opacity: 0.42;
+    animation-name: floatRight;
+    animation-duration: var(--duration);
+    animation-delay: var(--delay);
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+  }
+  .floating-keyword.is-right { left: -22rem; }
+  .floating-keyword.is-left { right: -22rem; animation-name: floatLeft; }
+
+  .intro-content {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    justify-items: center;
+    width: min(100%, 760px);
+  }
+
+  .intro-copy { display: grid; gap: 24px; justify-items: center; text-align: center; }
+
+  .intro-kicker {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    color: var(--accent-strong);
+  }
+
+  .intro-content h1 {
+    font-size: clamp(4.2rem, 12vw, 8.4rem);
+    font-weight: 780;
+    line-height: 1;
+  }
+
+  .intro-title {
+    max-width: 560px;
+    font-size: clamp(1.15rem, 3vw, 1.65rem);
     font-weight: 600;
     color: var(--text-secondary);
-    white-space: nowrap;
-    animation: drift 7s ease-in-out infinite alternate;
-  }
-  .chip svg { width: 13px; height: 13px; stroke: var(--accent); flex: none; }
-
-  @keyframes drift {
-    from { transform: translateY(-7px); }
-    to { transform: translateY(7px); }
+    word-break: keep-all;
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    .chip { animation: none; }
+  .intro-button {
+    margin-top: 8px;
+    min-height: 46px;
+    padding: 0 18px;
+    border: 1px solid var(--accent);
+    border-radius: var(--radius-sm);
+    background: var(--accent);
+    color: var(--surface);
+    font: inherit;
+    font-weight: 750;
+    cursor: pointer;
+    transition: transform 0.18s ease, background 0.18s ease, border-color 0.18s ease;
+  }
+  .intro-button:hover, .intro-button:focus-visible {
+    background: var(--accent-strong);
+    border-color: var(--accent-strong);
+    transform: translateY(-2px);
   }
 
-  /* ---------- header ---------- */
+  /* ---------- 헤더 ---------- */
 
   .site-header {
     position: sticky;
     top: 0;
-    z-index: 50;
-    height: var(--header-height);
-    background: rgba(255, 253, 250, 0.88);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--border);
-  }
-
-  .header-inner {
-    max-width: var(--max-width);
-    height: 100%;
-    margin: 0 auto;
-    padding: 0 32px;
+    z-index: 20;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 24px;
+    min-height: var(--header-height);
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+    background: rgba(255, 253, 250, 0.94);
+    backdrop-filter: blur(16px);
   }
 
-  .header-mark {
-    font-size: 1.0625rem;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-  }
+  .header-inner { display: flex; justify-content: flex-end; }
 
   .site-nav {
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: 2px;
     overflow-x: auto;
     scrollbar-width: none;
   }
   .site-nav::-webkit-scrollbar { display: none; }
 
   .site-nav a {
-    padding: 7px 11px;
+    padding: 8px 10px;
     border-radius: var(--radius-sm);
-    font-size: 0.875rem;
-    font-weight: 500;
     color: var(--text-secondary);
+    font-size: 0.9rem;
     white-space: nowrap;
-    transition: color 0.2s ease, background 0.2s ease;
+    transition: color 0.18s ease, background 0.18s ease;
   }
-  .site-nav a:hover { color: var(--text-primary); background: var(--surface-soft); }
-  .site-nav a.is-active { color: var(--accent-strong); background: var(--accent-soft); }
-
-  /* ---------- shared layout ---------- */
-
-  .wrap {
-    max-width: var(--max-width);
-    margin: 0 auto;
-    padding: 0 32px;
-  }
-
-  .section { padding: 96px 0; border-top: 1px solid var(--border); }
-  .section:first-of-type { border-top: none; }
-
-  .section-eyebrow {
-    display: block;
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    font-weight: 500;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--accent);
-  }
-
-  .section-title {
-    margin-top: 10px;
-    font-size: clamp(1.875rem, 4vw, 2.5rem);
-    font-weight: 700;
-  }
-
-  .section-lede {
-    margin-top: 14px;
-    max-width: 62ch;
-    color: var(--text-secondary);
-  }
-
-  .section-body { margin-top: 48px; }
-
-  /* ---------- buttons ---------- */
-
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-    padding: 11px 20px;
-    border: 1px solid var(--border-strong);
-    border-radius: var(--radius-md);
-    background: var(--surface);
-    color: var(--text-primary);
-    font-family: inherit;
-    font-size: 0.9375rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
-  }
-  .btn:hover { background: var(--surface-soft); border-color: var(--text-subtle); }
-  .btn:active { transform: translateY(1px); }
-
-  .btn-primary {
-    background: var(--accent);
-    border-color: var(--accent);
-    color: #fff;
-  }
-  .btn-primary:hover { background: var(--accent-strong); border-color: var(--accent-strong); }
-
-  /* ---------- hero ---------- */
-
-  .hero { padding: 88px 0 96px; }
-
-  .hero-grid {
-    display: grid;
-    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
-    gap: 64px;
-    align-items: center;
-  }
-
-  .hero-name {
-    font-size: clamp(3rem, 7vw, 4.75rem);
-    font-weight: 800;
-    line-height: 1.02;
-    letter-spacing: -0.045em;
-  }
-
-  .hero-role {
-    margin-top: 18px;
-    font-size: clamp(1.375rem, 2.6vw, 1.875rem);
-    font-weight: 600;
-    line-height: 1.35;
-    color: var(--text-primary);
-  }
-
-  .hero-tagline {
-    margin-top: 22px;
-    max-width: 46ch;
-    color: var(--text-secondary);
-  }
-
-  .hero-actions {
-    margin-top: 34px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-  }
-
-  .hero-portrait {
-    width: 100%;
-    max-width: 380px;
-    margin-left: auto;
-    aspect-ratio: 4 / 5;
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    background:
-      radial-gradient(120% 90% at 70% 8%, var(--accent-soft) 0%, transparent 62%),
-      var(--surface-soft);
-    box-shadow: var(--shadow);
-    display: grid;
-    place-content: center;
-    gap: 12px;
-    text-align: center;
-    padding: 32px;
-  }
-
-  .portrait-monogram {
-    font-size: clamp(3.5rem, 7vw, 5rem);
-    font-weight: 800;
-    letter-spacing: -0.05em;
+  .site-nav a:hover, .site-nav a[aria-current="page"] {
     color: var(--accent-strong);
+    background: var(--accent-soft);
+  }
+
+  /* ---------- 히어로 ---------- */
+
+  .hero-section {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(300px, 0.95fr);
+    align-items: center;
+    gap: 70px;
+    padding: 104px 0 92px;
+  }
+
+  .hero-copy { display: grid; gap: 24px; }
+
+  .hero-kicker, .section-eyebrow, .project-period, .timeline-period {
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    text-transform: uppercase;
+    letter-spacing: 0;
+    color: var(--accent-strong);
+  }
+
+  .hero-copy h1 {
+    max-width: 760px;
+    font-size: clamp(4rem, 10vw, 7.8rem);
+    font-weight: 760;
     line-height: 1;
   }
 
-  .portrait-caption {
-    font-family: var(--font-mono);
-    font-size: 0.6875rem;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--text-subtle);
+  .hero-title {
+    max-width: 720px;
+    font-size: clamp(1.45rem, 3vw, 2.25rem);
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--text-primary);
   }
 
-  /* ---------- about ---------- */
+  .hero-intro {
+    max-width: 680px;
+    font-size: 1.08rem;
+    color: var(--text-secondary);
+    word-break: keep-all;
+  }
+
+  .hero-actions, .card-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+
+  .hero-profile-panel { display: grid; justify-items: center; }
+
+  .hero-portrait {
+    width: min(100%, 360px);
+    overflow: hidden;
+    background: #fff;
+  }
+  .hero-portrait img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+    object-position: center top;
+  }
+
+  .hero-portrait-fallback {
+    display: grid;
+    place-items: center;
+    gap: 6px;
+    width: min(100%, 360px);
+    aspect-ratio: 3 / 4;
+    background: var(--surface-soft);
+    color: var(--text-subtle);
+    font-weight: 700;
+  }
+  .hero-portrait-fallback strong {
+    font-size: clamp(3rem, 6vw, 4.4rem);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    color: var(--accent-strong);
+    line-height: 1;
+  }
+  .hero-portrait-fallback span {
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    text-transform: uppercase;
+  }
+
+  /* ---------- 버튼 ---------- */
+
+  .card-actions a, .card-actions button, .card-actions span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 42px;
+    padding: 0 16px;
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    color: var(--text-primary);
+    font: inherit;
+    font-weight: 700;
+    transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+  }
+  .card-actions a:hover, .card-actions button:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+  }
+  .card-actions .is-primary {
+    border-color: var(--accent);
+    background: var(--accent);
+    color: var(--surface);
+  }
+  .card-actions .is-primary:hover {
+    border-color: var(--accent-strong);
+    background: var(--accent-strong);
+  }
+  .card-actions span { color: var(--text-subtle); font-weight: 600; }
+
+  /* ---------- 섹션 ---------- */
+
+  .section {
+    padding: 92px 0;
+    border-top: 1px solid var(--border);
+  }
+
+  .section-inner { display: grid; gap: 32px; }
+
+  .section-heading { display: grid; gap: 10px; max-width: 820px; }
+  .section-heading h2 { font-size: clamp(2.15rem, 5vw, 3.45rem); font-weight: 720; line-height: 1.1; }
+  .section-heading p { color: var(--text-secondary); word-break: keep-all; }
+
+  /* ---------- 소개 ---------- */
 
   .about-grid {
     display: grid;
-    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
-    gap: 56px;
+    grid-template-columns: minmax(0, 1.35fr) minmax(280px, 1fr);
+    gap: 32px;
     align-items: start;
   }
 
-  .prose { display: flex; flex-direction: column; gap: 18px; }
-  .prose p { max-width: 60ch; color: var(--text-secondary); }
-  .prose strong { color: var(--text-primary); font-weight: 600; }
+  .text-panel { display: grid; gap: 18px; }
+  .text-panel p { color: var(--text-secondary); word-break: keep-all; }
+  .text-panel strong { color: var(--text-primary); font-weight: 650; }
 
   .focus-list {
-    display: flex;
-    flex-direction: column;
+    display: grid;
     border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
+    border-radius: var(--radius-md);
     background: var(--surface);
     overflow: hidden;
   }
-
   .focus-list li {
-    display: flex;
-    align-items: baseline;
+    display: grid;
+    grid-template-columns: 34px minmax(0, 1fr);
     gap: 14px;
-    padding: 16px 20px;
+    padding: 18px 20px;
     border-bottom: 1px solid var(--border);
+    transition: background 0.18s ease;
   }
   .focus-list li:last-child { border-bottom: none; }
+  .focus-list li:hover { background: var(--surface-soft); }
+  .focus-list b { font-family: var(--font-mono); font-size: 0.8rem; font-weight: 500; color: var(--accent); }
+  .focus-list strong { display: block; font-size: 0.98rem; font-weight: 650; }
+  .focus-list em { display: block; font-style: normal; font-size: 0.88rem; color: var(--text-secondary); }
 
-  .focus-index {
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    color: var(--accent);
-    flex: none;
-  }
+  /* ---------- 기술 스택 ---------- */
 
-  .focus-label { font-weight: 600; font-size: 0.9375rem; }
-  .focus-note { display: block; font-size: 0.8125rem; color: var(--text-secondary); font-weight: 400; }
-
-  /* ---------- skills ---------- */
-
-  .skill-groups {
+  .skills-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 20px;
-  }
-
-  .skill-group {
-    padding: 24px;
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    background: var(--surface);
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
-
-  .skill-group h3 {
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    font-weight: 500;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--text-subtle);
-  }
-
-  .tag-row { display: flex; flex-wrap: wrap; gap: 7px; }
-
-  .skill-rows { display: flex; flex-direction: column; }
-
-  .skill-rows li {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto auto;
-    align-items: center;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
     gap: 14px;
-    padding: 11px 0;
-    border-bottom: 1px dashed var(--border);
-  }
-  .skill-rows li:last-child { border-bottom: none; }
-
-  .skill-name { font-size: 0.9375rem; font-weight: 600; }
-
-  .level-meter { display: flex; gap: 3px; }
-  .level-meter i {
-    width: 16px;
-    height: 5px;
-    border-radius: 2px;
-    background: var(--surface-muted);
-  }
-  .level-meter i.on { background: var(--accent); }
-
-  .level-label {
-    min-width: 2.5em;
-    text-align: right;
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    color: var(--text-secondary);
   }
 
-  .tag {
-    padding: 5px 11px;
-    border: 1px solid var(--border);
-    border-radius: 999px;
-    background: var(--surface-soft);
-    font-size: 0.8125rem;
-    font-weight: 500;
-    color: var(--text-secondary);
-  }
-
-  /* ---------- projects ---------- */
-
-  .project-list { display: flex; flex-direction: column; gap: 24px; }
-
-  .project {
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    background: var(--surface);
-    box-shadow: var(--shadow-soft);
-    padding: 32px;
+  .skill-card {
     display: grid;
-    grid-template-columns: 180px minmax(0, 1fr);
-    gap: 40px;
+    align-content: start;
+    gap: 16px;
+    min-height: 210px;
+    padding: 22px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    background: var(--surface);
+    transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+  }
+  .skill-card:hover, .project-card:hover, .timeline-item:hover, .cert-card:hover {
+    border-color: var(--border-strong);
+    box-shadow: var(--shadow);
+    transform: translateY(-3px);
   }
 
-  .project-meta { display: flex; flex-direction: column; gap: 12px; }
-
-  .project-date {
-    font-family: var(--font-mono);
-    font-size: 0.8125rem;
-    color: var(--text-secondary);
-    letter-spacing: 0.02em;
+  .skill-card h3 {
+    font-size: 1.08rem;
+    line-height: 1.2;
+    text-align: center;
+    word-break: keep-all;
   }
 
-  .status {
-    align-self: flex-start;
+  .skill-chip-list { display: flex; flex-wrap: wrap; gap: 8px; }
+
+  .skill-chip {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-    padding: 4px 10px;
-    border-radius: 999px;
-    font-size: 0.75rem;
-    font-weight: 600;
+    gap: 7px;
+    min-height: 34px;
+    padding: 5px 10px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--surface-soft);
+    color: var(--text-primary);
+    font-size: 0.84rem;
+    font-weight: 650;
+    overflow-wrap: anywhere;
   }
-  .status-live { background: var(--accent-soft); color: var(--accent-strong); }
-  .status-done { background: var(--surface-muted); color: var(--text-secondary); }
-
-  .project-role {
-    font-size: 0.8125rem;
-    color: var(--text-secondary);
-  }
-  .project-role span {
-    display: block;
+  .skill-chip em {
+    font-style: normal;
     font-family: var(--font-mono);
-    font-size: 0.6875rem;
-    letter-spacing: 0.14em;
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: var(--accent-strong);
+    padding-left: 7px;
+    border-left: 1px solid var(--accent-line);
+  }
+
+  /* ---------- 프로젝트 ---------- */
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+    gap: 24px;
+  }
+
+  .project-card {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    background: var(--surface);
+    transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+  }
+
+  .project-media {
+    display: grid;
+    place-items: center;
+    aspect-ratio: 16 / 9;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface-soft);
+  }
+  .project-media span {
+    font-family: var(--font-mono);
+    font-size: 3.1rem;
+    font-weight: 800;
+    color: rgba(37, 35, 31, 0.16);
+  }
+  .project-media img { width: 100%; height: 100%; object-fit: cover; }
+
+  .project-content { display: flex; flex-direction: column; flex: 1; gap: 17px; padding: 24px; }
+  .project-content h3 { font-size: 1.45rem; font-weight: 700; line-height: 1.25; word-break: keep-all; }
+  .project-subtitle { font-weight: 650; color: var(--text-primary); word-break: keep-all; }
+  .project-content p { color: var(--text-secondary); word-break: keep-all; }
+
+  .status-badge {
+    width: fit-content;
+    display: inline-flex;
+    align-items: center;
+    min-height: 30px;
+    padding: 4px 10px;
+    border-radius: var(--radius-sm);
+    font-size: 0.78rem;
+    font-weight: 700;
+  }
+  .status-live { background: var(--accent-soft); color: var(--accent-strong); border: 1px solid var(--accent-line); }
+  .status-done { background: var(--surface-muted); color: var(--text-secondary); border: 1px solid var(--border-strong); }
+
+  .project-meta { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 14px; }
+  .project-meta div { display: grid; gap: 4px; }
+  .project-meta dt {
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
     text-transform: uppercase;
     color: var(--text-subtle);
-    margin-bottom: 3px;
   }
+  .project-meta dd { color: var(--text-secondary); font-size: 0.92rem; }
 
-  .project-title { font-size: 1.625rem; font-weight: 700; }
-  .project-subtitle { margin-top: 6px; font-size: 1rem; font-weight: 600; color: var(--accent-strong); }
-  .project-summary { margin-top: 14px; max-width: 62ch; color: var(--text-secondary); }
-
-  .bullets { margin-top: 20px; display: flex; flex-direction: column; gap: 9px; }
-  .bullets li {
-    position: relative;
-    padding-left: 17px;
-    font-size: 0.9375rem;
-    color: var(--text-secondary);
-  }
+  .bullets { display: grid; gap: 9px; }
+  .bullets li { position: relative; padding-left: 17px; color: var(--text-secondary); font-size: 0.95rem; word-break: keep-all; }
   .bullets li::before {
     content: "";
     position: absolute;
     left: 0;
-    top: 0.65em;
+    top: 0.62em;
     width: 5px;
     height: 5px;
     border-radius: 50%;
     background: var(--accent);
   }
 
-  .project-tags { margin-top: 22px; }
-
-  .project-links { margin-top: 24px; display: flex; flex-wrap: wrap; gap: 10px; }
-
-  .link-pill {
+  .tag-list { display: flex; flex-wrap: wrap; gap: 8px; }
+  .tag-list span {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-    padding: 8px 14px;
-    border: 1px solid var(--border-strong);
-    border-radius: var(--radius-md);
-    font-size: 0.875rem;
-    font-weight: 600;
-    transition: background 0.2s ease;
+    min-height: 30px;
+    padding: 4px 10px;
+    border: 1px solid var(--accent-line);
+    border-radius: var(--radius-sm);
+    background: var(--accent-soft);
+    color: var(--accent-strong);
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    overflow-wrap: anywhere;
   }
-  .link-pill:hover { background: var(--surface-soft); }
 
-  /* ---------- timeline ---------- */
+  .project-card-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: auto; padding: 0 24px 24px; }
 
-  .timeline { display: flex; flex-direction: column; }
+  /* ---------- 경험 ---------- */
+
+  .timeline { display: grid; gap: 16px; }
 
   .timeline-item {
     display: grid;
-    grid-template-columns: 200px minmax(0, 1fr);
-    gap: 40px;
-    padding: 32px 0;
-    border-top: 1px solid var(--border);
-  }
-  .timeline-item:first-child { border-top: none; padding-top: 0; }
-
-  .timeline-date {
-    font-family: var(--font-mono);
-    font-size: 0.8125rem;
-    color: var(--text-secondary);
-    letter-spacing: 0.02em;
-  }
-
-  .timeline-org { font-size: 1.25rem; font-weight: 700; }
-  .timeline-sub { margin-top: 4px; font-size: 0.9375rem; font-weight: 600; color: var(--accent-strong); }
-  .timeline-desc { margin-top: 12px; max-width: 62ch; color: var(--text-secondary); }
-
-  .stat-row {
-    margin-top: 18px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-  }
-
-  .stat {
-    padding: 10px 16px;
+    grid-template-columns: 180px minmax(0, 1fr);
+    gap: 24px;
+    padding: 26px;
     border: 1px solid var(--border);
     border-radius: var(--radius-md);
+    background: var(--surface);
+    transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+  }
+  .timeline-item > div { display: grid; gap: 12px; }
+  .timeline-item h3 { font-size: 1.3rem; font-weight: 700; word-break: keep-all; }
+  .timeline-subtitle { font-weight: 650; color: var(--text-primary); }
+  .timeline-item p { color: var(--text-secondary); word-break: keep-all; }
+
+  .timeline-note { border-left: 2px solid var(--accent); padding-left: 12px; }
+
+  .stat-row { display: flex; flex-wrap: wrap; gap: 8px; }
+  .stat-row div {
+    display: grid;
+    gap: 2px;
+    padding: 8px 14px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
     background: var(--surface-soft);
     font-variant-numeric: tabular-nums;
   }
-  .stat dt {
+  .stat-row dt {
     font-family: var(--font-mono);
-    font-size: 0.6875rem;
-    letter-spacing: 0.12em;
+    font-size: 0.7rem;
     text-transform: uppercase;
     color: var(--text-subtle);
   }
-  .stat dd { margin: 2px 0 0; font-size: 0.9375rem; font-weight: 600; }
+  .stat-row dd { font-size: 0.92rem; font-weight: 650; }
 
-  /* ---------- certifications ---------- */
+  /* ---------- 자격증 ---------- */
 
-  .cert-list {
+  .cert-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 380px)); gap: 16px; }
+
+  .cert-card {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 360px));
-    justify-content: start;
-    gap: 20px;
-  }
-
-  .cert {
+    gap: 10px;
+    align-content: start;
     padding: 26px;
     border: 1px solid var(--border);
-    border-left: 3px solid var(--accent);
-    border-radius: var(--radius-lg);
+    border-radius: var(--radius-md);
     background: var(--surface);
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
+    transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
   }
-  .cert-date { font-family: var(--font-mono); font-size: 0.8125rem; color: var(--text-secondary); }
-  .cert-name { font-size: 1.1875rem; font-weight: 700; }
-  .cert-issuer { font-size: 0.9375rem; color: var(--text-secondary); }
+  .cert-card h3 { font-size: 1.2rem; font-weight: 700; }
+  .cert-issuer { border-left: 2px solid var(--accent); padding-left: 12px; color: var(--text-secondary); }
 
-  /* ---------- contact ---------- */
+  /* ---------- 연락처 ---------- */
 
-  .contact-grid {
+  .contact-panel {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 20px;
-  }
-
-  .contact-card {
-    padding: 24px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1px;
+    overflow: hidden;
     border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    background: var(--surface);
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
+    border-radius: var(--radius-md);
+    background: var(--border);
   }
-  .contact-card dt {
+  .contact-panel > div {
+    display: grid;
+    gap: 6px;
+    align-content: start;
+    padding: 26px;
+    background: var(--surface);
+    transition: background 0.18s ease;
+  }
+  .contact-panel > div:hover { background: var(--surface-soft); }
+  .contact-panel dt {
     font-family: var(--font-mono);
-    font-size: 0.6875rem;
-    letter-spacing: 0.14em;
+    font-size: 0.74rem;
     text-transform: uppercase;
     color: var(--text-subtle);
   }
-  .contact-card dd { margin: 0; font-size: 1.0625rem; font-weight: 600; word-break: break-all; }
-  .contact-card dd a { border-bottom: 1px solid var(--border-strong); }
-  .contact-card dd a:hover { color: var(--accent-strong); border-color: var(--accent); }
+  .contact-panel dd { font-size: 1.05rem; font-weight: 650; overflow-wrap: anywhere; }
+  .contact-panel dd a { border-bottom: 1px solid var(--border-strong); transition: color 0.18s ease, border-color 0.18s ease; }
+  .contact-panel dd a:hover { color: var(--accent-strong); border-color: var(--accent); }
 
   .site-footer {
-    padding: 40px 0 56px;
-    border-top: 1px solid var(--border);
-    font-size: 0.8125rem;
-    color: var(--text-subtle);
     display: flex;
     flex-wrap: wrap;
-    gap: 12px;
     justify-content: space-between;
+    gap: 12px;
+    padding: 36px 0 56px;
+    border-top: 1px solid var(--border);
+    font-size: 0.84rem;
+    color: var(--text-subtle);
   }
 
-  /* ---------- responsive ---------- */
+  /* ---------- 반응형 ---------- */
 
-  @media (max-width: 960px) {
-    .hero-grid { grid-template-columns: 1fr; gap: 40px; }
-    .hero-portrait { max-width: 320px; }
-    .about-grid { grid-template-columns: 1fr; gap: 36px; }
-    .project { grid-template-columns: 1fr; gap: 24px; padding: 26px; }
+  @media (max-width: 1180px) {
+    .skills-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }
+
+  @media (max-width: 1000px) {
+    .hero-section { grid-template-columns: 1fr; gap: 34px; padding: 76px 0 68px; }
+    .hero-profile-panel { justify-items: start; }
+    .about-grid { grid-template-columns: 1fr; }
+    .projects-grid { grid-template-columns: 1fr; }
     .timeline-item { grid-template-columns: 1fr; gap: 14px; }
+    .contact-panel { grid-template-columns: 1fr !important; }
   }
 
   @media (max-width: 720px) {
-    .wrap, .header-inner { padding: 0 20px; }
-    .section { padding: 68px 0; }
-    .hero { padding: 56px 0 68px; }
-    .header-mark { display: none; }
-    .site-nav { width: 100%; justify-content: flex-start; }
-    .chip { display: none; }
-    .chip.chip-keep { display: inline-flex; }
+    .wrap { padding: 0 20px; }
+    .section { padding: 64px 0; }
+    .section-inner { gap: 26px; }
+    .hero-section { padding: 58px 0 56px; }
+    .skills-grid { grid-template-columns: 1fr; }
+    .skill-card { min-height: 0; padding: 20px; }
+    .project-content, .timeline-item, .cert-card { padding: 20px; }
+    .project-card-actions { padding: 0 20px 20px; }
+    .contact-panel > div { padding: 20px; }
+    .intro-cover { padding: 22px; }
+    .intro-content { width: min(100%, 560px); }
   }
 
-  /* ---------- profile photo (CONTENT.photo 를 채우면 적용됨) ---------- */
-
-  .hero-portrait.has-photo { padding: 0; overflow: hidden; }
-  .hero-portrait.has-photo img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { animation: none; }
+    .floating-keyword { animation: none; opacity: 0.22; }
+    .intro-cover { transition: none; }
+    .skill-card, .project-card, .timeline-item, .cert-card,
+    .card-actions a, .card-actions button, .intro-button { transition: none; }
+    .skill-card:hover, .project-card:hover, .timeline-item:hover, .cert-card:hover,
+    .card-actions a:hover, .card-actions button:hover, .intro-button:hover { transform: none; }
   }
 </style>
 
-<div class="intro" id="intro">
-  <div class="intro-chips" id="intro-chips" aria-hidden="true"></div>
-  <div class="intro-center">
-    <p class="intro-eyebrow" id="intro-eyebrow"></p>
-    <h1 class="intro-name" id="intro-name"></h1>
-    <div class="intro-cta">
-      <button class="btn btn-primary" type="button" id="intro-enter">포트폴리오 보기 ↗</button>
+<div class="intro-cover" id="intro">
+  <div class="intro-floating" id="intro-floating" aria-hidden="true"></div>
+  <div class="intro-content">
+    <div class="intro-copy">
+      <p class="intro-kicker" id="intro-kicker"></p>
+      <h1 id="intro-name"></h1>
+      <p class="intro-title" id="intro-title"></p>
+      <button class="intro-button" type="button" id="intro-enter">포트폴리오 보기 ↗</button>
     </div>
   </div>
 </div>
 
 <header class="site-header">
-  <div class="header-inner">
-    <a class="header-mark" href="#hero" id="header-mark"></a>
+  <div class="wrap header-inner">
     <nav class="site-nav" id="site-nav" aria-label="섹션 이동"></nav>
   </div>
 </header>
@@ -677,7 +697,7 @@
 /* ==========================================================================
    여기만 고치면 사이트 내용이 바뀝니다.
    아래 CONTENT 객체가 페이지의 모든 글과 목록을 담고 있습니다.
-   HTML이나 CSS는 건드리지 않아도 됩니다.
+   HTML 이나 CSS 는 건드리지 않아도 됩니다.
 
    기본 규칙
    - 글자는 반드시 따옴표 "" 로 감쌉니다.
@@ -692,18 +712,19 @@ const CONTENT = {
 
   name: "권영호",
   nameEn: "Kwon Yeongho",
+  kicker: "Embedded · Robotics · AI Software Developer",
   role: "Embedded / Robotics / AI Software Developer",
 
-  // 인트로 화면 이름 위에 작게 들어가는 줄
-  introEyebrow: "임베디드 · 로보틱스 · AI 소프트웨어 개발자",
+  // 인트로 화면에서 이름 아래 한 줄
+  introTitle: "임베디드와 로봇 제어에서 출발해 AI와 XR로 이어지는 시스템을 만듭니다.",
 
-  // 이름 아래 소개 한두 문장
-  tagline: "센서와 하드웨어에서 출발해 AI 인식과 3D·VR 환경으로 이어지는 시스템을 설계하고 구현하는 개발자입니다.",
+  // 히어로에서 직무 아래 소개
+  intro: "센서와 하드웨어를 다루는 임베디드 소프트웨어에서 출발해, AI 인식 결과를 로봇 제어와 3D·VR 환경으로 연결하는 시스템을 만듭니다.",
 
   // 프로필 사진: 이 파일명으로 사진을 이 폴더에 넣으면 자동으로 적용됩니다.
   // 파일이 없거나 이름이 다르면 아래 monogram 글자가 대신 보입니다.
   photo: "profile.jpg",
-  monogram: "YH",
+  monogram: "권",
 
   /* ── 연락처 ─────────────────────────────────────────────────── */
 
@@ -713,92 +734,98 @@ const CONTENT = {
     github: "gwonyeongho",    // 아이디만. 주소는 자동으로 만들어집니다
   },
 
-  /* ── 인트로 화면에 떠다니는 키워드 ──────────────────────────── */
+  /* ── 인트로 화면에 흘러가는 키워드 ──────────────────────────── */
 
   introChips: [
-    "C / C++", "Python", "Linux", "ROS2", "Unreal Engine 5",
-    "Raspberry Pi", "MATLAB / Simulink", "VR / XR", "로봇 통신 제어", "스마트기기",
+    "C / C++", "Python", "ROS2", "Linux", "Raspberry Pi",
+    "Unreal Engine 5", "OpenXR", "PyTorch", "Blender", "FastAPI",
+    "Quest 2", "MATLAB / Simulink",
   ],
 
   /* ── 소개 ───────────────────────────────────────────────────── */
 
   about: {
-    // 문단을 늘리거나 줄이려면 이 목록에서 추가·삭제하세요
+    lede: "하드웨어와 소프트웨어가 맞물리는 자리에서 일해 왔습니다.",
     paragraphs: [
-      "세종대학교 지능기전공학부 스마트기기전공에서 하드웨어와 소프트웨어가 함께 동작하는 시스템을 공부했습니다. 센서·제어·통신 같은 기전 요소와 그 위에 올라가는 소프트웨어를 함께 다루는 것이 전공의 중심이었습니다.",
-      "현재 삼성청년SW·AI아카데미(SSAFY) 15기에서 자료구조와 알고리즘, Linux·Raspberry Pi 임베디드 실습, 인공지능, ROS2 기반 로봇 통신 제어까지 이어지는 과정을 이수하고 있습니다. 가장 익숙한 언어는 C/C++이고, Python과 ROS2로 로봇·AI 쪽 작업을 합니다.",
-      "모델을 돌려보는 것에서 멈추지 않고, AI의 출력이 실제로 사용자에게 닿는 지점까지 연결하는 과정에 관심이 있습니다. 무엇이 관측이고 무엇이 추정인지 구분해서 보여주는 설계처럼, 사용자가 결과를 신뢰할 수 있게 만드는 부분을 중요하게 생각합니다.",
+      "세종대학교 <strong>지능기전공학부 스마트기기전공</strong>에서 센서·제어·통신 같은 기전 요소와 그 위에 올라가는 소프트웨어를 함께 다루며 스마트기기 시스템을 공부했습니다.",
+      "현재 <strong>삼성청년SW·AI아카데미(SSAFY) 15기</strong>에서 자료구조와 알고리즘, Linux·Raspberry Pi 임베디드 실습, 인공지능, ROS2 기반 로봇 통신 제어, 프론트엔드와 백엔드까지 이어지는 925시간 과정을 이수하고 있습니다.",
+      "팀 프로젝트에서는 사진에서 3D 유물을 생성하는 AI 파이프라인과 이를 전시하는 <strong>Unreal Engine 5 VR 클라이언트</strong>를 다룹니다. 모델을 돌려보는 데서 멈추지 않고, <strong>무엇이 관측이고 무엇이 AI 추정인지 구분해서</strong> 사용자에게 보여주는 설계에 관심이 있습니다.",
     ],
-    // 오른쪽에 번호와 함께 보이는 관심 분야
     focus: [
       { label: "Embedded & Smart Device", note: "센서·제어·통신을 다루는 기기 소프트웨어" },
       { label: "Robotics", note: "ROS2 기반 로봇 통신과 제어" },
-      { label: "AI & 3D · VR", note: "생성 모델을 Unreal Engine 인터페이스로 연결" },
-      { label: "Team Collaboration", note: "Git·Jira 기반 협업과 문서화" },
+      { label: "AI Pipeline", note: "2D→3D 생성 모델 검증과 후처리" },
+      { label: "XR Client", note: "Unreal Engine 5 · OpenXR 기반 VR 인터랙션" },
     ],
   },
 
   /* ── 기술 스택 ──────────────────────────────────────────────── */
-  /* 카드는 두 가지 형태로 만들 수 있습니다.
-     levels — 활용수준 막대를 함께 보여줍니다. level 은 1(초급) 2(중급) 3(고급).
-     tags   — 이름만 알약 모양으로 나열합니다.                                 */
+  /* 칩에 활용수준을 붙이려면 이름 뒤에 | 와 등급을 씁니다. 예) "Python|중급"
+     등급을 쓰지 않으면 이름만 표시됩니다.                                   */
 
   skills: [
     {
       title: "언어 / Languages",
-      levels: [
-        { name: "C / C++", level: 3 },
-        { name: "Python", level: 2 },
-        { name: "Java", level: 1 },
-      ],
+      chips: ["C / C++|고급", "Python|중급", "Java|초급", "JavaScript", "SQL", "Bash"],
     },
     {
-      title: "공학용 / Engineering",
-      levels: [
-        { name: "ROS2", level: 2 },
-        { name: "MATLAB / Simulink", level: 1 },
-      ],
+      title: "로보틱스 · 임베디드",
+      chips: ["ROS2|중급", "MATLAB / Simulink|초급", "Linux", "Raspberry Pi", "직렬 통신"],
     },
-    { title: "임베디드 / Embedded", tags: ["Linux", "Raspberry Pi", "로봇 통신 제어"] },
-    { title: "3D / XR", tags: ["Unreal Engine 5", "Blender", "Pico 4", "Meta Quest 2"] },
-    { title: "웹 / Web", tags: ["프론트엔드", "백엔드"] },
-    { title: "협업 / Collaboration", tags: ["Git", "GitLab", "Jira"] },
+    {
+      title: "AI · Computer Vision",
+      chips: ["PyTorch", "TripoSR", "Stable Fast 3D", "SPAR3D", "OpenCV", "NumPy", "SciPy", "trimesh", "rembg"],
+    },
+    {
+      title: "XR · 3D",
+      chips: ["Unreal Engine 5", "OpenXR", "Blueprints", "Blender", "three.js", "glTF · GLB", "Quest 2", "PICO 4"],
+    },
+    {
+      title: "웹 · 인프라 · 협업",
+      chips: ["FastAPI", "SQLite", "nginx", "AWS EC2", "Git · GitLab", "Jira", "Jenkins", "Git LFS"],
+    },
   ],
 
   /* ── 프로젝트 ───────────────────────────────────────────────── */
-  /* 프로젝트를 추가하려면 { ... } 한 덩어리를 복사해서 아래에 붙이고 내용만 바꾸세요.
-     status.kind 는 "live"(진행 중, 강조됨) 또는 "done"(완료) 입니다.
-     쓰지 않을 항목은 지워도 됩니다. links 가 없으면 버튼이 안 보입니다.        */
+  /* 프로젝트를 추가하려면 { ... } 한 덩어리를 복사해서 붙이고 내용만 바꾸세요.
+     status.kind 는 "live"(진행 중, 강조) 또는 "done"(완료) 입니다.
+     쓰지 않을 항목은 지워도 됩니다.                                         */
 
   projects: [
     {
-      date: "2026",
+      initial: "01",
+      period: "2026.09 – 진행 중",
       status: { label: "진행 중", kind: "live" },
+      title: "문화유산 AI 복원 · VR 박물관",
+      subtitle: "사진 한 장에서 3D 유물을 생성하고, 복원 결과를 VR로 전시한다",
+      summary: "사진을 2D→3D 생성 모델로 3D 유물로 만들고 결손부를 복원한 뒤, 무엇이 실제 관측이고 무엇이 AI 추정인지 구분해서 VR 박물관에 전시하는 프로젝트입니다. AI 출력을 역사적 정답이 아니라 검증 가능한 복원 가설로 다룹니다.",
       meta: [
         { label: "Team", value: "7명 · 5주" },
         { label: "Course", value: "SSAFY 15기" },
+        { label: "Target", value: "Quest 2 · PICO 4" },
       ],
-      title: "문화유산 AI 복원 · VR 박물관",
-      subtitle: "사진 한 장에서 3D 유물을 만들고, AI가 결손부를 복원해 VR로 전시한다",
-      summary: "사진을 2D→3D 생성 모델로 3D 유물로 만들고, AI 에이전트가 결손부를 복원한 뒤, 무엇이 실제 관측이고 무엇이 AI 추정인지 구분해서 VR 박물관에 전시하는 프로젝트입니다. AI 출력을 역사적 정답이 아니라 검증 가능한 복원 가설로 다룹니다.",
       bullets: [
-        "사진을 유일한 관측 근거로 두고 손상 상태와 복원 상태를 2단계 AI 추정으로 분리해 설계",
-        "Blender MCP를 이용한 메시 편집으로 결손부 복원 파이프라인 구성",
-        "Unreal Engine 5 기반 VR 클라이언트에서 원본·복원 상태를 토글로 비교하는 전시 인터랙션 구현",
-        "Pico 4를 주력 기기로, Meta Quest 2를 보조 기기로 대응하는 빌드 환경 구성",
+        "사진을 유일한 관측 근거로 두고 손상 상태와 복원 상태를 2단계 추정으로 분리해 설계",
+        "TripoSR · Stable Fast 3D · SPAR3D 세 모델을 같은 기준으로 벤치마크해 TripoSR을 기준선으로 선정",
+        "Unreal Engine 5 · OpenXR 기반 VR 클라이언트에서 원본과 복원 상태를 토글로 비교하는 전시 인터랙션 구현",
+        "Quest 2를 주력, PICO 4를 보조 기기로 대응하는 빌드 환경과 Git LFS 기반 바이너리 자산 관리 구성",
       ],
-      tags: ["Unreal Engine 5", "Blender MCP", "Python", "2D→3D Generation", "Pico 4", "Meta Quest 2", "GitLab", "Jira"],
+      tags: [
+        "Unreal Engine 5", "OpenXR", "Python", "PyTorch", "TripoSR",
+        "Blender", "OpenCV", "trimesh", "glTF · GLB", "Quest 2", "GitLab", "Jira",
+      ],
       links: [],
     },
     {
-      date: "2024",
+      initial: "02",
+      period: "2024",
       status: { label: "완료", kind: "done" },
+      title: "Capstone Web Application",
+      subtitle: "학부 캡스톤 디자인 웹 애플리케이션",
+      summary: "세종대학교 지능기전공학부 캡스톤 디자인 과정에서 진행한 웹 애플리케이션 프로젝트입니다.",
       meta: [
         { label: "Course", value: "세종대학교 캡스톤 디자인" },
       ],
-      title: "Capstone Web Application",
-      subtitle: "학부 캡스톤 디자인 웹 애플리케이션",
-      summary: "지능기전공학부 캡스톤 디자인 과정에서 진행한 웹 애플리케이션 프로젝트입니다.",
       bullets: [],
       tags: [],
       links: [
@@ -811,10 +838,10 @@ const CONTENT = {
 
   experience: [
     {
-      date: "2026.01 – 2026.12",
+      period: "2026.01 – 2026.12",
       org: "삼성청년SW·AI아카데미(SSAFY)",
       sub: "15기 · 삼성전자",
-      desc: "프로그래밍 기초부터 임베디드·AI·로봇, 프론트엔드와 백엔드까지 소프트웨어 개발 전 영역을 다루는 교육 과정을 이수하고 있습니다.",
+      note: "프로그래밍 기초부터 임베디드·AI·로봇, 프론트엔드와 백엔드까지 소프트웨어 개발 전 영역을 다루는 925시간 과정을 이수하고 있습니다.",
       stats: [
         { label: "Institute", value: "삼성전자" },
         { label: "Training", value: "925 Hours" },
@@ -828,13 +855,13 @@ const CONTENT = {
       ],
     },
     {
-      date: "2018.03 – 2025.02",
+      period: "2018.03 – 2025.02",
       org: "세종대학교",
       sub: "지능기전공학부 스마트기기전공 · 학사",
-      desc: "센서·제어·통신 등 기전 요소와 그 위에서 동작하는 소프트웨어를 함께 다루는 전공에서 스마트기기 시스템을 공부했습니다.",
+      note: "센서·제어·통신 등 기전 요소와 그 위에서 동작하는 소프트웨어를 함께 다루는 전공에서 스마트기기 시스템을 공부했습니다.",
       stats: [
-        { label: "Total", value: "130학점 · GPA 3.45 / 4.5" },
-        { label: "Major", value: "72학점 · GPA 3.62 / 4.5" },
+        { label: "Total", value: "130학점 · 3.45 / 4.5" },
+        { label: "Major", value: "72학점 · 3.62 / 4.5" },
         { label: "Graduated", value: "2025.02.14" },
       ],
       bullets: [],
@@ -856,8 +883,6 @@ const CONTENT = {
 (function () {
   "use strict";
 
-  var LEVEL_NAMES = { 1: "초급", 2: "중급", 3: "고급" };
-
   function el(tag, cls, text) {
     var node = document.createElement(tag);
     if (cls) node.className = cls;
@@ -870,11 +895,15 @@ const CONTENT = {
     return parent;
   }
 
-  function tagRow(items, extraClass) {
-    if (!items || !items.length) return null;
-    var row = el("div", extraClass ? extraClass + " tag-row" : "tag-row");
-    items.forEach(function (t) { add(row, el("span", "tag", t)); });
-    return row;
+  // <strong> 만 허용하는 최소 서식. 그 외 태그는 그냥 글자로 나온다.
+  function richText(node, raw) {
+    String(raw).split(/(<strong>[\s\S]*?<\/strong>)/g).forEach(function (part) {
+      if (!part) return;
+      var m = part.match(/^<strong>([\s\S]*?)<\/strong>$/);
+      if (m) add(node, el("strong", null, m[1]));
+      else node.appendChild(document.createTextNode(part));
+    });
+    return node;
   }
 
   function bulletList(items) {
@@ -884,11 +913,30 @@ const CONTENT = {
     return ul;
   }
 
+  function tagList(items) {
+    if (!items || !items.length) return null;
+    var row = el("div", "tag-list");
+    items.forEach(function (t) { add(row, el("span", null, t)); });
+    return row;
+  }
+
+  function metaList(items) {
+    if (!items || !items.length) return null;
+    var dl = el("dl", "project-meta");
+    items.forEach(function (m) {
+      var box = el("div");
+      add(box, el("dt", null, m.label));
+      add(box, el("dd", null, m.value));
+      add(dl, box);
+    });
+    return dl;
+  }
+
   function statRow(items) {
     if (!items || !items.length) return null;
     var dl = el("dl", "stat-row");
     items.forEach(function (s) {
-      var box = el("div", "stat");
+      var box = el("div");
       add(box, el("dt", null, s.label));
       add(box, el("dd", null, s.value));
       add(dl, box);
@@ -896,122 +944,124 @@ const CONTENT = {
     return dl;
   }
 
-  function sectionShell(id, eyebrow, title, lede) {
-    var section = el("section", "section");
-    section.id = id;
-    var wrap = el("div", "wrap");
-    add(wrap, el("span", "section-eyebrow", eyebrow));
-    add(wrap, el("h2", "section-title", title));
-    if (lede) add(wrap, el("p", "section-lede", lede));
-    var body = el("div", "section-body");
-    add(wrap, body);
-    add(section, wrap);
-    return { section: section, body: body };
+  function linkRow(links, firstIsPrimary) {
+    if (!links || !links.length) return null;
+    var row = el("div", "card-actions");
+    links.forEach(function (l, i) {
+      var a = el("a", (firstIsPrimary && i === 0) ? "is-primary" : null, l.label + " ↗");
+      a.href = l.url;
+      if (l.url.indexOf("http") === 0) { a.target = "_blank"; a.rel = "noopener"; }
+      add(row, a);
+    });
+    return row;
   }
 
-  /* ---------- intro ---------- */
+  function section(id, eyebrow, title, lede) {
+    var s = el("section", "section reveal");
+    s.id = id;
+    var wrap = el("div", "wrap");
+    var inner = el("div", "section-inner");
+    var head = el("div", "section-heading");
+    add(head, el("p", "section-eyebrow", eyebrow));
+    add(head, el("h2", null, title));
+    if (lede) add(head, el("p", null, lede));
+    add(inner, head);
+    var body = el("div");
+    add(inner, body);
+    add(wrap, inner);
+    add(s, wrap);
+    return { section: s, body: body };
+  }
+
+  /* ---------- 인트로 ---------- */
 
   function renderIntro() {
-    document.getElementById("intro-eyebrow").textContent = CONTENT.introEyebrow;
-    document.getElementById("intro-name").textContent = CONTENT.name;
-    document.getElementById("header-mark").textContent = CONTENT.name;
     document.title = CONTENT.name + " 포트폴리오";
+    document.getElementById("intro-kicker").textContent = CONTENT.kicker;
+    document.getElementById("intro-name").textContent = CONTENT.name;
+    document.getElementById("intro-title").textContent = CONTENT.introTitle;
 
-    // 칩을 가장자리에 흩뿌린다. 가운데 글자와 겹치지 않는 자리만 쓴다.
-    var spots = [
-      [9, 6], [17, 62], [26, 80], [34, 12], [46, 84],
-      [58, 4], [68, 70], [76, 20], [85, 58], [13, 34],
-      [90, 12], [40, 92],
-    ];
-    var box = document.getElementById("intro-chips");
+    var box = document.getElementById("intro-floating");
     (CONTENT.introChips || []).forEach(function (label, i) {
-      var spot = spots[i % spots.length];
-      var chip = el("span", i < 4 ? "chip chip-keep" : "chip", label);
-      chip.style.top = spot[0] + "%";
-      chip.style.left = spot[1] + "%";
-      chip.style.animationDelay = (-(i * 0.73) % 7).toFixed(2) + "s";
+      var chip = el("span", "floating-keyword " + (i % 2 ? "is-left" : "is-right"), label);
+      // 세로 레인을 고르게 나누고, 속도와 시작 시점을 흩어 같은 줄로 뭉치지 않게 한다
+      chip.style.setProperty("--lane", (5 + (i * 7.6) % 84).toFixed(1) + "%");
+      chip.style.setProperty("--duration", (26 + (i * 3.4) % 16).toFixed(1) + "s");
+      chip.style.setProperty("--delay", (-((i * 2.9) % 30)).toFixed(1) + "s");
       add(box, chip);
     });
   }
 
-  /* ---------- hero ---------- */
+  /* ---------- 히어로 ---------- */
 
   function renderHero() {
-    var section = el("section", "hero wrap");
-    section.id = "hero";
-    var grid = el("div", "hero-grid");
+    var s = el("section", "hero-section wrap reveal");
+    s.id = "hero";
 
-    var left = el("div");
-    add(left, el("h1", "hero-name", CONTENT.name));
-    add(left, el("p", "hero-role", CONTENT.role));
-    if (CONTENT.tagline) add(left, el("p", "hero-tagline", CONTENT.tagline));
+    var copy = el("div", "hero-copy");
+    add(copy, el("p", "hero-kicker", CONTENT.kicker));
+    add(copy, el("h1", null, CONTENT.name));
+    add(copy, el("p", "hero-title", CONTENT.role));
+    if (CONTENT.intro) add(copy, el("p", "hero-intro", CONTENT.intro));
 
-    var actions = el("div", "hero-actions");
-    if (CONTENT.projects && CONTENT.projects.length) {
-      var a1 = el("a", "btn btn-primary", "프로젝트 보기");
-      a1.href = "#projects";
-      add(actions, a1);
-    }
+    var links = [];
+    if ((CONTENT.projects || []).length) links.push({ label: "프로젝트 보기", url: "#projects" });
     if (CONTENT.contact && CONTENT.contact.github) {
-      var a2 = el("a", "btn", "GitHub ↗");
-      a2.href = "https://github.com/" + CONTENT.contact.github;
-      a2.target = "_blank";
-      a2.rel = "noopener";
-      add(actions, a2);
+      links.push({ label: "GitHub", url: "https://github.com/" + CONTENT.contact.github });
     }
-    var a3 = el("a", "btn", "연락처");
-    a3.href = "#contact";
-    add(actions, a3);
-    add(left, actions);
-    add(grid, left);
+    links.push({ label: "연락처", url: "#contact" });
+    var actions = linkRow(links, true);
+    if (actions) actions.className = "hero-actions card-actions";
+    add(copy, actions);
+    add(s, copy);
 
+    var panel = el("div", "hero-profile-panel");
     var figure = el("figure", "hero-portrait");
 
-    function showMonogram() {
-      figure.classList.remove("has-photo");
+    function showFallback() {
+      figure.className = "hero-portrait-fallback";
       figure.textContent = "";
-      add(figure, el("span", "portrait-monogram", CONTENT.monogram));
-      add(figure, el("figcaption", "portrait-caption", CONTENT.nameEn));
+      add(figure, el("strong", null, CONTENT.monogram));
+      add(figure, el("span", null, CONTENT.nameEn));
     }
 
     if (CONTENT.photo) {
-      figure.classList.add("has-photo");
       var img = el("img");
       img.alt = CONTENT.name + " 프로필 사진";
-      // 사진 파일이 없으면 깨진 이미지 대신 모노그램을 보여준다
-      img.addEventListener("error", showMonogram, { once: true });
+      // 사진 파일이 없으면 깨진 이미지 대신 이름 글자를 보여준다
+      img.addEventListener("error", showFallback, { once: true });
       img.src = CONTENT.photo;
       add(figure, img);
     } else {
-      showMonogram();
+      showFallback();
     }
-    add(grid, figure);
-
-    add(section, grid);
-    return section;
+    add(panel, figure);
+    add(s, panel);
+    return s;
   }
 
-  /* ---------- about ---------- */
+  /* ---------- 소개 ---------- */
 
   function renderAbout() {
     var about = CONTENT.about;
     if (!about || !(about.paragraphs || []).length) return null;
 
-    var shell = sectionShell("about", "About", "소개");
-    shell.body.classList.add("about-grid");
+    var shell = section("about", "About", "소개", about.lede);
+    shell.body.className = "about-grid";
 
-    var prose = el("div", "prose");
-    about.paragraphs.forEach(function (p) { add(prose, el("p", null, p)); });
-    add(shell.body, prose);
+    var panel = el("div", "text-panel");
+    about.paragraphs.forEach(function (p) { add(panel, richText(el("p"), p)); });
+    add(shell.body, panel);
 
     if ((about.focus || []).length) {
       var list = el("ul", "focus-list");
       about.focus.forEach(function (f, i) {
         var li = el("li");
-        add(li, el("span", "focus-index", String(i + 1).padStart(2, "0")));
-        var label = el("span", "focus-label", f.label);
-        if (f.note) add(label, el("span", "focus-note", f.note));
-        add(li, label);
+        add(li, el("b", null, String(i + 1).padStart(2, "0")));
+        var body = el("div");
+        add(body, el("strong", null, f.label));
+        if (f.note) add(body, el("em", null, f.note));
+        add(li, body);
         add(list, li);
       });
       add(shell.body, list);
@@ -1019,107 +1069,87 @@ const CONTENT = {
     return shell.section;
   }
 
-  /* ---------- skills ---------- */
+  /* ---------- 기술 스택 ---------- */
 
   function renderSkills() {
     if (!(CONTENT.skills || []).length) return null;
 
-    var shell = sectionShell(
+    var shell = section(
       "skills", "Skills", "기술 스택",
-      "전공과 SSAFY 과정, 팀 프로젝트에서 사용해 온 언어와 도구입니다. 활용수준은 초급 · 중급 · 고급 세 단계로 표기했습니다."
+      "전공과 SSAFY 과정, 팀 프로젝트에서 실제로 사용한 언어와 도구입니다. 일부 항목에는 활용수준을 함께 표기했습니다."
     );
-    shell.body.classList.add("skill-groups");
+    shell.body.className = "skills-grid";
 
     CONTENT.skills.forEach(function (group) {
-      var card = el("div", "skill-group");
+      var card = el("div", "skill-card");
       add(card, el("h3", null, group.title));
-
-      if ((group.levels || []).length) {
-        var rows = el("ul", "skill-rows");
-        group.levels.forEach(function (s) {
-          var li = el("li");
-          add(li, el("span", "skill-name", s.name));
-          var meter = el("span", "level-meter");
-          meter.setAttribute("aria-hidden", "true");
-          for (var i = 1; i <= 3; i++) add(meter, el("i", i <= s.level ? "on" : null));
-          add(li, meter);
-          add(li, el("span", "level-label", LEVEL_NAMES[s.level] || ""));
-          add(rows, li);
-        });
-        add(card, rows);
-      }
-      add(card, tagRow(group.tags));
+      var list = el("div", "skill-chip-list");
+      (group.chips || []).forEach(function (raw) {
+        var parts = String(raw).split("|");
+        var chip = el("span", "skill-chip", parts[0].trim());
+        if (parts[1]) add(chip, el("em", null, parts[1].trim()));
+        add(list, chip);
+      });
+      add(card, list);
       add(shell.body, card);
     });
     return shell.section;
   }
 
-  /* ---------- projects ---------- */
+  /* ---------- 프로젝트 ---------- */
 
   function renderProjects() {
     if (!(CONTENT.projects || []).length) return null;
 
-    var shell = sectionShell(
+    var shell = section(
       "projects", "Projects", "프로젝트",
       "AI 파이프라인과 사용자 인터페이스를 하나의 흐름으로 잇는 팀 프로젝트를 중심으로 정리했습니다."
     );
-    shell.body.classList.add("project-list");
+    shell.body.className = "projects-grid";
 
     CONTENT.projects.forEach(function (p) {
-      var card = el("article", "project");
+      var card = el("article", "project-card");
 
-      var meta = el("div", "project-meta");
-      if (p.date) add(meta, el("p", "project-date", p.date));
-      if (p.status) {
-        add(meta, el("span", "status status-" + (p.status.kind || "done"), p.status.label));
-      }
-      (p.meta || []).forEach(function (m) {
-        var row = el("p", "project-role");
-        add(row, el("span", null, m.label));
-        row.appendChild(document.createTextNode(m.value));
-        add(meta, row);
-      });
-      add(card, meta);
+      var media = el("div", "project-media");
+      add(media, el("span", null, p.initial || ""));
+      add(card, media);
 
-      var body = el("div");
-      add(body, el("h3", "project-title", p.title));
+      var body = el("div", "project-content");
+      if (p.period) add(body, el("p", "project-period", p.period));
+      if (p.status) add(body, el("span", "status-badge status-" + (p.status.kind || "done"), p.status.label));
+      add(body, el("h3", null, p.title));
       if (p.subtitle) add(body, el("p", "project-subtitle", p.subtitle));
-      if (p.summary) add(body, el("p", "project-summary", p.summary));
+      if (p.summary) add(body, el("p", null, p.summary));
+      add(body, metaList(p.meta));
       add(body, bulletList(p.bullets));
-      add(body, tagRow(p.tags, "project-tags"));
-
-      if ((p.links || []).length) {
-        var links = el("div", "project-links");
-        p.links.forEach(function (l) {
-          var a = el("a", "link-pill", l.label + " ↗");
-          a.href = l.url;
-          a.target = "_blank";
-          a.rel = "noopener";
-          add(links, a);
-        });
-        add(body, links);
-      }
+      add(body, tagList(p.tags));
       add(card, body);
+
+      var actions = linkRow(p.links, false);
+      if (actions) {
+        actions.className = "project-card-actions card-actions";
+        add(card, actions);
+      }
       add(shell.body, card);
     });
     return shell.section;
   }
 
-  /* ---------- experience ---------- */
+  /* ---------- 경험 ---------- */
 
   function renderExperience() {
     if (!(CONTENT.experience || []).length) return null;
 
-    var shell = sectionShell("experience", "Experience", "경험");
-    shell.body.classList.add("timeline");
+    var shell = section("experience", "Experience", "경험");
+    shell.body.className = "timeline";
 
     CONTENT.experience.forEach(function (x) {
       var item = el("article", "timeline-item");
-      add(item, el("p", "timeline-date", x.date));
+      add(item, el("p", "timeline-period", x.period));
       var body = el("div");
-      add(body, el("h3", "timeline-org", x.org));
-      if (x.sub) add(body, el("p", "timeline-sub", x.sub));
-      if (x.desc) add(body, el("p", "timeline-desc", x.desc));
+      add(body, el("h3", null, x.org));
+      if (x.sub) add(body, el("p", "timeline-subtitle", x.sub));
+      if (x.note) add(body, el("p", "timeline-note", x.note));
       add(body, statRow(x.stats));
       add(body, bulletList(x.bullets));
       add(item, body);
@@ -1128,38 +1158,37 @@ const CONTENT = {
     return shell.section;
   }
 
-  /* ---------- certifications ---------- */
+  /* ---------- 자격증 ---------- */
 
   function renderCertifications() {
     if (!(CONTENT.certifications || []).length) return null;
 
-    var shell = sectionShell("certifications", "Certifications", "자격증");
-    shell.body.classList.add("cert-list");
+    var shell = section("certifications", "Certifications", "자격증");
+    shell.body.className = "cert-list";
 
     CONTENT.certifications.forEach(function (c) {
-      var card = el("article", "cert");
-      if (c.date) add(card, el("p", "cert-date", c.date));
-      add(card, el("h3", "cert-name", c.name));
+      var card = el("article", "cert-card");
+      if (c.date) add(card, el("p", "project-period", c.date));
+      add(card, el("h3", null, c.name));
       if (c.issuer) add(card, el("p", "cert-issuer", c.issuer));
       add(shell.body, card);
     });
     return shell.section;
   }
 
-  /* ---------- contact ---------- */
+  /* ---------- 연락처 ---------- */
 
   function renderContact() {
     var c = CONTENT.contact || {};
-    var shell = sectionShell(
+    var shell = section(
       "contact", "Contact", "연락처",
       "프로젝트나 채용 관련 문의는 이메일로 연락 주시면 가장 빠르게 확인합니다."
     );
-    shell.body.classList.add("contact-grid");
-    var dl = shell.body;
-    dl.classList.add("contact-grid");
+    var panel = el("dl", "contact-panel");
+    shell.body.appendChild(panel);
 
     function card(label, value, href) {
-      var box = el("div", "contact-card");
+      var box = el("div");
       add(box, el("dt", null, label));
       var dd = el("dd");
       if (href) {
@@ -1171,18 +1200,20 @@ const CONTENT = {
         dd.textContent = value;
       }
       add(box, dd);
-      return box;
+      add(panel, box);
     }
 
-    if (c.email) add(dl, card("Email", c.email, "mailto:" + c.email));
-    if (c.phone) add(dl, card("Phone", c.phone));
-    if (c.github) {
-      add(dl, card("GitHub", "github.com/" + c.github, "https://github.com/" + c.github));
-    }
+    if (c.email) card("Email", c.email, "mailto:" + c.email);
+    if (c.phone) card("Phone", c.phone);
+    if (c.github) card("GitHub", "github.com/" + c.github, "https://github.com/" + c.github);
+
+    // 칸이 3개보다 적으면 열 수를 줄여 빈틈이 생기지 않게 한다
+    var n = panel.children.length;
+    if (n && n < 3) panel.style.gridTemplateColumns = "repeat(" + n + ", minmax(0, 1fr))";
     return shell.section;
   }
 
-  /* ---------- assemble ---------- */
+  /* ---------- 조립 ---------- */
 
   renderIntro();
 
@@ -1205,6 +1236,11 @@ const CONTENT = {
     navItems.push({ id: entry[0], label: entry[1] });
   });
 
+  // 섹션이 차례로 올라오도록 시작 시점을 조금씩 늦춘다
+  Array.prototype.slice.call(document.querySelectorAll(".reveal")).forEach(function (node, i) {
+    node.style.animationDelay = Math.min(i * 0.06, 0.42) + "s";
+  });
+
   var nav = document.getElementById("site-nav");
   navItems.forEach(function (item) {
     var a = el("a", null, item.label);
@@ -1214,46 +1250,44 @@ const CONTENT = {
 
   var footer = document.getElementById("site-footer");
   add(footer, el("span", null, "© " + new Date().getFullYear() + " " + CONTENT.name));
-  add(footer, el("span", null, CONTENT.role));
+  add(footer, el("span", null, CONTENT.kicker));
 
-  /* ---------- behavior ---------- */
+  /* ---------- 동작 ---------- */
 
   var intro = document.getElementById("intro");
   var enter = document.getElementById("intro-enter");
-  var dismissed = false;
+  var closed = false;
 
-  function dismiss() {
-    if (dismissed) return;
-    dismissed = true;
-    intro.classList.add("is-dismissed");
+  function hide() { intro.hidden = true; }
+
+  function close() {
+    if (closed) return;
+    closed = true;
+    intro.classList.add("is-closing");
     intro.setAttribute("aria-hidden", "true");
     // 트랜지션이 끝나면 완전히 제거한다. 배경 탭처럼 트랜지션이
     // 진행되지 않는 상황에서도 타이머가 확실히 숨긴다.
     intro.addEventListener("transitionend", hide, { once: true });
     setTimeout(hide, 700);
-    window.removeEventListener("wheel", dismiss);
-    window.removeEventListener("touchmove", dismiss);
+    window.removeEventListener("wheel", close);
+    window.removeEventListener("touchmove", close);
     window.removeEventListener("keydown", onKey);
-  }
-
-  function hide() {
-    intro.hidden = true;
   }
 
   function onKey(e) {
     if (e.key === "Escape" || e.key === "Enter" || e.key === " " ||
         e.key === "PageDown" || e.key === "ArrowDown") {
-      dismiss();
+      close();
     }
   }
 
   enter.addEventListener("click", function () {
-    dismiss();
+    close();
     var target = document.getElementById("hero");
     if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
   });
-  window.addEventListener("wheel", dismiss, { passive: true });
-  window.addEventListener("touchmove", dismiss, { passive: true });
+  window.addEventListener("wheel", close, { passive: true });
+  window.addEventListener("touchmove", close, { passive: true });
   window.addEventListener("keydown", onKey);
 
   var links = Array.prototype.slice.call(nav.querySelectorAll("a"));
@@ -1266,7 +1300,11 @@ const CONTENT = {
     var current = null;
     sections.forEach(function (s) { if (s.offsetTop <= pos) current = s; });
     links.forEach(function (a) {
-      a.classList.toggle("is-active", !!current && a.getAttribute("href") === "#" + current.id);
+      if (current && a.getAttribute("href") === "#" + current.id) {
+        a.setAttribute("aria-current", "page");
+      } else {
+        a.removeAttribute("aria-current");
+      }
     });
   }
 
