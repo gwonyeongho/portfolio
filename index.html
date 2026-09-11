@@ -536,6 +536,53 @@
 
   .project-card-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: auto; padding: 0 24px 24px; }
 
+  /* ---------- 협업 ---------- */
+
+  .collab-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+    gap: 16px;
+  }
+
+  .collab-card {
+    display: grid;
+    gap: 18px;
+    align-content: start;
+    padding: 26px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    background: var(--surface);
+    transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+  }
+  .collab-card:hover {
+    border-color: var(--border-strong);
+    box-shadow: var(--shadow);
+    transform: translateY(-3px);
+  }
+
+  .collab-head { display: grid; gap: 8px; }
+  .collab-head h3 { font-size: 1.3rem; font-weight: 700; }
+  .collab-head p { color: var(--text-secondary); word-break: keep-all; }
+
+  .collab-rows { display: grid; }
+  .collab-rows > div {
+    display: grid;
+    grid-template-columns: minmax(96px, auto) minmax(0, 1fr);
+    gap: 8px 16px;
+    padding: 11px 0;
+    border-top: 1px dashed var(--border);
+  }
+  .collab-rows > div:first-child { border-top: none; padding-top: 0; }
+  .collab-rows dt {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--accent-strong);
+    overflow-wrap: anywhere;
+  }
+  .collab-rows dd { font-size: 0.92rem; color: var(--text-secondary); word-break: keep-all; }
+
   /* ---------- 경험 ---------- */
 
   .timeline { display: grid; gap: 16px; }
@@ -837,6 +884,45 @@ const CONTENT = {
       ],
     },
   ],
+
+  /* ── 협업 방식 ──────────────────────────────────────────────── */
+  /* rows 는 왼쪽에 이름, 오른쪽에 설명이 들어가는 표입니다.
+     notes 는 그 아래 점 목록입니다. 필요 없으면 [] 로 비우세요.           */
+
+  collaboration: {
+    lede: "7명이 한 저장소에서 작업하기 위해 팀에서 합의한 규칙을 따릅니다.",
+    areas: [
+      {
+        title: "Git",
+        summary: "단순화한 Git Flow 를 쓰고, 병합은 리뷰를 거친 Merge Request 로만 합니다.",
+        rows: [
+          { term: "master", desc: "시연·배포가 가능한 안정 버전" },
+          { term: "dev", desc: "모든 개발 작업을 통합하는 기본 브랜치" },
+          { term: "feature/*", desc: "기능 단위 작업 브랜치. dev 에서 따서 dev 로 병합" },
+          { term: "Study", desc: "팀원별 기술 스터디. dev 에 병합하지 않음" },
+        ],
+        notes: [
+          "브랜치 이름은 <타입>/<Jira 키>-<영역>-<설명> 규칙으로 통일",
+          "master 와 dev 는 보호 브랜치. 리뷰어 1명 이상을 거친 MR 로만 병합",
+          "Unreal 바이너리 자산은 Git LFS 로 관리하고 lock 으로 동시 편집 충돌을 차단",
+        ],
+      },
+      {
+        title: "Jira",
+        summary: "이슈 추적을 Jira 한 곳으로 모으고, 깊이를 2단계로 제한해 관리 비용을 줄였습니다.",
+        rows: [
+          { term: "Epic", desc: "여러 작업을 아우르는 상위 단위" },
+          { term: "Story", desc: "사용자 관점에서 본 작업 단위" },
+          { term: "Task · Bug", desc: "실제 작업과 결함. 하위 작업은 만들지 않음" },
+        ],
+        notes: [
+          "GitLab Issues 대신 Jira 로 단일화해 이슈가 두 곳에 흩어지지 않게 함",
+          "GitLab 과 Jira 를 연동해 브랜치와 MR 이 이슈에 자동으로 연결되도록 구성",
+          "이슈 키를 브랜치 이름에 넣어 작업과 코드를 서로 추적",
+        ],
+      },
+    ],
+  },
 
   /* ── 경험 · 학력 ────────────────────────────────────────────── */
 
@@ -1154,6 +1240,39 @@ const CONTENT = {
     return shell.section;
   }
 
+  /* ---------- 협업 ---------- */
+
+  function renderCollaboration() {
+    var c = CONTENT.collaboration;
+    if (!c || !(c.areas || []).length) return null;
+
+    var shell = section("collaboration", "Collaboration", "협업", c.lede);
+    shell.body.className = "collab-grid";
+
+    c.areas.forEach(function (area) {
+      var card = el("div", "collab-card");
+
+      var head = el("div", "collab-head");
+      add(head, el("h3", null, area.title));
+      if (area.summary) add(head, el("p", null, area.summary));
+      add(card, head);
+
+      if ((area.rows || []).length) {
+        var dl = el("dl", "collab-rows");
+        area.rows.forEach(function (r) {
+          var box = el("div");
+          add(box, el("dt", null, r.term));
+          add(box, el("dd", null, r.desc));
+          add(dl, box);
+        });
+        add(card, dl);
+      }
+      add(card, bulletList(area.notes));
+      add(shell.body, card);
+    });
+    return shell.section;
+  }
+
   /* ---------- 경험 ---------- */
 
   function renderExperience() {
@@ -1245,6 +1364,7 @@ const CONTENT = {
     ["about", "소개", renderAbout],
     ["skills", "기술 스택", renderSkills],
     ["projects", "프로젝트", renderProjects],
+    ["collaboration", "협업", renderCollaboration],
     ["experience", "경험", renderExperience],
     ["certifications", "자격증", renderCertifications],
     ["contact", "연락처", renderContact],

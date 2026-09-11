@@ -108,3 +108,22 @@ cd C:\Users\SSAFY\source\repos\portfolio; git add -A; git commit -m "프로필 �
 ```
 
 다른 이름이나 png 를 쓰려면 `index.html` 의 `photo:` 값을 그 파일명으로 바꾼다.
+
+## 협업 섹션 고치기
+
+`CONTENT.collaboration.areas` 에서 카드를 추가하거나 지운다.
+
+```js
+{
+  title: "Git",
+  summary: "카드 제목 아래 한 줄 설명",
+  rows: [                                  // 왼쪽 이름 · 오른쪽 설명 표
+    { term: "master", desc: "안정 버전" },
+  ],
+  notes: [                                 // 그 아래 점 목록
+    "규칙이나 운영 방식을 한 줄씩",
+  ],
+},
+```
+
+`areas` 를 `[]` 로 비우면 협업 섹션과 메뉴가 함께 사라진다.
