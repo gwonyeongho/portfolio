@@ -38,6 +38,12 @@
 
   * { box-sizing: border-box; }
 
+  html {
+    scroll-behavior: smooth;
+    scroll-snap-type: y proximity;
+    scroll-padding-top: var(--header-height);
+  }
+
   body {
     margin: 0;
     background: var(--background);
@@ -348,6 +354,7 @@
   /* ---------- 섹션 ---------- */
 
   .section {
+    scroll-snap-align: start;
     padding: 92px 0;
     border-top: 1px solid var(--border);
   }
@@ -394,9 +401,15 @@
 
   /* ---------- 기술 스택 ---------- */
 
+  #skills {
+    min-height: calc(100vh - var(--header-height));
+    display: grid;
+    align-items: center;
+  }
+
   .skills-grid {
     display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 14px;
   }
 
@@ -422,6 +435,20 @@
     line-height: 1.2;
     text-align: center;
     word-break: keep-all;
+  }
+
+  .skill-card.is-language {
+    grid-column: 1 / -1;
+    min-height: 240px;
+    align-content: center;
+    padding: 36px;
+  }
+  .skill-card.is-language h3 { font-size: 1.5rem; }
+  .skill-card.is-language .skill-chip-list { justify-content: center; }
+  .skill-card.is-language .skill-chip {
+    min-height: 48px;
+    padding: 9px 14px;
+    font-size: 1rem;
   }
 
   .skill-chip-list { display: flex; flex-wrap: wrap; gap: 8px; }
@@ -457,11 +484,22 @@
 
   /* ---------- 프로젝트 ---------- */
 
-  .projects-grid {
+  .project-stack { border-top: 1px solid var(--border); }
+
+  .project-page {
+    min-height: calc(100vh - var(--header-height));
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    align-items: start;
-    gap: 24px;
+    align-items: center;
+    scroll-snap-align: start;
+    padding: 72px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .project-page-inner {
+    display: grid;
+    grid-template-columns: minmax(280px, 0.82fr) minmax(0, 1.18fr);
+    align-items: stretch;
+    gap: 28px;
   }
 
   .project-card {
@@ -472,6 +510,27 @@
     border-radius: var(--radius-md);
     background: var(--surface);
     transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+  }
+
+  .project-page .project-card { display: contents; }
+
+  .project-page .project-media {
+    min-height: 420px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+  }
+  .project-page .project-media.has-image {
+    height: auto;
+    min-height: 420px;
+  }
+  .project-page .project-media span { font-size: clamp(3rem, 8vw, 6.8rem); }
+
+  .project-page .project-content {
+    justify-content: center;
+    padding: 34px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    background: var(--surface);
   }
 
   .project-media {
@@ -715,14 +774,17 @@
   /* ---------- 반응형 ---------- */
 
   @media (max-width: 1180px) {
-    .skills-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .skills-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   }
 
   @media (max-width: 1000px) {
     .hero-section { grid-template-columns: 1fr; gap: 34px; padding: 76px 0 68px; }
     .hero-profile-panel { justify-items: start; }
     .about-grid { grid-template-columns: 1fr; }
-    .projects-grid { grid-template-columns: 1fr; }
+    .project-page { min-height: auto; padding: 58px 0; }
+    .project-page-inner { grid-template-columns: 1fr; }
+    .project-page .project-media,
+    .project-page .project-media.has-image { min-height: 300px; height: 300px; }
     .timeline-item { grid-template-columns: 1fr; gap: 14px; }
     .contact-panel { grid-template-columns: 1fr !important; }
   }
@@ -734,6 +796,8 @@
     .hero-section { padding: 58px 0 56px; }
     .skills-grid { grid-template-columns: 1fr; }
     .skill-card { min-height: 0; padding: 20px; }
+    .skill-card.is-language { padding: 24px 20px; }
+    .skill-card.is-language .skill-chip-list { justify-content: flex-start; }
     .project-content, .timeline-item, .cert-card { padding: 20px; }
     .project-card-actions { padding: 0 20px 20px; }
     .contact-panel > div { padding: 20px; }
@@ -795,14 +859,14 @@ const CONTENT = {
 
   name: "권영호",
   nameEn: "Kwon Yeongho",
-  kicker: "AI · Robotics · Backend Developer",
-  role: "AI / Robotics / Backend Developer",
+  kicker: "AI · Robotics · Embedded SW Developer",
+  role: "AI / Robotics / Embedded SW Developer",
 
   // 인트로 화면에서 이름 아래 한 줄
-  introTitle: "AI의 판단을 서비스와 로봇의 동작으로 연결합니다.",
+  introTitle: "AI의 판단을 로봇과 실제 시스템의 동작으로 연결합니다.",
 
   // 히어로에서 직무 아래 소개
-  intro: "모델의 입력과 출력을 검증하고 실제 서비스와 로봇 제어 흐름에 연결합니다.",
+  intro: "AI 모델과 센서 데이터를 검증하고 로봇 제어와 사용자 기능으로 연결합니다.",
 
   // 프로필 사진. 이 폴더에 있는 파일명을 적습니다.
   // photoWebp 는 용량이 절반인 대체본입니다. 없으면 "" 로 비우세요.
@@ -837,7 +901,7 @@ const CONTENT = {
     focus: [
       { label: "AI Service", note: "모델 연동·구조화 출력·검증" },
       { label: "Robotics", note: "센서 판단과 로봇 제어 연결" },
-      { label: "Backend", note: "FastAPI 기반 서비스 API" },
+      { label: "Embedded SW", note: "센서·장치·통신 제어" },
     ],
   },
 
@@ -854,7 +918,7 @@ const CONTENT = {
       ],
     },
     {
-      title: "AI · Backend",
+      title: "AI · Service",
       chips: ["FastAPI", "Pydantic", "LangChain", "Ollama", "faster-whisper", "PyTorch", "OpenCV"],
     },
     {
@@ -955,6 +1019,22 @@ const CONTENT = {
     },
     {
       initial: "05",
+      status: { label: "완료", kind: "done" },
+      title: "신체 치수 예측",
+      subtitle: "신체 부위별 치수 예측 모델",
+      meta: [
+        { label: "담당", value: "데이터 전처리 · 모델 개선" },
+      ],
+      bullets: [
+        "예측 대상의 특성에 맞춰 신체 부위별 모델을 분리해 학습",
+        "학습 데이터 부족을 보완하기 위해 데이터 증강 적용",
+        "모델 구조와 학습 데이터를 조정해 예측 오차 개선",
+      ],
+      tags: ["Python", "Machine Learning", "Data Augmentation"],
+      links: [],
+    },
+    {
+      initial: "06",
       period: "2024",
       status: { label: "완료", kind: "done" },
       title: "해외여행 커뮤니티 앱",
@@ -1262,8 +1342,8 @@ const CONTENT = {
     );
     shell.body.className = "skills-grid";
 
-    CONTENT.skills.forEach(function (group) {
-      var card = el("div", "skill-card");
+    CONTENT.skills.forEach(function (group, index) {
+      var card = el("div", "skill-card" + (index === 0 ? " is-language" : ""));
       add(card, el("h3", null, group.title));
       var list = el("div", "skill-chip-list");
       (group.chips || []).forEach(function (raw) {
@@ -1292,13 +1372,13 @@ const CONTENT = {
   function renderProjects() {
     if (!(CONTENT.projects || []).length) return null;
 
-    var shell = section(
-      "projects", "Projects", "프로젝트",
-      "AI 서비스·로봇·앱 프로젝트의 역할과 구현을 정리했습니다."
-    );
-    shell.body.className = "projects-grid";
+    var stack = el("div", "project-stack");
+    stack.id = "projects";
 
-    CONTENT.projects.forEach(function (p) {
+    CONTENT.projects.forEach(function (p, index) {
+      var page = el("section", "project-page");
+      page.id = "project-" + String(index + 1).padStart(2, "0");
+      var inner = el("div", "wrap project-page-inner");
       var card = el("article", "project-card");
 
       var media = el("div", "project-media");
@@ -1315,25 +1395,25 @@ const CONTENT = {
       add(card, media);
 
       var body = el("div", "project-content");
+      add(body, el("p", "section-eyebrow", "Project " + String(index + 1).padStart(2, "0") + " / " + String(CONTENT.projects.length).padStart(2, "0")));
       if (p.period) add(body, el("p", "project-period", p.period));
       if (p.status) add(body, el("span", "status-badge status-" + (p.status.kind || "done"), p.status.label));
       add(body, el("h3", null, p.title));
       if (p.subtitle) add(body, el("p", "project-subtitle", p.subtitle));
-      if (p.summary) add(body, el("p", null, p.summary));
       add(body, metaList(p.meta));
       if ((p.bullets || []).length) add(body, el("p", "contribution-title", "내 기여"));
       add(body, bulletList(p.bullets));
       add(body, tagList(p.tags));
-      add(card, body);
 
       var actions = linkRow(p.links, false);
-      if (actions) {
-        actions.className = "project-card-actions card-actions";
-        add(card, actions);
-      }
-      add(shell.body, card);
+      if (actions) add(body, actions);
+
+      add(card, body);
+      add(inner, card);
+      add(page, inner);
+      add(stack, page);
     });
-    return shell.section;
+    return stack;
   }
 
   /* ---------- 협업 ---------- */
