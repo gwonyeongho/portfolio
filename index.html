@@ -1099,8 +1099,59 @@ const CONTENT = {
 
   experience: [
     {
-      period: "2026.01.07 – 2026.12",
-      org: "삼성청년SW·AI아카데미(SSAFY)",
+      period: "2014.03",
+      org: "고등학교 입학",
+      sub: "고등학교 교육과정 시작",
+      note: "",
+      stats: [],
+      bullets: [],
+    },
+    {
+      period: "2017.02",
+      org: "고등학교 졸업",
+      sub: "고등학교 교육과정 이수",
+      note: "",
+      stats: [],
+      bullets: [],
+    },
+    {
+      period: "2018.03",
+      org: "세종대학교 입학",
+      sub: "지능기전공학부 스마트기기전공",
+      note: "센서·제어·통신과 SW를 함께 다루며 스마트기기 시스템을 공부했습니다.",
+      stats: [],
+      bullets: [],
+    },
+    {
+      period: "2018.10",
+      org: "대한민국 육군 입대",
+      sub: "병역 의무 이행",
+      note: "",
+      stats: [],
+      bullets: [],
+    },
+    {
+      period: "2020.05",
+      org: "대한민국 육군 전역",
+      sub: "군 복무 완료",
+      note: "",
+      stats: [],
+      bullets: [],
+    },
+    {
+      period: "2025.02",
+      org: "세종대학교 졸업",
+      sub: "지능기전공학부 스마트기기전공 · 학사",
+      note: "",
+      stats: [
+        { label: "전체", value: "130학점 · 3.45 / 4.5" },
+        { label: "전공", value: "72학점 · 3.62 / 4.5" },
+      ],
+      bullets: [],
+    },
+    {
+      period: "2026.01",
+      org: "삼성청년SW·AI아카데미(SSAFY) 입과",
       sub: "15기 · 임베디드로봇 트랙 · 삼성전자",
       note: "자료구조·알고리즘부터 Linux·Raspberry Pi·AI·로봇 제어와 웹 개발까지 925시간 과정을 이수하고 있습니다.",
       stats: [
@@ -1113,33 +1164,6 @@ const CONTENT = {
         "AI·로봇 — 인공지능·로봇 제어",
         "웹 — 프론트엔드·백엔드",
       ],
-    },
-    {
-      period: "2018.03.02 – 2025.02.14",
-      org: "세종대학교",
-      sub: "지능기전공학부 스마트기기전공 · 학사",
-      note: "센서·제어·통신과 SW를 함께 다루며 스마트기기 시스템을 공부했습니다.",
-      stats: [
-        { label: "전체", value: "130학점 · 3.45 / 4.5" },
-        { label: "전공", value: "72학점 · 3.62 / 4.5" },
-      ],
-      bullets: [],
-    },
-    {
-      period: "2018.10.15 – 2020.05.28",
-      org: "대한민국 육군",
-      sub: "병역 의무 이행",
-      note: "군 복무를 마치고 만기 전역했습니다.",
-      stats: [],
-      bullets: [],
-    },
-    {
-      period: "2014.03.03 – 2017.02.07",
-      org: "고등학교",
-      sub: "졸업",
-      note: "고등학교 교육과정을 이수했습니다.",
-      stats: [],
-      bullets: [],
     },
   ],
 
@@ -1494,7 +1518,7 @@ const CONTENT = {
   function renderExperience() {
     if (!(CONTENT.experience || []).length) return null;
 
-    var shell = section("experience", "Timeline", "연도별 이력", "학업·병역·교육 이력을 최신순으로 정리했습니다.");
+    var shell = section("experience", "Timeline", "연도별 이력", "학업·병역·교육 이력을 시간순으로 정리했습니다.");
     shell.body.className = "timeline";
 
     CONTENT.experience.forEach(function (x) {
