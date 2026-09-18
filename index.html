@@ -1,3 +1,9 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="AI·로보틱스·백엔드 개발자 권영호 포트폴리오">
 <title>권영호 포트폴리오</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -434,15 +440,20 @@
     font-weight: 650;
     overflow-wrap: anywhere;
   }
-  .skill-chip em {
-    font-style: normal;
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
-    font-weight: 500;
-    color: var(--accent-strong);
-    padding-left: 7px;
+  .skill-meter {
+    display: inline-grid;
+    grid-template-columns: repeat(5, 5px);
+    gap: 3px;
+    padding-left: 8px;
     border-left: 1px solid var(--accent-line);
   }
+  .skill-meter i {
+    width: 5px;
+    height: 13px;
+    border-radius: 2px;
+    background: var(--surface-muted);
+  }
+  .skill-meter i.is-filled { background: var(--accent); }
 
   /* ---------- 프로젝트 ---------- */
 
@@ -719,6 +730,8 @@
     .card-actions a:hover, .card-actions button:hover, .intro-button:hover { transform: none; }
   }
 </style>
+</head>
+<body>
 
 <div class="intro-cover" id="intro">
   <div class="intro-floating" id="intro-floating" aria-hidden="true"></div>
@@ -761,14 +774,14 @@ const CONTENT = {
 
   name: "권영호",
   nameEn: "Kwon Yeongho",
-  kicker: "Embedded · Robotics · AI Software Developer",
-  role: "Embedded / Robotics / AI Software Developer",
+  kicker: "AI · Robotics · Backend Developer",
+  role: "AI / Robotics / Backend Developer",
 
   // 인트로 화면에서 이름 아래 한 줄
-  introTitle: "임베디드와 로봇 제어에서 출발해 AI와 XR로 이어지는 시스템을 만듭니다.",
+  introTitle: "AI의 판단을 서비스와 로봇의 동작으로 연결합니다.",
 
   // 히어로에서 직무 아래 소개
-  intro: "센서와 하드웨어를 다루는 임베디드 소프트웨어에서 출발해, AI 인식 결과를 로봇 제어와 3D·VR 환경으로 연결하는 시스템을 만듭니다.",
+  intro: "모델의 입력과 출력을 검증하고 실제 서비스와 로봇 제어 흐름에 연결합니다.",
 
   // 프로필 사진. 이 폴더에 있는 파일명을 적습니다.
   // photoWebp 는 용량이 절반인 대체본입니다. 없으면 "" 로 비우세요.
@@ -788,52 +801,52 @@ const CONTENT = {
   /* ── 인트로 화면에 흘러가는 키워드 ──────────────────────────── */
 
   introChips: [
-    "C / C++", "Python", "ROS2", "Linux", "Raspberry Pi",
-    "Unreal Engine 5", "OpenXR", "PyTorch", "Blender", "FastAPI",
-    "Quest 2", "MATLAB / Simulink",
+    "Python", "C / C++", "JavaScript", "FastAPI", "LangChain",
+    "ROS2", "OpenCV", "RoboDK", "Unreal Engine 5", "Git · Jira",
   ],
 
   /* ── 소개 ───────────────────────────────────────────────────── */
 
   about: {
-    lede: "하드웨어와 소프트웨어가 맞물리는 자리에서 일해 왔습니다.",
+    lede: "AI 결과를 실제 동작으로 연결하는 개발자입니다.",
     paragraphs: [
-      "세종대학교 <strong>지능기전공학부 스마트기기전공</strong>에서 센서·제어·통신 같은 기전 요소와 그 위에 올라가는 소프트웨어를 함께 다루며 스마트기기 시스템을 공부했습니다.",
-      "현재 <strong>삼성청년SW·AI아카데미(SSAFY) 15기</strong>에서 자료구조와 알고리즘, Linux·Raspberry Pi 임베디드 실습, 인공지능, ROS2 기반 로봇 통신 제어, 프론트엔드와 백엔드까지 이어지는 925시간 과정을 이수하고 있습니다.",
-      "팀 프로젝트에서는 사진에서 3D 유물을 생성하는 AI 파이프라인과 이를 전시하는 <strong>Unreal Engine 5 VR 클라이언트</strong>를 다룹니다. 모델을 돌려보는 데서 멈추지 않고, <strong>무엇이 관측이고 무엇이 AI 추정인지 구분해서</strong> 사용자에게 보여주는 설계에 관심이 있습니다.",
+      "세종대학교 지능기전공학부에서 센서·제어·통신을 공부하고 <strong>SSAFY 임베디드로봇 트랙</strong>에서 AI·로봇·웹을 프로젝트로 연결했습니다.",
+      "LLM의 구조화 출력과 검증, 로봇의 센서 판단과 안전 규칙처럼 <strong>AI가 만든 결과를 안정적으로 적용하는 과정</strong>에 관심이 있습니다.",
     ],
     focus: [
-      { label: "Embedded & Smart Device", note: "센서·제어·통신을 다루는 기기 소프트웨어" },
-      { label: "Robotics", note: "ROS2 기반 로봇 통신과 제어" },
-      { label: "AI Pipeline", note: "2D→3D 생성 모델 검증과 후처리" },
-      { label: "XR Client", note: "Unreal Engine 5 · OpenXR 기반 VR 인터랙션" },
+      { label: "AI Service", note: "모델 연동·구조화 출력·검증" },
+      { label: "Robotics", note: "센서 판단과 로봇 제어 연결" },
+      { label: "Backend", note: "FastAPI 기반 서비스 API" },
     ],
   },
 
   /* ── 기술 스택 ──────────────────────────────────────────────── */
-  /* 칩에 활용수준을 붙이려면 이름 뒤에 | 와 등급을 씁니다. 예) "Python|중급"
+  /* 칩에 활용수준을 붙이려면 이름 뒤에 | 와 1~5 숫자를 씁니다. 예) "Python|4"
      등급을 쓰지 않으면 이름만 표시됩니다.                                   */
 
   skills: [
     {
       title: "언어 / Languages",
-      chips: ["C / C++|고급", "Python|중급", "Java|초급", "JavaScript", "SQL", "Bash"],
+      chips: [
+        "Python|4", "C / C++|4", "Java|3", "JavaScript|3",
+        "HTML / CSS|3", "SQL|2", "Bash|2",
+      ],
     },
     {
-      title: "로보틱스 · 임베디드",
-      chips: ["ROS2|중급", "MATLAB / Simulink|초급", "Linux", "Raspberry Pi", "직렬 통신"],
+      title: "AI · Backend",
+      chips: ["FastAPI", "Pydantic", "LangChain", "Ollama", "faster-whisper", "PyTorch", "OpenCV"],
     },
     {
-      title: "AI · Computer Vision",
-      chips: ["PyTorch", "TripoSR", "Stable Fast 3D", "SPAR3D", "OpenCV", "NumPy", "SciPy", "trimesh", "rembg"],
+      title: "Robotics",
+      chips: ["ROS2", "Raspberry Pi", "Dobot", "RoboDK", "RealSense", "IMU"],
     },
     {
-      title: "XR · 3D",
-      chips: ["Unreal Engine 5", "OpenXR", "Blueprints", "Blender", "three.js", "glTF · GLB", "Quest 2", "PICO 4"],
+      title: "Web · App",
+      chips: ["Vue", "Django", "Firebase", "Android", "WebSocket"],
     },
     {
-      title: "웹 · 인프라 · 협업",
-      chips: ["FastAPI", "SQLite", "nginx", "AWS EC2", "Git · GitLab", "Jira", "Jenkins", "Git LFS"],
+      title: "Tools",
+      chips: ["Git · GitLab", "Jira", "Linux", "Docker", "Unreal Engine 5", "OpenXR"],
     },
   ],
 
@@ -848,40 +861,93 @@ const CONTENT = {
       period: "2026.09 – 진행 중",
       status: { label: "진행 중", kind: "live" },
       title: "문화유산 AI 복원 · VR 박물관",
-      subtitle: "사진 한 장에서 3D 유물을 생성하고, 복원 결과를 VR로 전시한다",
-      summary: "사진을 2D→3D 생성 모델로 3D 유물로 만들고 결손부를 복원한 뒤, 무엇이 실제 관측이고 무엇이 AI 추정인지 구분해서 VR 박물관에 전시하는 프로젝트입니다. AI 출력을 역사적 정답이 아니라 검증 가능한 복원 가설로 다룹니다.",
+      subtitle: "사진 기반 3D 생성 결과를 VR에서 비교하는 프로젝트",
+      summary: "2D→3D 생성 모델의 결과를 검증하고 Unreal Engine 5 VR 전시에 연결합니다.",
       meta: [
         { label: "Team", value: "7명 · 5주" },
-        { label: "Course", value: "SSAFY 15기" },
-        { label: "Target", value: "Quest 2 · PICO 4" },
+        { label: "Role", value: "AI 파이프라인 · VR" },
       ],
       bullets: [
-        "사진을 유일한 관측 근거로 두고 손상 상태와 복원 상태를 2단계 추정으로 분리해 설계",
-        "TripoSR · Stable Fast 3D · SPAR3D 세 모델을 같은 기준으로 벤치마크해 TripoSR을 기준선으로 선정",
-        "Unreal Engine 5 · OpenXR 기반 VR 클라이언트에서 원본과 복원 상태를 토글로 비교하는 전시 인터랙션 구현",
-        "Quest 2를 주력, PICO 4를 보조 기기로 대응하는 빌드 환경과 Git LFS 기반 바이너리 자산 관리 구성",
+        "TripoSR·Stable Fast 3D·SPAR3D를 같은 기준으로 비교",
+        "원본과 복원 상태를 VR에서 전환해 확인하는 기능 구현",
       ],
-      tags: [
-        "Unreal Engine 5", "OpenXR", "Python", "PyTorch", "TripoSR",
-        "Blender", "OpenCV", "trimesh", "glTF · GLB", "Quest 2", "GitLab", "Jira",
-      ],
+      tags: ["Python", "PyTorch", "Unreal Engine 5", "OpenXR", "Blender"],
       links: [],
     },
     {
       initial: "02",
+      period: "2026",
+      status: { label: "완료", kind: "done" },
+      title: "PipeCheckkk",
+      subtitle: "센서와 AI 판단을 연결한 하수도 탐사 로봇",
+      summary: "6인 팀에서 5주 동안 AI 주행 시스템을 담당했습니다.",
+      meta: [
+        { label: "Team", value: "6명 · 5주" },
+        { label: "Role", value: "AI 주행 시스템" },
+      ],
+      bullets: [
+        "Depth 자유공간 계산과 VLM 상황 판단을 모터 명령에 연결",
+        "IMU 자세 정보와 안전·회피 규칙으로 주행 판단 보완",
+      ],
+      tags: ["Python", "FastAPI", "Depth Anything V2", "VLM", "IMU", "Raspberry Pi"],
+      links: [],
+    },
+    {
+      initial: "03",
+      period: "2026",
+      status: { label: "완료", kind: "done" },
+      title: "Smart Factory Twin",
+      subtitle: "실제 로봇팔과 가상 공정을 연결한 스마트팩토리",
+      summary: "부품 인식부터 로봇팔 조립과 공정 상태 표시까지 하나의 흐름으로 연결했습니다.",
+      meta: [
+        { label: "Role", value: "로봇·비전·디지털 트윈" },
+      ],
+      bullets: [
+        "YOLO 부품 인식과 Dobot 조립 동작 구현",
+        "RoboDK 공정 시뮬레이션과 실제 공정 신호 연동",
+      ],
+      tags: ["Python", "ROS2", "Dobot", "RoboDK", "OpenCV", "Vue"],
+      links: [
+        { label: "GitHub 저장소", url: "https://github.com/gwonyeongho/smart-factory-twin" },
+      ],
+    },
+    {
+      initial: "04",
+      period: "2026",
+      status: { label: "완료", kind: "done" },
+      title: "Karaoke AI Agent",
+      subtitle: "음성 복합 명령을 기기 상태로 변환하는 AI 서비스",
+      summary: "음성 인식부터 LLM 호출과 출력 검증 및 상태 반영까지 구현했습니다.",
+      meta: [
+        { label: "Type", value: "팀 프로젝트" },
+        { label: "Role", value: "AI 명령 처리" },
+      ],
+      bullets: [
+        "faster-whisper와 Qwen3 1.7B로 음성 명령 처리",
+        "LangChain 구조화 출력과 Pydantic 검증으로 적용 범위 통제",
+      ],
+      tags: ["Python", "FastAPI", "Qwen3 1.7B", "LangChain", "Pydantic", "JavaScript"],
+      links: [
+        { label: "GitHub 저장소", url: "https://github.com/gwonyeongho/karaoke-agent" },
+      ],
+    },
+    {
+      initial: "05",
       period: "2024",
       status: { label: "완료", kind: "done" },
-      title: "Capstone Web Application",
-      subtitle: "학부 캡스톤 디자인 웹 애플리케이션",
-      summary: "세종대학교 지능기전공학부 캡스톤 디자인 과정에서 진행한 웹 애플리케이션 프로젝트입니다.",
+      title: "해외여행 커뮤니티 앱",
+      subtitle: "여행 정보 공유와 실시간 대화를 지원하는 Android 앱",
+      summary: "사용자 흐름을 설계하고 커뮤니티 화면과 실시간 채팅을 구현했습니다.",
       meta: [
-        { label: "Course", value: "세종대학교 캡스톤 디자인" },
+        { label: "Role", value: "UI/UX · Frontend" },
+        { label: "Course", value: "학부 캡스톤" },
       ],
-      bullets: [],
-      tags: [],
-      links: [
-        { label: "GitHub 저장소", url: "https://github.com/gwonyeongho/Capstone_Webapp_" },
+      bullets: [
+        "Figma 프로토타입과 사용자 친화적 UI/UX 설계",
+        "게시글·정보 공유·Q&A와 Firebase 실시간 채팅 구현",
       ],
+      tags: ["Java", "Android", "Firebase", "Figma"],
+      links: [],
     },
   ],
 
@@ -890,36 +956,25 @@ const CONTENT = {
      notes 는 그 아래 점 목록입니다. 필요 없으면 [] 로 비우세요.           */
 
   collaboration: {
-    lede: "7명이 한 저장소에서 작업하기 위해 팀에서 합의한 규칙을 따릅니다.",
+    lede: "일정과 변경 이력을 팀이 함께 확인할 수 있도록 관리합니다.",
     areas: [
       {
         title: "Git",
-        summary: "단순화한 Git Flow 를 쓰고, 병합은 리뷰를 거친 Merge Request 로만 합니다.",
+        summary: "기능 단위 브랜치와 리뷰 기반 병합을 사용합니다.",
         rows: [
-          { term: "master", desc: "시연·배포가 가능한 안정 버전" },
-          { term: "dev", desc: "모든 개발 작업을 통합하는 기본 브랜치" },
-          { term: "feature/*", desc: "기능 단위 작업 브랜치. dev 에서 따서 dev 로 병합" },
-          { term: "Study", desc: "팀원별 기술 스터디. dev 에 병합하지 않음" },
+          { term: "Branch", desc: "기능과 이슈 단위로 작업 분리" },
+          { term: "Review", desc: "변경 내용을 확인한 뒤 병합" },
         ],
-        notes: [
-          "브랜치 이름은 <타입>/<Jira 키>-<영역>-<설명> 규칙으로 통일",
-          "master 와 dev 는 보호 브랜치. 리뷰어 1명 이상을 거친 MR 로만 병합",
-          "Unreal 바이너리 자산은 Git LFS 로 관리하고 lock 으로 동시 편집 충돌을 차단",
-        ],
+        notes: [],
       },
       {
         title: "Jira",
-        summary: "이슈 추적을 Jira 한 곳으로 모으고, 깊이를 2단계로 제한해 관리 비용을 줄였습니다.",
+        summary: "스프린트 목표와 티켓으로 진행 상태를 관리합니다.",
         rows: [
-          { term: "Epic", desc: "여러 작업을 아우르는 상위 단위" },
-          { term: "Story", desc: "사용자 관점에서 본 작업 단위" },
-          { term: "Task · Bug", desc: "실제 작업과 결함. 하위 작업은 만들지 않음" },
+          { term: "Sprint", desc: "기간별 목표와 우선순위 설정" },
+          { term: "Ticket", desc: "담당자·상태·산출물 추적" },
         ],
-        notes: [
-          "GitLab Issues 대신 Jira 로 단일화해 이슈가 두 곳에 흩어지지 않게 함",
-          "GitLab 과 Jira 를 연동해 브랜치와 MR 이 이슈에 자동으로 연결되도록 구성",
-          "이슈 키를 브랜치 이름에 넣어 작업과 코드를 서로 추적",
-        ],
+        notes: [],
       },
     ],
   },
@@ -1181,7 +1236,7 @@ const CONTENT = {
 
     var shell = section(
       "skills", "Skills", "기술 스택",
-      "전공과 SSAFY 과정, 팀 프로젝트에서 실제로 사용한 언어와 도구입니다. 일부 항목에는 활용수준을 함께 표기했습니다."
+      "프로젝트에서 사용한 언어와 도구입니다."
     );
     shell.body.className = "skills-grid";
 
@@ -1192,7 +1247,16 @@ const CONTENT = {
       (group.chips || []).forEach(function (raw) {
         var parts = String(raw).split("|");
         var chip = el("span", "skill-chip", parts[0].trim());
-        if (parts[1]) add(chip, el("em", null, parts[1].trim()));
+        if (parts[1]) {
+          var level = Math.max(0, Math.min(5, Number(parts[1].trim()) || 0));
+          var meter = el("span", "skill-meter");
+          meter.setAttribute("role", "img");
+          meter.setAttribute("aria-label", "활용도 " + level + "/5");
+          for (var i = 1; i <= 5; i += 1) {
+            add(meter, el("i", i <= level ? "is-filled" : null));
+          }
+          add(chip, meter);
+        }
         add(list, chip);
       });
       add(card, list);
@@ -1456,3 +1520,5 @@ const CONTENT = {
   setActive();
 })();
 </script>
+</body>
+</html>
