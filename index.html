@@ -491,8 +491,9 @@
     display: grid;
     align-items: center;
     scroll-snap-align: start;
-    padding: 72px 0;
+    padding: 36px 0;
     border-bottom: 1px solid var(--border);
+    background: var(--surface-soft);
   }
 
   .project-page-inner {
@@ -500,6 +501,13 @@
     grid-template-columns: minmax(280px, 0.82fr) minmax(0, 1.18fr);
     align-items: stretch;
     gap: 28px;
+    width: min(calc(100% - 64px), 1120px);
+    min-height: min(720px, calc(100vh - var(--header-height) - 72px));
+    padding: 48px;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    background: var(--surface);
+    box-shadow: 0 24px 70px rgba(75, 57, 43, 0.11);
   }
 
   .project-card {
@@ -515,22 +523,22 @@
   .project-page .project-card { display: contents; }
 
   .project-page .project-media {
-    min-height: 420px;
-    border: 1px solid var(--border);
-    border-radius: var(--radius-md);
+    min-height: 100%;
+    border: none;
+    border-radius: 2px;
   }
   .project-page .project-media.has-image {
     height: auto;
-    min-height: 420px;
+    min-height: 100%;
   }
   .project-page .project-media span { font-size: clamp(3rem, 8vw, 6.8rem); }
 
   .project-page .project-content {
     justify-content: center;
-    padding: 34px;
-    border: 1px solid var(--border);
-    border-radius: var(--radius-md);
-    background: var(--surface);
+    padding: 12px 12px 12px 24px;
+    border: none;
+    border-radius: 0;
+    background: transparent;
   }
 
   .project-media {
@@ -781,10 +789,16 @@
     .hero-section { grid-template-columns: 1fr; gap: 34px; padding: 76px 0 68px; }
     .hero-profile-panel { justify-items: start; }
     .about-grid { grid-template-columns: 1fr; }
-    .project-page { min-height: auto; padding: 58px 0; }
-    .project-page-inner { grid-template-columns: 1fr; }
+    .project-page { min-height: auto; padding: 36px 0; }
+    .project-page-inner {
+      grid-template-columns: 1fr;
+      width: min(calc(100% - 40px), 720px);
+      min-height: auto;
+      padding: 24px;
+    }
     .project-page .project-media,
     .project-page .project-media.has-image { min-height: 300px; height: 300px; }
+    .project-page .project-content { padding: 8px 4px; }
     .timeline-item { grid-template-columns: 1fr; gap: 14px; }
     .contact-panel { grid-template-columns: 1fr !important; }
   }
@@ -1085,33 +1099,58 @@ const CONTENT = {
 
   experience: [
     {
-      period: "2026.01 – 2026.12",
+      period: "2026.01.07 – 2026.12",
       org: "삼성청년SW·AI아카데미(SSAFY)",
-      sub: "15기 · 삼성전자",
-      note: "프로그래밍 기초부터 임베디드·AI·로봇, 프론트엔드와 백엔드까지 소프트웨어 개발 전 영역을 다루는 925시간 과정을 이수하고 있습니다.",
+      sub: "15기 · 임베디드로봇 트랙 · 삼성전자",
+      note: "자료구조·알고리즘부터 Linux·Raspberry Pi·AI·로봇 제어와 웹 개발까지 925시간 과정을 이수하고 있습니다.",
       stats: [
-        { label: "Institute", value: "삼성전자" },
-        { label: "Training", value: "925 Hours" },
+        { label: "교육", value: "925 Hours" },
+        { label: "트랙", value: "Embedded Robotics" },
       ],
       bullets: [
-        "프로그래밍 — 자료구조와 알고리즘 학습",
-        "임베디드 — Linux와 Raspberry Pi 환경의 임베디드 실습",
-        "AI — 인공지능 학습",
-        "로봇 — ROS2 기반 로봇 통신 제어",
-        "웹 — 프론트엔드 · 백엔드 프로그래밍",
+        "프로그래밍 — 자료구조·알고리즘",
+        "임베디드 — Linux·Raspberry Pi",
+        "AI·로봇 — 인공지능·로봇 제어",
+        "웹 — 프론트엔드·백엔드",
       ],
     },
     {
-      period: "2018.03 – 2025.02",
+      period: "2018.03.02 – 2025.02.14",
       org: "세종대학교",
       sub: "지능기전공학부 스마트기기전공 · 학사",
-      note: "센서·제어·통신 등 기전 요소와 그 위에서 동작하는 소프트웨어를 함께 다루는 전공에서 스마트기기 시스템을 공부했습니다.",
+      note: "센서·제어·통신과 SW를 함께 다루며 스마트기기 시스템을 공부했습니다.",
       stats: [
-        { label: "Total", value: "130학점 · 3.45 / 4.5" },
-        { label: "Major", value: "72학점 · 3.62 / 4.5" },
-        { label: "Graduated", value: "2025.02.14" },
+        { label: "전체", value: "130학점 · 3.45 / 4.5" },
+        { label: "전공", value: "72학점 · 3.62 / 4.5" },
       ],
       bullets: [],
+    },
+    {
+      period: "2018.10.15 – 2020.05.28",
+      org: "대한민국 육군",
+      sub: "병역 의무 이행",
+      note: "군 복무를 마치고 만기 전역했습니다.",
+      stats: [],
+      bullets: [],
+    },
+    {
+      period: "2014.03.03 – 2017.02.07",
+      org: "고등학교",
+      sub: "졸업",
+      note: "고등학교 교육과정을 이수했습니다.",
+      stats: [],
+      bullets: [],
+    },
+  ],
+
+  /* ── 수상 ───────────────────────────────────────────────────── */
+
+  awards: [
+    {
+      date: "2026.08.10",
+      name: "공통프로젝트 우수상",
+      issuer: "삼성전자 주식회사",
+      note: "AIoT 트랙 · 하수구 탐사 AI 자율주행 로봇",
     },
   ],
 
@@ -1119,6 +1158,7 @@ const CONTENT = {
 
   certifications: [
     { date: "2025.12.24", name: "산업안전기사", issuer: "한국산업인력공단" },
+    { date: "2021.02.19", name: "자동차운전면허 2종 보통", issuer: "삼척 지방경찰서" },
   ],
 
 };
@@ -1454,7 +1494,7 @@ const CONTENT = {
   function renderExperience() {
     if (!(CONTENT.experience || []).length) return null;
 
-    var shell = section("experience", "Experience", "경험");
+    var shell = section("experience", "Timeline", "연도별 이력", "학업·병역·교육 이력을 최신순으로 정리했습니다.");
     shell.body.className = "timeline";
 
     CONTENT.experience.forEach(function (x) {
@@ -1468,6 +1508,25 @@ const CONTENT = {
       add(body, bulletList(x.bullets));
       add(item, body);
       add(shell.body, item);
+    });
+    return shell.section;
+  }
+
+  /* ---------- 수상 ---------- */
+
+  function renderAwards() {
+    if (!(CONTENT.awards || []).length) return null;
+
+    var shell = section("awards", "Awards", "수상");
+    shell.body.className = "cert-list";
+
+    CONTENT.awards.forEach(function (a) {
+      var card = el("article", "cert-card");
+      if (a.date) add(card, el("p", "project-period", a.date));
+      add(card, el("h3", null, a.name));
+      if (a.issuer) add(card, el("p", "cert-issuer", a.issuer));
+      if (a.note) add(card, el("p", "timeline-note", a.note));
+      add(shell.body, card);
     });
     return shell.section;
   }
@@ -1541,7 +1600,8 @@ const CONTENT = {
     ["skills", "기술 스택", renderSkills],
     ["projects", "프로젝트", renderProjects],
     ["collaboration", "협업", renderCollaboration],
-    ["experience", "경험", renderExperience],
+    ["experience", "연도별 이력", renderExperience],
+    ["awards", "수상", renderAwards],
     ["certifications", "자격증", renderCertifications],
     ["contact", "연락처", renderContact],
   ].forEach(function (entry) {
