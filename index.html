@@ -489,6 +489,20 @@
     color: rgba(159, 87, 60, 0.42);
   }
   .project-media img { width: 100%; height: 100%; object-fit: cover; }
+  .project-media.has-image {
+    height: 190px;
+    min-height: 190px;
+    padding: 0;
+    overflow: hidden;
+    background: #ffffff;
+  }
+  .project-media.has-image img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    object-fit: contain;
+  }
 
   .project-content { display: flex; flex-direction: column; flex: 1; gap: 17px; padding: 24px; }
   .project-content h3 { font-size: 1.45rem; font-weight: 700; line-height: 1.25; word-break: keep-all; }
@@ -519,6 +533,12 @@
   .project-meta dd { color: var(--text-secondary); font-size: 0.92rem; }
 
   .bullets { display: grid; gap: 9px; }
+  .contribution-title {
+    margin-top: 2px;
+    font-size: 0.86rem;
+    font-weight: 750;
+    color: var(--text-primary);
+  }
   .bullets li { position: relative; padding-left: 17px; color: var(--text-secondary); font-size: 0.95rem; word-break: keep-all; }
   .bullets li::before {
     content: "";
@@ -862,33 +882,34 @@ const CONTENT = {
       period: "2026.09 – 진행 중",
       status: { label: "진행 중", kind: "live" },
       title: "문화유산 AI 복원 · VR 박물관",
-      subtitle: "사진 기반 3D 생성 결과를 VR에서 비교하는 프로젝트",
-      summary: "2D→3D 생성 모델의 결과를 검증하고 Unreal Engine 5 VR 전시에 연결합니다.",
+      subtitle: "사진 기반 3D 생성 · VR 전시",
       meta: [
-        { label: "Team", value: "7명 · 5주" },
-        { label: "Role", value: "AI 파이프라인 · VR" },
+        { label: "팀", value: "7명 · 5주" },
+        { label: "담당", value: "AI 파이프라인 · VR" },
       ],
       bullets: [
-        "TripoSR·Stable Fast 3D·SPAR3D를 같은 기준으로 비교",
-        "원본과 복원 상태를 VR에서 전환해 확인하는 기능 구현",
+        "TripoSR·Stable Fast 3D·SPAR3D를 동일한 입력과 기준으로 비교해 기준 모델 선정",
+        "Unreal Engine 5에서 원본과 복원 상태를 전환해 비교하는 VR 인터랙션 구현",
+        "Quest 2·PICO 4 빌드 환경과 Git LFS 기반 3D 자산 관리 구성",
       ],
       tags: ["Python", "PyTorch", "Unreal Engine 5", "OpenXR", "Blender"],
       links: [],
     },
     {
       initial: "02",
+      image: "assets/pipecheck-robot.webp",
       period: "2026",
       status: { label: "완료", kind: "done" },
       title: "PipeCheckkk",
-      subtitle: "센서와 AI 판단을 연결한 하수도 탐사 로봇",
-      summary: "6인 팀에서 5주 동안 AI 주행 시스템을 담당했습니다.",
+      subtitle: "AIoT 하수도 탐사 로봇",
       meta: [
-        { label: "Team", value: "6명 · 5주" },
-        { label: "Role", value: "AI 주행 시스템" },
+        { label: "팀", value: "6명 · 5주" },
+        { label: "담당", value: "AI 주행 시스템" },
       ],
       bullets: [
-        "Depth 자유공간 계산과 VLM 상황 판단을 모터 명령에 연결",
-        "IMU 자세 정보와 안전·회피 규칙으로 주행 판단 보완",
+        "Depth 기반 좌·중앙·우 자유공간 점수를 계산해 주행 방향 판단",
+        "주행 영상과 센서 상태를 VLM에 전달하고 판단 결과를 모터 명령으로 연결",
+        "IMU 자세 정보와 하네스 안전·회피 규칙을 반영해 전복과 경로 이탈 대응",
       ],
       tags: ["Python", "FastAPI", "Depth Anything V2", "VLM", "IMU", "Raspberry Pi"],
       links: [],
@@ -898,14 +919,14 @@ const CONTENT = {
       period: "2026",
       status: { label: "완료", kind: "done" },
       title: "Smart Factory Twin",
-      subtitle: "실제 로봇팔과 가상 공정을 연결한 스마트팩토리",
-      summary: "부품 인식부터 로봇팔 조립과 공정 상태 표시까지 하나의 흐름으로 연결했습니다.",
+      subtitle: "로봇팔·비전·가상 공정 연동",
       meta: [
-        { label: "Role", value: "로봇·비전·디지털 트윈" },
+        { label: "담당", value: "부품 인식 · 로봇팔 · 트윈" },
       ],
       bullets: [
-        "YOLO 부품 인식과 Dobot 조립 동작 구현",
-        "RoboDK 공정 시뮬레이션과 실제 공정 신호 연동",
+        "비전 기반 부품 인식 결과를 Dobot 로봇팔의 조립 동작으로 연결",
+        "RoboDK에서 조립 공정을 구현하고 실제 장비의 공정 신호와 연동",
+        "웹 화면에서 공정 단계와 장비 상태를 확인할 수 있도록 표시",
       ],
       tags: ["Python", "ROS2", "Dobot", "RoboDK", "OpenCV", "Vue"],
       links: [
@@ -917,15 +938,15 @@ const CONTENT = {
       period: "2026",
       status: { label: "완료", kind: "done" },
       title: "Karaoke AI Agent",
-      subtitle: "음성 복합 명령을 기기 상태로 변환하는 AI 서비스",
-      summary: "음성 인식부터 LLM 호출과 출력 검증 및 상태 반영까지 구현했습니다.",
+      subtitle: "음성 명령 기반 노래방 제어",
       meta: [
-        { label: "Type", value: "팀 프로젝트" },
-        { label: "Role", value: "AI 명령 처리" },
+        { label: "형태", value: "팀 프로젝트" },
+        { label: "담당", value: "AI 명령 처리" },
       ],
       bullets: [
-        "faster-whisper와 Qwen3 1.7B로 음성 명령 처리",
-        "LangChain 구조화 출력과 Pydantic 검증으로 적용 범위 통제",
+        "음성 녹음부터 faster-whisper STT와 Qwen 명령 해석까지 처리 흐름 연결",
+        "실사용 응답 속도를 고려해 Qwen3 1.7B를 적용하고 복합 상태 변경 구조 설계",
+        "LangChain 구조화 출력과 Pydantic 검증으로 타입·허용값·수치 범위 통제",
       ],
       tags: ["Python", "FastAPI", "Qwen3 1.7B", "LangChain", "Pydantic", "JavaScript"],
       links: [
@@ -937,15 +958,15 @@ const CONTENT = {
       period: "2024",
       status: { label: "완료", kind: "done" },
       title: "해외여행 커뮤니티 앱",
-      subtitle: "여행 정보 공유와 실시간 대화를 지원하는 Android 앱",
-      summary: "사용자 흐름을 설계하고 커뮤니티 화면과 실시간 채팅을 구현했습니다.",
+      subtitle: "여행 정보 공유 Android 앱",
       meta: [
-        { label: "Role", value: "UI/UX · Frontend" },
-        { label: "Course", value: "학부 캡스톤" },
+        { label: "담당", value: "UI/UX · Frontend" },
+        { label: "구분", value: "학부 캡스톤" },
       ],
       bullets: [
-        "Figma 프로토타입과 사용자 친화적 UI/UX 설계",
-        "게시글·정보 공유·Q&A와 Firebase 실시간 채팅 구현",
+        "Figma로 사용자 흐름과 화면 프로토타입을 설계하고 Android UI 구현",
+        "게시글·여행 정보 공유·Q&A 커뮤니티 기능 구현",
+        "Firebase를 연동해 사용자 간 실시간 채팅 구현",
       ],
       tags: ["Java", "Android", "Firebase", "Figma"],
       links: [],
@@ -1281,7 +1302,16 @@ const CONTENT = {
       var card = el("article", "project-card");
 
       var media = el("div", "project-media");
-      add(media, el("span", null, p.initial || ""));
+      if (p.image) {
+        media.className += " has-image";
+        var image = el("img");
+        image.src = p.image;
+        image.alt = p.title + " 프로젝트 이미지";
+        image.loading = "lazy";
+        add(media, image);
+      } else {
+        add(media, el("span", null, p.initial || ""));
+      }
       add(card, media);
 
       var body = el("div", "project-content");
@@ -1291,6 +1321,7 @@ const CONTENT = {
       if (p.subtitle) add(body, el("p", "project-subtitle", p.subtitle));
       if (p.summary) add(body, el("p", null, p.summary));
       add(body, metaList(p.meta));
+      if ((p.bullets || []).length) add(body, el("p", "contribution-title", "내 기여"));
       add(body, bulletList(p.bullets));
       add(body, tagList(p.tags));
       add(card, body);
