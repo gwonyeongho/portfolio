@@ -399,6 +399,46 @@
   .focus-list strong { display: block; font-size: 0.98rem; font-weight: 650; }
   .focus-list em { display: block; font-style: normal; font-size: 0.88rem; color: var(--text-secondary); }
 
+  .about-timeline {
+    grid-column: 1 / -1;
+    display: grid;
+    gap: 18px;
+    margin-top: 16px;
+  }
+  .about-timeline h3 { font-size: 1.2rem; font-weight: 700; }
+  .about-timeline-track {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+  }
+  .about-timeline-item {
+    position: relative;
+    display: grid;
+    align-content: start;
+    gap: 7px;
+    min-width: 0;
+    padding: 22px 14px 0 0;
+    border-top: 2px solid var(--border-strong);
+  }
+  .about-timeline-item::before {
+    content: "";
+    position: absolute;
+    top: -6px;
+    left: 0;
+    width: 10px;
+    height: 10px;
+    border: 2px solid var(--surface);
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 1px var(--accent);
+  }
+  .about-timeline-item time {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--accent-strong);
+  }
+  .about-timeline-item strong { font-size: 0.94rem; line-height: 1.35; word-break: keep-all; }
+  .about-timeline-item span { font-size: 0.8rem; line-height: 1.45; color: var(--text-secondary); word-break: keep-all; }
+
   /* ---------- 기술 스택 ---------- */
 
   #skills {
@@ -812,6 +852,14 @@
     .skill-card { min-height: 0; padding: 20px; }
     .skill-card.is-language { padding: 24px 20px; }
     .skill-card.is-language .skill-chip-list { justify-content: flex-start; }
+    .about-timeline-track { grid-template-columns: 1fr; }
+    .about-timeline-item {
+      padding: 0 0 24px 22px;
+      border-top: none;
+      border-left: 2px solid var(--border-strong);
+    }
+    .about-timeline-item::before { top: 4px; left: -6px; }
+    .about-timeline-item:last-child { padding-bottom: 0; }
     .project-content, .timeline-item, .cert-card { padding: 20px; }
     .project-card-actions { padding: 0 20px 20px; }
     .contact-panel > div { padding: 20px; }
@@ -1392,6 +1440,21 @@ const CONTENT = {
       });
       add(shell.body, list);
     }
+
+    if ((CONTENT.experience || []).length) {
+      var timeline = el("div", "about-timeline");
+      add(timeline, el("h3", null, "연도 흐름"));
+      var track = el("div", "about-timeline-track");
+      CONTENT.experience.forEach(function (x) {
+        var item = el("article", "about-timeline-item");
+        add(item, el("time", null, x.period));
+        add(item, el("strong", null, x.org));
+        if (x.sub) add(item, el("span", null, x.sub));
+        add(track, item);
+      });
+      add(timeline, track);
+      add(shell.body, timeline);
+    }
     return shell.section;
   }
 
@@ -1624,7 +1687,6 @@ const CONTENT = {
     ["skills", "기술 스택", renderSkills],
     ["projects", "프로젝트", renderProjects],
     ["collaboration", "협업", renderCollaboration],
-    ["experience", "연도별 이력", renderExperience],
     ["awards", "수상", renderAwards],
     ["certifications", "자격증", renderCertifications],
     ["contact", "연락처", renderContact],
