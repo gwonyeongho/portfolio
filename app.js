@@ -43,7 +43,7 @@
     return `<span class="skill-meter" role="img" aria-label="활용도 ${level}/5">${Array.from({ length: 5 }, (_, i) => `<i class="${i < level ? "filled" : ""}" aria-hidden="true"></i>`).join("")}</span>`;
   }
   function projectCard(p) {
-    return `<article class="project-summary"><a href="${detailUrl(p)}" aria-label="${escape(p.title)} 자세히 보기"><div class="project-thumbnail"><img src="${escape(p.cover)}" alt="${escape(p.title)} 대표 이미지" width="1280" height="720" loading="lazy"></div><div class="project-summary-body"><h3>${escape(p.title)}</h3><p class="project-subtitle">${escape(p.subtitle)}</p>${tags(p)}${meta(p)}<span class="project-arrow">자세히 보기 →</span></div></a></article>`;
+    return `<article class="project-summary"><a href="${detailUrl(p)}" aria-label="${escape(p.title)} 자세히 보기"><div class="project-thumbnail"><img src="${escape(p.cover)}?v=compact-tech-gwon-1" alt="${escape(p.title)} 대표 이미지" width="1280" height="720" loading="lazy"></div><div class="project-summary-body"><h3>${escape(p.title)}</h3><p class="project-subtitle">${escape(p.subtitle)}</p>${tags(p)}${meta(p)}<span class="project-arrow">자세히 보기 →</span></div></a></article>`;
   }
   function otherProject(p) {
     return `<article class="other-project"><div class="other-title"><h3><a href="${detailUrl(p)}">${escape(p.title)}</a></h3>${p.links.map(([label, url]) => `<a href="${escape(url)}" target="_blank" rel="noopener noreferrer">${escape(label)} ↗</a>`).join("")}</div><p>${escape(p.subtitle)}</p>${meta(p)}<a href="${detailUrl(p)}" class="project-arrow">자세히 보기 →</a></article>`;
@@ -82,13 +82,23 @@
     ];
     const list = (items) =>
       `<ul class="contribution-list">${items.map(([title, description]) => `<li><h3>${escape(title)}</h3><p>${sentenceHtml(description)}</p></li>`).join("")}</ul>`;
-    const infoTable = (items, technologies = []) =>
-      `<table class="detail-table"><thead><tr><th scope="col">항목</th><th scope="col">설명</th></tr></thead><tbody class="implementation-rows">${items.map(([title, description]) => `<tr><th scope="row">${escape(title)}</th><td class="description-cell">${sentenceHtml(description)}</td></tr>`).join("")}</tbody>${technologies.length ? `<tbody class="technology-rows">${technologies.map(([area, tech]) => `<tr><th scope="row">기술: ${escape(area)}</th><td>${escape(tech)}</td></tr>`).join("")}</tbody>` : ""}</table>`;
+    const infoTable = (items) =>
+      `<table class="detail-table"><thead><tr><th scope="col">항목</th><th scope="col">설명</th></tr></thead><tbody class="implementation-rows">${items.map(([title, description]) => `<tr><th scope="row">${escape(title)}</th><td class="description-cell">${sentenceHtml(description)}</td></tr>`).join("")}</tbody></table>`;
+    const techSummary = (items) =>
+      `<aside class="tech-panel" aria-label="사용 기술"><h3>사용 기술</h3><dl class="tech-summary">${items
+        .map(
+          ([area, tech]) =>
+            `<div><dt>${escape(area)}</dt><dd>${tech
+              .split(/\s+\/\s+/)
+              .map((name) => `<span class="tech-chip">${escape(name)}</span>`)
+              .join("")}</dd></div>`,
+        )
+        .join("")}</dl></aside>`;
     return `<article class="container detail-page"><a href="#projects" class="back-link">← 프로젝트 목록으로 돌아가기</a><header class="detail-header"><p class="eyebrow">Project Detail</p><h1>${escape(p.title)}</h1><p class="detail-lead">${escape(p.subtitle)}</p><dl class="detail-meta"><div><dt>개발 기간</dt><dd>${escape(p.period)}${p.duration ? " (" + escape(p.duration) + ")" : ""}</dd></div><div><dt>개발 인원</dt><dd>${escape(p.team)}</dd></div><div><dt>담당 역할</dt><dd>${escape(p.role)}</dd></div></dl>${links(p)}</header>
     <nav class="detail-nav" aria-label="프로젝트 상세 목차">${sections.map(([id, title]) => `<a href="#project/${p.id}/${id}">${title}</a>`).join("")}</nav>
     <section class="detail-section" id="detail-overview"><h2>프로젝트 개요</h2>${p.overview.map((t) => `<p>${sentenceHtml(t)}</p>`).join("")}${p.award ? `<div class="detail-award">팀 프로젝트 수상<strong>${escape(p.award)}</strong></div>` : ""}</section>
     <section class="detail-section" id="detail-role"><h2>담당 역할</h2>${infoTable(p.responsibilities)}</section>
-    <section class="detail-section" id="detail-contribution"><h2>기여 및 기술</h2>${infoTable(p.contributions, p.tech)}</section>
+    <section class="detail-section" id="detail-contribution"><h2>기여 및 기술</h2>${infoTable(p.contributions)}${techSummary(p.tech)}</section>
     <section class="detail-section" id="detail-problems"><h2>해결 문제</h2><div class="problem-cards">${p.problems.map((t) => `<article class="problem-card"><h3>${escape(t.title)}</h3><dl>${t.rows.map(([label, bullets]) => `<div class="problem-row"><dt>${escape(label)}</dt><dd><ul>${bullets.map((text) => `<li>${sentenceHtml(text)}</li>`).join("")}</ul></dd></div>`).join("")}</dl></article>`).join("")}</div>
     ${p.performance?.length ? `<div id="detail-performance"><h3 class="performance-heading">성능 개선</h3>${p.performance.map((t) => `<article class="performance-card"><h3>${escape(t.title)}</h3><dl class="performance-summary">${t.rows.map(([label, text]) => `<div class="problem-row"><dt>${escape(label)}</dt><dd>${sentenceHtml(text)}</dd></div>`).join("")}</dl><div class="table-scroll" role="region" aria-label="${escape(t.title)} 비교 표" tabindex="0"><table class="benchmark-table"><caption class="visually-hidden">${escape(t.title)}</caption><thead><tr>${t.headers.map((label) => `<th scope="col">${escape(label)}</th>`).join("")}</tr></thead><tbody>${t.tableRows.map((row) => `<tr>${row.map((cell, i) => (i === 0 ? `<th scope="row">${escape(cell)}</th>` : `<td${i === row.length - 1 ? ' class="selected-method"' : ""}>${escape(cell)}</td>`)).join("")}</tr>`).join("")}</tbody></table></div><div class="benchmark-verdict"><strong>개선 결과</strong><span>${sentenceHtml(t.conclusion)}</span></div></article>`).join("")}</div>` : ""}</section>
     <section class="detail-section" id="detail-ai"><h2>AI 활용</h2>${list(p.aiUsage)}</section>

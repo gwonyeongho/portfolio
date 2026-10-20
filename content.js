@@ -1,7 +1,7 @@
 /* 실제 담당 영역과 구현 근거, 평가 조건을 구분합니다. */
 window.PORTFOLIO = {
   name: "권영호",
-  nameEn: "Yeongho Kwon",
+  nameEn: "Yeongho Gwon",
   role: "AI / SW Developer",
   email: "dudgh2030@naver.com",
   github: "https://github.com/gwonyeongho",

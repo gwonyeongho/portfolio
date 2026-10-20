@@ -77,9 +77,12 @@ ol {
   padding-left: 20px;
 }
 mark {
-  background: linear-gradient(transparent 58%, #ffe4b1 58%);
+  background: #fff0c9;
   color: inherit;
-  padding: 0 2px;
+  padding: 0.02em 0.12em;
+  border-radius: 3px;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
 }
 .container {
   width: 100%;
