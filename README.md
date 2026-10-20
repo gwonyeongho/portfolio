@@ -6,7 +6,7 @@ AI와 SW 개발자 포트폴리오이다. 참고 사이트의 사원증 진입 �
 
 ## 프로젝트 구성
 
-대표 프로젝트는 본디 문화유산 AI 복원 및 VR 박물관, PipeCheckkk, Smart Factory Twin, Karaoke AI Agent이다. 추가 프로젝트로 신체 치수 예측과 해외여행 커뮤니티 앱을 소개한다. 6개 프로젝트 모두 별도 상세 화면에서 개요, 담당 기술, 개인 구현, 회고를 확인할 수 있다. 대표 프로젝트는 문제, 원인, 해결, 결과 순서의 트러블슈팅을 포함한다.
+대표 프로젝트는 본디 문화유산 AI 복원 및 VR 박물관, PipeCheckkk, Smart Factory Twin, Karaoke AI Agent이다. 추가 프로젝트로 신체 치수 예측과 해외여행 커뮤니티 앱을 소개한다. 6개 프로젝트 모두 별도 상세 화면을 제공한다. 해결 문제는 문제, 적용한 해결, 확인한 결과를 구분한 짧은 목록으로 표시하고 노래방 성능은 조건과 평가 범위를 명시한 비교 표로 제공한다.
 
 팀 전체 기능과 개인 구현을 구분하였다. 본디의 개인 담당은 유물저장소 웹과 미리보기 개선, 방향 점검 Agent이다. VR 클라이언트와 다른 팀원의 AI 모델 학습은 개인 구현으로 표기하지 않았다. 비공개 저장소 링크와 고유 자격 식별번호는 공개하지 않는다.
 
@@ -20,6 +20,7 @@ AI와 SW 개발자 포트폴리오이다. 참고 사이트의 사원증 진입 �
 | `app.js` | 화면 렌더링과 해시 기반 상세 라우팅 |
 | `styles.css` | 반응형 레이아웃과 시각 스타일 |
 | `project-layout.css` | 이미지 좌측, 설명 우측의 프로젝트 목록 |
+| `readability.css` | 문제 해결 카드와 성능 비교 표의 반응형 스타일 |
 | `assets/` | 실제 프로젝트 화면과 대표 이미지 |
 | `tests/` | 콘텐츠 검증 및 브라우저 회귀 테스트 |
 | `docs/CONTENT_SOURCES.md` | 작성 근거와 공개 범위 |
@@ -54,4 +55,4 @@ PORTFOLIO_URL=https://gwonyeongho.github.io/portfolio/ npm run test:browser
 
 ## 내용 수정
 
-일반 문구는 `content.js`에서 수정한다. 프로젝트를 추가할 때는 기존 프로젝트 객체의 `id`, `title`, `role`, `overview`, `tech`, `contributions`, `troubleshooting`, `retrospective` 구조를 따른다. 이미지와 캡션은 `media.js`에서 관리한다. 확인하지 않은 성능 수치는 추가하지 않는다.
+일반 문구는 `content.js`에서 수정한다. 프로젝트 객체에는 `id`, `title`, `role`, `responsibilities`, `overview`, `tech`, `contributions`, `problems`, `aiUsage`를 작성한다. `problems`는 제목과 라벨별 짧은 목록을 담는다. `performance`는 표의 열과 비교 수치, 측정 조건, 선택 근거, 평가 범위를 구분한다. 이미지와 캡션은 `media.js`에서 관리한다. 확인하지 않은 성능 수치는 추가하지 않는다.

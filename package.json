@@ -6,6 +6,7 @@
   "scripts": {
     "test": "node --test tests/content.test.cjs",
     "test:browser": "node tests/browser.cjs",
+    "test:readability": "node tests/readability.cjs",
     "test:layout": "node tests/layout.cjs",
     "test:revision": "node tests/revision.cjs",
     "check": "node --check app.js && node --check content.js && node --check media.js",
