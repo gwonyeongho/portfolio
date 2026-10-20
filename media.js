@@ -21,7 +21,7 @@ const MEDIA = {
     screens: [
       [
         "assets/pipecheck-exploration.webp",
-        "팀 통합 대시보드의 탐사 중 화면. 관로 카메라와 장애물 회피 진행 상태, 일시 정지 및 종료 제어를 표시합니다. 개인 담당은 AI 주행과 관제 연동입니다.",
+        "팀 통합 대시보드의 탐사 중 화면. 관로 카메라와 장애물 회피 진행 상태, 일시 정지 및 종료 제어를 표시합니다.",
       ],
       [
         "assets/pipecheck-flow.webp",
@@ -39,8 +39,8 @@ const MEDIA = {
         "자동 조립 공정과 장비의 진행 상태를 확인하는 웹 화면",
       ],
       [
-        "assets/factory-vision.webp",
-        "YOLO로 상단 부품과 하단 부품을 구분한 인식 화면. 표시된 값은 해당 프레임의 검출 신뢰도이며 전체 모델 정확도는 아닙니다.",
+        "assets/factory-vision-cropped.webp",
+        "YOLO로 상단 부품과 하단 부품을 구분한 인식 화면.",
       ],
     ],
   },
@@ -50,7 +50,7 @@ const MEDIA = {
     screens: [
       [
         "assets/karaoke-ui.webp",
-        "실제 프론트엔드 코드로 렌더링한 초기 제어 화면. 음성 처리 및 모델 API를 실행한 시연 화면은 아닙니다.",
+        "실제 프론트엔드 코드로 렌더링한 초기 제어 화면.",
       ],
     ],
   },
@@ -62,6 +62,7 @@ const IMAGE_SIZES = {
   "assets/pipecheck-flow.webp": [1920, 1080],
   "assets/factory-preview.webp": [1611, 937],
   "assets/factory-vision.webp": [1427, 800],
+  "assets/factory-vision-cropped.webp": [1221, 800],
   "assets/karaoke-ui.webp": [1100, 625],
 };
 window.PORTFOLIO.projects.forEach((p) => {
