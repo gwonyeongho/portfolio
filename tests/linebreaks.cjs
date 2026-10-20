@@ -62,11 +62,11 @@ const assert = require("node:assert/strict");
         const groups = [
           ["#detail-overview > p", project.overview],
           [
-            "#detail-role .contribution-list > li > p",
+            "#detail-role .implementation-rows .description-cell",
             project.responsibilities.map((x) => x[1]),
           ],
           [
-            "#detail-contribution .contribution-list > li > p",
+            "#detail-contribution .implementation-rows .description-cell",
             project.contributions.map((x) => x[1]),
           ],
           [

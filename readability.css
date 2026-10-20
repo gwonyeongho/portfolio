@@ -116,6 +116,59 @@
 .benchmark-verdict strong {
   flex: 0 0 auto;
 }
+.detail-table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  border: 1px solid #deded8;
+  margin: 20px 0 30px;
+}
+.detail-table th,
+.detail-table td {
+  padding: 17px 18px;
+  border-bottom: 1px solid #e7e7e1;
+  text-align: left;
+  vertical-align: top;
+  line-height: 1.9;
+  overflow-wrap: anywhere;
+  word-break: keep-all;
+  font-size: 14px;
+}
+.detail-table th:first-child {
+  width: 26%;
+}
+.detail-table thead th {
+  background: #f4f4f0;
+  color: #55554e;
+  font-weight: 700;
+}
+.detail-table tbody th {
+  font-weight: 650;
+}
+.detail-table .technology-rows {
+  background: #fafaf7;
+}
+.detail-table .technology-rows th {
+  color: #66665e;
+  font-size: 13px;
+}
+.detail-table tbody:last-child tr:last-child > * {
+  border-bottom: 0;
+}
+@media (max-width: 600px) {
+  .detail-table th,
+  .detail-table td {
+    padding: 12px 9px;
+    font-size: 13px;
+    line-height: 1.8;
+  }
+  .detail-table th:first-child {
+    width: 29%;
+  }
+  .detail-table .technology-rows th {
+    font-size: 12px;
+  }
+}
 .visually-hidden {
   position: absolute;
   width: 1px;

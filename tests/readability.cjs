@@ -15,19 +15,14 @@ const assert = require("node:assert/strict");
       "two actual benchmark comparison tables",
     );
     const text = await p.locator("#detail-performance").innerText();
-    for (const s of [
-      "13.13초",
-      "4.83초",
-      "4.55초",
-      "81.5%",
-      "22/27",
-      "27/27",
-      "9개 명령",
-      "3회",
-      "STT",
-      "단독 효과",
-    ])
+    for (const s of ["13.13초", "4.83초", "4.55초", "81.5%", "22/27", "27/27"])
       assert.ok(text.includes(s), s);
+    assert.equal(
+      await p.locator("#detail-performance .benchmark-notes").count(),
+      0,
+    );
+    for (const label of ["측정 조건", "평가 범위"])
+      assert.ok(!text.includes(label));
     for (const id of [
       "vr-museum",
       "pipecheckkk",
