@@ -6,6 +6,7 @@
   "scripts": {
     "test": "node --test tests/content.test.cjs",
     "test:browser": "node tests/browser.cjs",
+    "test:pipe-tech": "node tests/pipe-tech.cjs",
     "test:polish": "node tests/polish.cjs",
     "test:tables": "node tests/tables.cjs",
     "test:linebreaks": "node tests/linebreaks.cjs",

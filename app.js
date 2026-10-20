@@ -84,8 +84,8 @@
       `<ul class="contribution-list">${items.map(([title, description]) => `<li><h3>${escape(title)}</h3><p>${sentenceHtml(description)}</p></li>`).join("")}</ul>`;
     const infoTable = (items) =>
       `<table class="detail-table"><thead><tr><th scope="col">항목</th><th scope="col">설명</th></tr></thead><tbody class="implementation-rows">${items.map(([title, description]) => `<tr><th scope="row">${escape(title)}</th><td class="description-cell">${sentenceHtml(description)}</td></tr>`).join("")}</tbody></table>`;
-    const techSummary = (items) =>
-      `<aside class="tech-panel" aria-label="사용 기술"><h3>사용 기술</h3><dl class="tech-summary">${items
+    const techSummary = (items, inline = false) =>
+      `<aside class="tech-panel${inline ? " tech-panel--inline" : ""}" aria-label="사용 기술"><h3>사용 기술</h3><dl class="tech-summary">${items
         .map(
           ([area, tech]) =>
             `<div><dt>${escape(area)}</dt><dd>${tech
@@ -98,7 +98,7 @@
     <nav class="detail-nav" aria-label="프로젝트 상세 목차">${sections.map(([id, title]) => `<a href="#project/${p.id}/${id}">${title}</a>`).join("")}</nav>
     <section class="detail-section" id="detail-overview"><h2>프로젝트 개요</h2>${p.overview.map((t) => `<p>${sentenceHtml(t)}</p>`).join("")}${p.award ? `<div class="detail-award">팀 프로젝트 수상<strong>${escape(p.award)}</strong></div>` : ""}</section>
     <section class="detail-section" id="detail-role"><h2>담당 역할</h2>${infoTable(p.responsibilities)}</section>
-    <section class="detail-section" id="detail-contribution"><h2>기여 및 기술</h2>${infoTable(p.contributions)}${techSummary(p.tech)}</section>
+    <section class="detail-section" id="detail-contribution"><h2>기여 및 기술</h2>${infoTable(p.contributions)}${techSummary(p.tech, p.id === "pipecheckkk")}</section>
     <section class="detail-section" id="detail-problems"><h2>해결 문제</h2><div class="problem-cards">${p.problems.map((t) => `<article class="problem-card"><h3>${escape(t.title)}</h3><dl>${t.rows.map(([label, bullets]) => `<div class="problem-row"><dt>${escape(label)}</dt><dd><ul>${bullets.map((text) => `<li>${sentenceHtml(text)}</li>`).join("")}</ul></dd></div>`).join("")}</dl></article>`).join("")}</div>
     ${p.performance?.length ? `<div id="detail-performance"><h3 class="performance-heading">성능 개선</h3>${p.performance.map((t) => `<article class="performance-card"><h3>${escape(t.title)}</h3><dl class="performance-summary">${t.rows.map(([label, text]) => `<div class="problem-row"><dt>${escape(label)}</dt><dd>${sentenceHtml(text)}</dd></div>`).join("")}</dl><div class="table-scroll" role="region" aria-label="${escape(t.title)} 비교 표" tabindex="0"><table class="benchmark-table"><caption class="visually-hidden">${escape(t.title)}</caption><thead><tr>${t.headers.map((label) => `<th scope="col">${escape(label)}</th>`).join("")}</tr></thead><tbody>${t.tableRows.map((row) => `<tr>${row.map((cell, i) => (i === 0 ? `<th scope="row">${escape(cell)}</th>` : `<td${i === row.length - 1 ? ' class="selected-method"' : ""}>${escape(cell)}</td>`)).join("")}</tr>`).join("")}</tbody></table></div><div class="benchmark-verdict"><strong>개선 결과</strong><span>${sentenceHtml(t.conclusion)}</span></div></article>`).join("")}</div>` : ""}</section>
     <section class="detail-section" id="detail-ai"><h2>AI 활용</h2>${list(p.aiUsage)}</section>
