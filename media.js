@@ -20,6 +20,10 @@ const MEDIA = {
     coverCaption: "PipeCheckkk 프로젝트 최종발표 자료",
     screens: [
       [
+        "assets/pipecheck-exploration.webp",
+        "팀 통합 대시보드의 탐사 중 화면. 관로 카메라와 장애물 회피 진행 상태, 일시 정지 및 종료 제어를 표시합니다. 개인 담당은 AI 주행과 관제 연동입니다.",
+      ],
+      [
         "assets/pipecheck-flow.webp",
         "카메라와 Depth, 초음파, IMU, 이전 행동을 입력받아 방향과 속도 및 다음 행동을 판단하는 AI 주행 구조",
       ],
@@ -54,6 +58,7 @@ const MEDIA = {
 const IMAGE_SIZES = {
   "assets/bondi-comparison.webp": [2879, 1413],
   "assets/bondi-preview.webp": [1983, 1047],
+  "assets/pipecheck-exploration.webp": [900, 720],
   "assets/pipecheck-flow.webp": [1920, 1080],
   "assets/factory-preview.webp": [1611, 937],
   "assets/factory-vision.webp": [1427, 800],

@@ -42,7 +42,7 @@ const fs = require("node:fs"),
     assert.ok(!skills.includes(term), term);
   await p.goto(base + "#about");
   const intro = await p.locator(".intro-text").innerText();
-  for (const term of ["AI", "프론트엔드", "로봇 제어"])
+  for (const term of ["AI", "SW와 HW", "AI 활용에 강점"])
     assert.ok(intro.includes(term), term);
   assert.ok(!(await p.title()).includes("Robotics"));
   await p.goto(base + "#project/pipecheckkk");

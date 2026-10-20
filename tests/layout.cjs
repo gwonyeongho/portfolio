@@ -69,7 +69,7 @@ const assert = require("node:assert/strict");
     }
     await p.goto(base + "#about");
     const intro = await p.locator(".intro-text").innerText();
-    for (const term of ["AI", "Agent", "프론트엔드", "로봇 제어", "시뮬레이션"])
+    for (const term of ["AI", "Agent", "SW와 HW", "AI 활용에 강점"])
       assert.ok(intro.includes(term), term);
     for (const term of ["노래방", "유물저장소", "하수도", "프로젝트"])
       assert.ok(!intro.includes(term), term);
