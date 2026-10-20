@@ -84,8 +84,8 @@
       `<ul class="contribution-list">${items.map(([title, description]) => `<li><h3>${escape(title)}</h3><p>${sentenceHtml(description)}</p></li>`).join("")}</ul>`;
     const infoTable = (items) =>
       `<table class="detail-table"><thead><tr><th scope="col">항목</th><th scope="col">설명</th></tr></thead><tbody class="implementation-rows">${items.map(([title, description]) => `<tr><th scope="row">${escape(title)}</th><td class="description-cell">${sentenceHtml(description)}</td></tr>`).join("")}</tbody></table>`;
-    const techSummary = (items, inline = false) =>
-      `<aside class="tech-panel${inline ? " tech-panel--inline" : ""}" aria-label="사용 기술"><h3>사용 기술</h3><dl class="tech-summary">${items
+    const techSummary = (items, grouped = false) =>
+      `<aside class="tech-panel${grouped ? " tech-panel--pipe-grouped" : ""}" aria-label="사용 기술"><h3>사용 기술</h3><dl class="tech-summary">${items
         .map(
           ([area, tech]) =>
             `<div><dt>${escape(area)}</dt><dd>${tech

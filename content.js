@@ -241,10 +241,10 @@ window.PORTFOLIO = {
         ["Agent 하네스와 도구", "Hermes / Python / webhook / vl_pilot.py"],
         ["노트북과 Pi 통신", "HTTP / JSON / FastAPI / Motor Edge API"],
         [
-          "로봇 상태와 제어 연동",
+          "로봇 상태와 제어",
           "IMU 자세 / 좌우 모터값 / 명령 순번과 유효시간",
         ],
-        ["원격 관제 연동", "Cloud command relay / 상태 및 주행 로그 API"],
+        ["원격 관제", "Cloud command relay / 상태 및 주행 로그 API"],
       ],
       contributions: [
         [

@@ -222,28 +222,18 @@
     grid-template-columns: 78px minmax(0, 1fr);
   }
 }
-.tech-panel--inline .tech-summary {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
+.tech-panel--pipe-grouped .tech-summary > div {
+  grid-template-columns: 148px minmax(0, 1fr);
 }
-.tech-panel--inline .tech-summary > div,
-.tech-panel--inline .tech-summary dd {
-  display: contents;
-}
-.tech-panel--inline .tech-summary dt {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
+.tech-panel--pipe-grouped .tech-summary dt {
   white-space: nowrap;
-  border: 0;
+  overflow-wrap: normal;
 }
-.tech-panel--inline .tech-chip {
-  white-space: nowrap;
+@media (max-width: 700px) {
+  .tech-panel--pipe-grouped .tech-summary > div {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 6px;
+  }
 }
 .visually-hidden {
   position: absolute;
