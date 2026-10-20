@@ -17,6 +17,16 @@
           "'": "&#39;",
         })[ch],
     );
+  // Only the author's static introduction may contain its existing mark tags.
+  const sentenceHtml = (value, trustedIntroduction = false) =>
+    String(value ?? "")
+      .trim()
+      .split(/(?<=\.)\s+(?=\S)/u)
+      .map(
+        (sentence) =>
+          `<span class="prose-sentence">${trustedIntroduction ? sentence : escape(sentence)}</span>`,
+      )
+      .join("");
   const detailUrl = (p) => "#project/" + p.id;
   const head = (en, ko) =>
     `<div class="section-head"><p class="eyebrow">${en}</p><h2>${ko}</h2></div>`;
@@ -40,8 +50,8 @@
   }
   function home() {
     document.title = `${D.name} | ${D.role}`;
-    return `<section class="container about" id="about"><div class="hero-layout"><div class="hero-copy"><p class="hero-motto">생각을 동작으로</p><p class="motto-note">모델의 출력에서 실제 사용까지</p><h1>${D.headline.map((s) => `<span>${escape(s)}</span>`).join("")}</h1><div class="intro-text">${D.introduction.map((p) => `<p>${p}</p>`).join("")}</div><dl class="contact-list"><dt>Email</dt><dd><a href="mailto:${escape(D.email)}">${escape(D.email)}</a></dd><dt>GitHub</dt><dd><a href="${D.github}" target="_blank" rel="noopener noreferrer">github.com/gwonyeongho</a></dd></dl></div><img class="hero-photo" src="profile.webp" alt="권영호 프로필 사진" width="176" height="226"></div></section>
-    <section class="history-band" aria-label="이력과 자격증 및 수상"><div class="container history-grid"><div>${head("History", "이력")}<ol class="timeline">${D.history.map(([date, title, note]) => `<li><time>${escape(date)}</time><strong>${escape(title)}</strong><p>${escape(note)}</p></li>`).join("")}</ol></div><div>${head("Certificates &amp; Awards", "자격증 &amp; 수상")}${[
+    return `<section class="container about" id="about"><div class="hero-layout"><div class="hero-copy"><p class="hero-motto">생각을 동작으로</p><p class="motto-note">모델의 출력에서 실제 사용까지</p><h1>${D.headline.map((s) => `<span>${escape(s)}</span>`).join("")}</h1><div class="intro-text">${D.introduction.map((p) => `<p>${sentenceHtml(p, true)}</p>`).join("")}</div><dl class="contact-list"><dt>Email</dt><dd><a href="mailto:${escape(D.email)}">${escape(D.email)}</a></dd><dt>GitHub</dt><dd><a href="${D.github}" target="_blank" rel="noopener noreferrer">github.com/gwonyeongho</a></dd></dl></div><img class="hero-photo" src="profile.webp" alt="권영호 프로필 사진" width="176" height="226"></div></section>
+    <section class="history-band" aria-label="이력과 자격증 및 수상"><div class="container history-grid"><div>${head("History", "이력")}<ol class="timeline">${D.history.map(([date, title, note]) => `<li><time>${escape(date)}</time><strong>${escape(title)}</strong><p>${sentenceHtml(note)}</p></li>`).join("")}</ol></div><div>${head("Certificates &amp; Awards", "자격증 &amp; 수상")}${[
       ["자격증", D.certificates],
       ["수상", D.awards],
     ]
@@ -71,16 +81,16 @@
       ["screens", "주요 화면"],
     ];
     const list = (items) =>
-      `<ul class="contribution-list">${items.map(([title, description]) => `<li><h3>${escape(title)}</h3><p>${escape(description)}</p></li>`).join("")}</ul>`;
+      `<ul class="contribution-list">${items.map(([title, description]) => `<li><h3>${escape(title)}</h3><p>${sentenceHtml(description)}</p></li>`).join("")}</ul>`;
     return `<article class="container detail-page"><a href="#projects" class="back-link">← 프로젝트 목록으로 돌아가기</a><header class="detail-header"><p class="eyebrow">Project Detail</p><h1>${escape(p.title)}</h1><p class="detail-lead">${escape(p.subtitle)}</p><dl class="detail-meta"><div><dt>개발 기간</dt><dd>${escape(p.period)}${p.duration ? " (" + escape(p.duration) + ")" : ""}</dd></div><div><dt>개발 인원</dt><dd>${escape(p.team)}</dd></div><div><dt>담당 역할</dt><dd>${escape(p.role)}</dd></div></dl>${links(p)}</header>
     <nav class="detail-nav" aria-label="프로젝트 상세 목차">${sections.map(([id, title]) => `<a href="#project/${p.id}/${id}">${title}</a>`).join("")}</nav>
-    <section class="detail-section" id="detail-overview"><h2>프로젝트 개요</h2>${p.overview.map((t) => `<p>${escape(t)}</p>`).join("")}${p.award ? `<div class="detail-award">팀 프로젝트 수상<strong>${escape(p.award)}</strong></div>` : ""}</section>
+    <section class="detail-section" id="detail-overview"><h2>프로젝트 개요</h2>${p.overview.map((t) => `<p>${sentenceHtml(t)}</p>`).join("")}${p.award ? `<div class="detail-award">팀 프로젝트 수상<strong>${escape(p.award)}</strong></div>` : ""}</section>
     <section class="detail-section" id="detail-role"><h2>담당 역할</h2>${list(p.responsibilities)}</section>
     <section class="detail-section" id="detail-contribution"><h2>기여 및 기술</h2>${list(p.contributions)}<table class="tech-table"><thead><tr><th scope="col">구현 영역</th><th scope="col">사용 기술</th></tr></thead><tbody>${p.tech.map(([area, tech]) => `<tr><th scope="row">${escape(area)}</th><td>${escape(tech)}</td></tr>`).join("")}</tbody></table></section>
-    <section class="detail-section" id="detail-problems"><h2>해결 문제</h2><div class="problem-cards">${p.problems.map((t) => `<article class="problem-card"><h3>${escape(t.title)}</h3><dl>${t.rows.map(([label, bullets]) => `<div class="problem-row"><dt>${escape(label)}</dt><dd><ul>${bullets.map((text) => `<li>${escape(text)}</li>`).join("")}</ul></dd></div>`).join("")}</dl></article>`).join("")}</div>
-    ${p.performance?.length ? `<div id="detail-performance"><h3 class="performance-heading">성능 개선</h3>${p.performance.map((t) => `<article class="performance-card"><h3>${escape(t.title)}</h3><dl class="performance-summary">${t.rows.map(([label, text]) => `<div class="problem-row"><dt>${escape(label)}</dt><dd>${escape(text)}</dd></div>`).join("")}</dl><div class="table-scroll" role="region" aria-label="${escape(t.title)} 비교 표" tabindex="0"><table class="benchmark-table"><caption class="visually-hidden">${escape(t.title)}</caption><thead><tr>${t.headers.map((label) => `<th scope="col">${escape(label)}</th>`).join("")}</tr></thead><tbody>${t.tableRows.map((row) => `<tr>${row.map((cell, i) => (i === 0 ? `<th scope="row">${escape(cell)}</th>` : `<td${i === row.length - 1 ? ' class="selected-method"' : ""}>${escape(cell)}</td>`)).join("")}</tr>`).join("")}</tbody></table></div><div class="benchmark-notes"><h4>측정 조건</h4><ul>${t.conditions.map((text) => `<li>${escape(text)}</li>`).join("")}</ul></div><div class="benchmark-verdict"><strong>개선 결과</strong><span>${escape(t.conclusion)}</span></div><div class="benchmark-notes measurement-limits"><h4>평가 범위</h4><ul>${t.limits.map((text) => `<li>${escape(text)}</li>`).join("")}</ul></div></article>`).join("")}</div>` : ""}</section>
+    <section class="detail-section" id="detail-problems"><h2>해결 문제</h2><div class="problem-cards">${p.problems.map((t) => `<article class="problem-card"><h3>${escape(t.title)}</h3><dl>${t.rows.map(([label, bullets]) => `<div class="problem-row"><dt>${escape(label)}</dt><dd><ul>${bullets.map((text) => `<li>${sentenceHtml(text)}</li>`).join("")}</ul></dd></div>`).join("")}</dl></article>`).join("")}</div>
+    ${p.performance?.length ? `<div id="detail-performance"><h3 class="performance-heading">성능 개선</h3>${p.performance.map((t) => `<article class="performance-card"><h3>${escape(t.title)}</h3><dl class="performance-summary">${t.rows.map(([label, text]) => `<div class="problem-row"><dt>${escape(label)}</dt><dd>${sentenceHtml(text)}</dd></div>`).join("")}</dl><div class="table-scroll" role="region" aria-label="${escape(t.title)} 비교 표" tabindex="0"><table class="benchmark-table"><caption class="visually-hidden">${escape(t.title)}</caption><thead><tr>${t.headers.map((label) => `<th scope="col">${escape(label)}</th>`).join("")}</tr></thead><tbody>${t.tableRows.map((row) => `<tr>${row.map((cell, i) => (i === 0 ? `<th scope="row">${escape(cell)}</th>` : `<td${i === row.length - 1 ? ' class="selected-method"' : ""}>${escape(cell)}</td>`)).join("")}</tr>`).join("")}</tbody></table></div><div class="benchmark-notes"><h4>측정 조건</h4><ul>${t.conditions.map((text) => `<li>${sentenceHtml(text)}</li>`).join("")}</ul></div><div class="benchmark-verdict"><strong>개선 결과</strong><span>${sentenceHtml(t.conclusion)}</span></div><div class="benchmark-notes measurement-limits"><h4>평가 범위</h4><ul>${t.limits.map((text) => `<li>${sentenceHtml(text)}</li>`).join("")}</ul></div></article>`).join("")}</div>` : ""}</section>
     <section class="detail-section" id="detail-ai"><h2>AI 활용</h2>${list(p.aiUsage)}</section>
-    <section class="detail-section" id="detail-screens"><h2>주요 화면</h2>${p.screens?.length ? `<div class="screen-gallery">${p.screens.map(([src, caption, size]) => `<figure><img src="${escape(src)}" alt="${escape(caption)}" width="${size[0]}" height="${size[1]}" loading="lazy"><figcaption>${escape(caption)}</figcaption></figure>`).join("")}</div>` : `<p>별도로 공개된 화면 자료는 없습니다.</p>${links(p)}`}</section>
+    <section class="detail-section" id="detail-screens"><h2>주요 화면</h2>${p.screens?.length ? `<div class="screen-gallery">${p.screens.map(([src, caption, size]) => `<figure><img src="${escape(src)}" alt="${escape(caption)}" width="${size[0]}" height="${size[1]}" loading="lazy"><figcaption>${sentenceHtml(caption)}</figcaption></figure>`).join("")}</div>` : `<p>별도로 공개된 화면 자료는 없습니다.</p>${links(p)}`}</section>
     <a href="${detailUrl(next)}" class="next-project"><div><small>다음 프로젝트</small><strong>${escape(next.title)}</strong></div><span aria-hidden="true">→</span></a></article>`;
   }
   let currentProject = null;

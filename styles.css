@@ -311,6 +311,7 @@ h2 {
 }
 .hero-copy {
   max-width: 675px;
+  min-width: 0;
 }
 .hero-motto {
   font-size: clamp(36px, 5.8vw, 64px);
@@ -340,6 +341,16 @@ h2 {
 }
 .intro-text p + p {
   margin-top: 10px;
+}
+.prose-sentence {
+  display: block;
+  text-wrap: pretty;
+}
+.intro-text .prose-sentence,
+.hero-copy h1 span {
+  text-wrap: balance;
+  word-break: keep-all;
+  overflow-wrap: normal;
 }
 .hero-photo {
   width: 176px;

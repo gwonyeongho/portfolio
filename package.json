@@ -6,6 +6,7 @@
   "scripts": {
     "test": "node --test tests/content.test.cjs",
     "test:browser": "node tests/browser.cjs",
+    "test:linebreaks": "node tests/linebreaks.cjs",
     "test:identity": "node tests/identity.cjs",
     "test:readability": "node tests/readability.cjs",
     "test:layout": "node tests/layout.cjs",
