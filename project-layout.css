@@ -1,3 +1,28 @@
+/* 기술 스택은 설명과 장비 이름 없이 소프트웨어 이름만 표시한다. */
+.skill-list-compact {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.skill-row.skill-compact {
+  display: block;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 10px 14px;
+  background: #fafaf9;
+}
+.skill-compact .skill-identity {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.skill-compact .skill-meter {
+  margin: 0;
+}
+.skill-compact .skill-name {
+  font-size: 14px;
+}
 /* 참고 사이트와 같은 이미지 좌측 / 설명 우측의 가로형 프로젝트 목록 */
 .project-grid {
   grid-template-columns: 1fr;

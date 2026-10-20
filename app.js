@@ -39,7 +39,7 @@
     return `<article class="other-project"><div class="other-title"><h3><a href="${detailUrl(p)}">${escape(p.title)}</a></h3>${p.links.map(([label, url]) => `<a href="${escape(url)}" target="_blank" rel="noopener noreferrer">${escape(label)} ↗</a>`).join("")}</div><p>${escape(p.subtitle)}</p>${meta(p)}<a href="${detailUrl(p)}" class="project-arrow">자세히 보기 →</a></article>`;
   }
   function home() {
-    document.title = `${D.name} | AI / Robotics SW Developer`;
+    document.title = `${D.name} | ${D.role}`;
     return `<section class="container about" id="about"><div class="hero-layout"><div class="hero-copy"><p class="hero-motto">생각을 동작으로</p><p class="motto-note">모델의 출력에서 실제 사용까지</p><h1>${D.headline.map((s) => `<span>${escape(s)}</span>`).join("")}</h1><div class="intro-text">${D.introduction.map((p) => `<p>${p}</p>`).join("")}</div><dl class="contact-list"><dt>Email</dt><dd><a href="mailto:${escape(D.email)}">${escape(D.email)}</a></dd><dt>GitHub</dt><dd><a href="${D.github}" target="_blank" rel="noopener noreferrer">github.com/gwonyeongho</a></dd></dl></div><img class="hero-photo" src="profile.webp" alt="권영호 프로필 사진" width="176" height="226"></div></section>
     <section class="history-band" aria-label="이력과 자격증 및 수상"><div class="container history-grid"><div>${head("History", "이력")}<ol class="timeline">${D.history.map(([date, title, note]) => `<li><time>${escape(date)}</time><strong>${escape(title)}</strong><p>${escape(note)}</p></li>`).join("")}</ol></div><div>${head("Certificates &amp; Awards", "자격증 &amp; 수상")}${[
       ["자격증", D.certificates],
@@ -50,7 +50,7 @@
           `<div class="credential-group"><h3>${title}</h3><ul class="credential-list">${items.map(([name, date]) => `<li><span>${escape(name)}</span>${date ? `<time>${escape(date)}</time>` : ""}</li>`).join("")}</ul></div>`,
       )
       .join("")}</div></div></section>
-    <section class="container section" id="skills">${head("Tech Stack", "기술 스택")}<div class="skill-table">${D.skills.map((group) => `<div class="skill-group"><h3>${escape(group.category)}</h3><ul class="skill-rows">${group.items.map((s) => `<li class="skill-row"><div class="skill-identity"><span class="skill-name">${escape(s.name)}</span>${meter(s.level)}</div><ul class="skill-notes">${s.notes.map((n) => `<li>${escape(n)}</li>`).join("")}</ul></li>`).join("")}</ul></div>`).join("")}</div></section>
+    <section class="container section" id="skills">${head("Tech Stack", "기술 스택")}<div class="skill-table">${D.skills.map((group) => `<div class="skill-group"><h3>${escape(group.category)}</h3><ul class="skill-rows skill-list-compact">${group.items.map((s) => `<li class="skill-row skill-compact"><div class="skill-identity"><span class="skill-name">${escape(s.name)}</span>${meter(s.level)}</div></li>`).join("")}</ul></div>`).join("")}</div></section>
     <section class="projects-section" id="projects"><div class="container section">${head("Projects", "프로젝트")}<div class="project-grid">${D.projects
       .filter((p) => !p.other)
       .map(projectCard)
@@ -67,6 +67,8 @@
       ...(p.screens?.length ? [["screens", "주요 화면"]] : []),
       ["technology", "담당 기술"],
       ["contribution", "담당 기능"],
+      ...(p.aiUsage?.length ? [["ai", "AI 활용"]] : []),
+      ...(p.performance?.length ? [["performance", "성능 개선"]] : []),
       ...(p.troubleshooting.length ? [["troubleshooting", "트러블슈팅"]] : []),
       ["retrospective", "회고"],
     ];
@@ -77,6 +79,8 @@
     ${p.screens?.length ? `<section class="detail-section" id="detail-screens"><h2>주요 화면</h2><div class="screen-gallery">${p.screens.map(([src, caption, size]) => `<figure><img src="${escape(src)}" alt="${escape(caption)}" width="${size[0]}" height="${size[1]}" loading="lazy"><figcaption>${escape(caption)}</figcaption></figure>`).join("")}</div></section>` : ""}
     <section class="detail-section" id="detail-technology"><h2>담당 기술</h2><table class="tech-table"><thead><tr><th scope="col">영역</th><th scope="col">사용 기술</th></tr></thead><tbody>${p.tech.map(([area, tech]) => `<tr><th scope="row">${escape(area)}</th><td>${escape(tech)}</td></tr>`).join("")}</tbody></table></section>
     <section class="detail-section" id="detail-contribution"><h2>담당 기능</h2><ul class="contribution-list">${p.contributions.map(([title, description]) => `<li><h3>${escape(title)}</h3><p>${escape(description)}</p></li>`).join("")}</ul></section>
+    ${p.aiUsage?.length ? `<section class="detail-section" id="detail-ai"><h2>AI 활용</h2><ul class="contribution-list">${p.aiUsage.map(([title, text]) => `<li><h3>${escape(title)}</h3><p>${escape(text)}</p></li>`).join("")}</ul></section>` : ""}
+    ${p.performance?.length ? `<section class="detail-section" id="detail-performance"><h2>성능 개선</h2>${p.performance.map((t) => `<article class="trouble"><h3>${escape(t.title)}</h3><dl>${t.rows.map(([label, text]) => `<div class="trouble-row"><dt>${escape(label)}</dt><dd>${escape(text)}</dd></div>`).join("")}</dl></article>`).join("")}</section>` : ""}
     ${
       p.troubleshooting.length
         ? `<section class="detail-section" id="detail-troubleshooting"><h2>트러블슈팅</h2>${p.troubleshooting

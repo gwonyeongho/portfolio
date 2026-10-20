@@ -19,7 +19,8 @@ test("four main projects and two additional projects retain personal scope", () 
     assert.ok(p.contributions.length >= 3);
     assert.ok(p.tech.length);
     assert.ok(p.retrospective);
-    if (!p.other) assert.ok(p.troubleshooting.length);
+    if (!p.other) assert.ok(p.troubleshooting.length || p.performance?.length);
+    assert.ok(p.aiUsage?.length);
   }
 });
 test("all published project images exist", () => {
