@@ -77,14 +77,16 @@ fs.mkdirSync(output, { recursive: true });
     "keyboard skip activation preserves the project heading",
   );
   assert.ok(
-    await page.evaluate(() => document.activeElement === document.querySelector("main")),
+    await page.evaluate(
+      () => document.activeElement === document.querySelector("main"),
+    ),
     "keyboard skip activation focuses main",
   );
   await page.goto(base + "#project/vr-museum/technology");
   await images();
   await page.waitForFunction(() => {
     const top = document
-      .getElementById("detail-technology")
+      .getElementById("detail-contribution")
       ?.getBoundingClientRect().top;
     return top >= 50 && top <= 170;
   });
@@ -106,20 +108,27 @@ fs.mkdirSync(output, { recursive: true });
       await images();
       await noOverflow(`${w}/${id}`);
       const text = await page.locator("main").innerText();
-      for (const label of ["프로젝트 개요", "담당 기술", "담당 기능", "회고"])
+      for (const label of [
+        "프로젝트 개요",
+        "담당 역할",
+        "기여 및 기술",
+        "해결 문제",
+        "AI 활용",
+        "주요 화면",
+      ])
         assert.ok(text.includes(label), `${id}: ${label}`);
       if (w === 1440 || w === 390)
         await page.screenshot({ path: path.join(output, `${id}-${w}.png`) });
       if (w === 1440) {
         await page
-          .getByRole("link", { name: "담당 기술", exact: true })
+          .getByRole("link", { name: "기여 및 기술", exact: true })
           .click();
         await page.waitForFunction(() => {
           const top = document
-            .getElementById("detail-technology")
+            .getElementById("detail-contribution")
             ?.getBoundingClientRect().top;
           return (
-            location.hash.endsWith("/technology") && top >= 50 && top <= 170
+            location.hash.endsWith("/contribution") && top >= 50 && top <= 170
           );
         });
         await page.screenshot({

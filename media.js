@@ -6,6 +6,10 @@ const MEDIA = {
       "본디 프로젝트 소개 / 실제 유물저장소 화면을 활용한 대표 이미지",
     screens: [
       [
+        "assets/bondi-comparison.webp",
+        "원본(왼쪽)과 복원본(오른쪽)을 나란히 비교하는 실제 유물저장소 화면. 두 뷰어의 카메라가 함께 움직입니다.",
+      ],
+      [
         "assets/bondi-preview.webp",
         "유물 원본과 여러 복원본을 웹에서 확인하고 비교하는 유물저장소",
       ],
@@ -48,6 +52,7 @@ const MEDIA = {
   },
 };
 const IMAGE_SIZES = {
+  "assets/bondi-comparison.webp": [2879, 1413],
   "assets/bondi-preview.webp": [1983, 1047],
   "assets/pipecheck-flow.webp": [1920, 1080],
   "assets/factory-preview.webp": [1611, 937],

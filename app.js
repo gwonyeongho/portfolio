@@ -64,44 +64,23 @@
     const next = D.projects[(D.projects.indexOf(p) + 1) % D.projects.length];
     const sections = [
       ["overview", "프로젝트 개요"],
-      ...(p.screens?.length ? [["screens", "주요 화면"]] : []),
-      ["technology", "담당 기술"],
-      ["contribution", "담당 기능"],
-      ...(p.aiUsage?.length ? [["ai", "AI 활용"]] : []),
-      ...(p.performance?.length ? [["performance", "성능 개선"]] : []),
-      ...(p.troubleshooting.length ? [["troubleshooting", "트러블슈팅"]] : []),
-      ["retrospective", "회고"],
+      ["role", "담당 역할"],
+      ["contribution", "기여 및 기술"],
+      ["problems", "해결 문제"],
+      ["ai", "AI 활용"],
+      ["screens", "주요 화면"],
     ];
+    const list = (items) =>
+      `<ul class="contribution-list">${items.map(([title, description]) => `<li><h3>${escape(title)}</h3><p>${escape(description)}</p></li>`).join("")}</ul>`;
     return `<article class="container detail-page"><a href="#projects" class="back-link">← 프로젝트 목록으로 돌아가기</a><header class="detail-header"><p class="eyebrow">Project Detail</p><h1>${escape(p.title)}</h1><p class="detail-lead">${escape(p.subtitle)}</p><dl class="detail-meta"><div><dt>개발 기간</dt><dd>${escape(p.period)}${p.duration ? " (" + escape(p.duration) + ")" : ""}</dd></div><div><dt>개발 인원</dt><dd>${escape(p.team)}</dd></div><div><dt>담당 역할</dt><dd>${escape(p.role)}</dd></div></dl>${links(p)}</header>
-    ${p.cover ? `<figure class="detail-cover"><img src="${escape(p.cover)}" alt="${escape(p.title)} 대표 이미지" width="1280" height="720"><figcaption>${escape(p.coverCaption || "프로젝트 소개 이미지")}</figcaption></figure>` : ""}
     <nav class="detail-nav" aria-label="프로젝트 상세 목차">${sections.map(([id, title]) => `<a href="#project/${p.id}/${id}">${title}</a>`).join("")}</nav>
-    <section class="detail-section" id="detail-overview"><h2>프로젝트 개요</h2>${p.overview.map((t) => `<p>${escape(t)}</p>`).join("")}${p.award ? `<div class="detail-award">팀 프로젝트 수상<strong>${escape(p.award)}</strong></div>` : ""}<div class="flow" aria-label="구현 흐름">${p.flow.map((f, i) => `${i ? '<i aria-hidden="true">→</i>' : ""}<span>${escape(f)}</span>`).join("")}</div></section>
-    ${p.screens?.length ? `<section class="detail-section" id="detail-screens"><h2>주요 화면</h2><div class="screen-gallery">${p.screens.map(([src, caption, size]) => `<figure><img src="${escape(src)}" alt="${escape(caption)}" width="${size[0]}" height="${size[1]}" loading="lazy"><figcaption>${escape(caption)}</figcaption></figure>`).join("")}</div></section>` : ""}
-    <section class="detail-section" id="detail-technology"><h2>담당 기술</h2><table class="tech-table"><thead><tr><th scope="col">영역</th><th scope="col">사용 기술</th></tr></thead><tbody>${p.tech.map(([area, tech]) => `<tr><th scope="row">${escape(area)}</th><td>${escape(tech)}</td></tr>`).join("")}</tbody></table></section>
-    <section class="detail-section" id="detail-contribution"><h2>담당 기능</h2><ul class="contribution-list">${p.contributions.map(([title, description]) => `<li><h3>${escape(title)}</h3><p>${escape(description)}</p></li>`).join("")}</ul></section>
-    ${p.aiUsage?.length ? `<section class="detail-section" id="detail-ai"><h2>AI 활용</h2><ul class="contribution-list">${p.aiUsage.map(([title, text]) => `<li><h3>${escape(title)}</h3><p>${escape(text)}</p></li>`).join("")}</ul></section>` : ""}
-    ${p.performance?.length ? `<section class="detail-section" id="detail-performance"><h2>성능 개선</h2>${p.performance.map((t) => `<article class="trouble"><h3>${escape(t.title)}</h3><dl>${t.rows.map(([label, text]) => `<div class="trouble-row"><dt>${escape(label)}</dt><dd>${escape(text)}</dd></div>`).join("")}</dl></article>`).join("")}</section>` : ""}
-    ${
-      p.troubleshooting.length
-        ? `<section class="detail-section" id="detail-troubleshooting"><h2>트러블슈팅</h2>${p.troubleshooting
-            .map(
-              (t, i) =>
-                `<article class="trouble"><h3>${i + 1}. ${escape(t.title)}</h3><dl>${[
-                  ["문제", t.problem],
-                  ["원인", t.cause],
-                  ["해결", t.solution],
-                  ["결과", t.result],
-                ]
-                  .map(
-                    ([label, text]) =>
-                      `<div class="trouble-row"><dt>${label}</dt><dd>${escape(text)}</dd></div>`,
-                  )
-                  .join("")}</dl></article>`,
-            )
-            .join("")}</section>`
-        : ""
-    }
-    <section class="detail-section" id="detail-retrospective"><h2>회고</h2><p>${escape(p.retrospective)}</p></section><a href="${detailUrl(next)}" class="next-project"><div><small>다음 프로젝트</small><strong>${escape(next.title)}</strong></div><span aria-hidden="true">→</span></a></article>`;
+    <section class="detail-section" id="detail-overview"><h2>프로젝트 개요</h2>${p.overview.map((t) => `<p>${escape(t)}</p>`).join("")}${p.award ? `<div class="detail-award">팀 프로젝트 수상<strong>${escape(p.award)}</strong></div>` : ""}</section>
+    <section class="detail-section" id="detail-role"><h2>담당 역할</h2>${list(p.responsibilities)}</section>
+    <section class="detail-section" id="detail-contribution"><h2>기여 및 기술</h2>${list(p.contributions)}<table class="tech-table"><thead><tr><th scope="col">구현 영역</th><th scope="col">사용 기술</th></tr></thead><tbody>${p.tech.map(([area, tech]) => `<tr><th scope="row">${escape(area)}</th><td>${escape(tech)}</td></tr>`).join("")}</tbody></table></section>
+    <section class="detail-section" id="detail-problems"><h2>해결 문제</h2>${list(p.problems)}${p.performance?.length ? `<div id="detail-performance"><h3 class="performance-heading">성능 개선</h3>${p.performance.map((t) => `<article class="trouble"><h3>${escape(t.title)}</h3><dl>${t.rows.map(([label, content]) => `<div class="trouble-row"><dt>${escape(label)}</dt><dd>${escape(content)}</dd></div>`).join("")}</dl></article>`).join("")}</div>` : ""}</section>
+    <section class="detail-section" id="detail-ai"><h2>AI 활용</h2>${list(p.aiUsage)}</section>
+    <section class="detail-section" id="detail-screens"><h2>주요 화면</h2>${p.screens?.length ? `<div class="screen-gallery">${p.screens.map(([src, caption, size]) => `<figure><img src="${escape(src)}" alt="${escape(caption)}" width="${size[0]}" height="${size[1]}" loading="lazy"><figcaption>${escape(caption)}</figcaption></figure>`).join("")}</div>` : `<p>별도로 공개된 화면 자료는 없습니다.</p>${links(p)}`}</section>
+    <a href="${detailUrl(next)}" class="next-project"><div><small>다음 프로젝트</small><strong>${escape(next.title)}</strong></div><span aria-hidden="true">→</span></a></article>`;
   }
   let currentProject = null;
   function route() {
@@ -117,7 +96,14 @@
       if (parts[2])
         requestAnimationFrame(() =>
           document
-            .getElementById("detail-" + parts[2])
+            .getElementById(
+              "detail-" +
+                ({
+                  technology: "contribution",
+                  troubleshooting: "problems",
+                  retrospective: "problems",
+                }[parts[2]] || parts[2]),
+            )
             ?.scrollIntoView({ behavior: "instant", block: "start" }),
         );
     } else {

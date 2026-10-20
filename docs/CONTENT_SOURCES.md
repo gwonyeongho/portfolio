@@ -46,6 +46,14 @@ PipeCheckkk는 로컬 자기소개서 초안과 사용자가 직접 설명한 �
 
 노래방의 성능 개선은 공개 저장소 `docs/PERFORMANCE_BENCHMARK.md`의 기존 최종 반복 평가를 사용했다. 9개 명령을 각 3회 측정한 조건에서 구조화 처리의 명령 정확도는 두 모델 모두 27/27이며 평균 응답시간은 8B 13.13초, 1.7B 4.83초다. 1.7B의 Raw 방식 22/27과 4.55초를 구조화 처리 27/27과 4.83초와 비교했다. 신규 측정이나 전체 음성 입력부터의 체감 응답시간으로 표기하지 않았고 LangChain 단독 효과로 일반화하지 않았다.
 
+## 본디 인프라와 비교 화면 근거
+
+본디 개인 인프라와 웹 구현은 저장소의 `infra/README.md`, `infra/WEB_APP_DEV_GUIDE.md`, `infra/WEB_SERVER_BUILD_GUIDE.md`, `infra/JENKINS_BUILD_GUIDE.md`, `infra/web/Jenkinsfile`을 확인하였다. EC2와 Nginx 및 systemd 배포, FastAPI와 SQLite 자료 관리, Jenkins의 GitLab dev 병합 기반 경로 필터와 배포 후 상태 점검을 구분하였다. Docker 배포로 표현하지 않았다. 이 유물저장소는 팀 내부 자료 도구이며 개인 VR 클라이언트 구현으로 확대하지 않았다.
+
+`assets/bondi-comparison.webp`는 저장소의 `infra/web/screenshots/restoration-comparison.png`를 WebP로 변환한 실제 화면이다. 원본과 복원본을 좌우로 비교하며 카메라 동기화를 안내하는 UI를 확인하였다. 새 복원 결과나 가상 화면을 생성하지 않았다. 이미지 크기는 2879 × 1413이며 개인정보와 서버 주소가 보이지 않음을 검토하였다.
+
+신체 사이즈 측정 저장소에는 첨부 화면이 없고 여행 앱은 접근 가능한 화면 원본이 없어 주요 화면에 공개 자료 부재를 명시하였다. 해당 화면을 임의로 생성하지 않았다.
+
 ## 공개 범위
 
 자격증과 군 복무의 고유 식별번호, API 키, 서버 설정, 개인 전화번호, 원본 발표 자료 전체를 포함하지 않는다. 원본 발표 자료는 변경하지 않았다.

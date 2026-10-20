@@ -16,7 +16,7 @@ const fs = require("node:fs"),
   await p.getByRole("link", { name: "AI 활용", exact: true }).click();
   await p.locator("#detail-ai").waitFor();
   assert.ok((await p.locator("#detail-ai").innerText()).includes("Qwen"));
-  await p.getByRole("link", { name: "성능 개선", exact: true }).click();
+  await p.getByRole("link", { name: "해결 문제", exact: true }).click();
   await p.locator("#detail-performance").waitFor();
   assert.equal(await p.locator("#detail-troubleshooting").count(), 0);
   assert.ok(

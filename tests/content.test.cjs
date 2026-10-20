@@ -19,7 +19,8 @@ test("four main projects and two additional projects retain personal scope", () 
     assert.ok(p.contributions.length >= 3);
     assert.ok(p.tech.length);
     assert.ok(p.retrospective);
-    if (!p.other) assert.ok(p.troubleshooting.length || p.performance?.length);
+    assert.ok(p.problems?.length || p.performance?.length);
+    assert.ok(p.responsibilities?.length);
     assert.ok(p.aiUsage?.length);
   }
 });
@@ -63,5 +64,5 @@ test("BONDI does not attribute VR implementation to personal contribution", () =
   const p = D.projects.find((p) => p.id === "vr-museum");
   assert.ok(!p.role.includes("VR"));
   assert.ok(p.role.includes("유물저장소"));
-  assert.ok(p.troubleshooting.some((t) => t.result.includes("사람")));
+  assert.ok(p.aiUsage.some(([, text]) => text.includes("사람")));
 });
