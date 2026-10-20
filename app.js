@@ -26,7 +26,7 @@
         (sentence) =>
           `<span class="prose-sentence">${trustedIntroduction ? sentence : escape(sentence)}</span>`,
       )
-      .join("");
+      .join('<br class="sentence-break">');
   const detailUrl = (p) => "#project/" + p.id;
   const head = (en, ko) =>
     `<div class="section-head"><p class="eyebrow">${en}</p><h2>${ko}</h2></div>`;

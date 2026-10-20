@@ -343,10 +343,17 @@ h2 {
   margin-top: 10px;
 }
 .prose-sentence {
-  display: block;
-  text-wrap: pretty;
+  display: inline;
 }
-.intro-text .prose-sentence,
+.intro-text p {
+  text-wrap: wrap;
+  word-break: keep-all;
+  overflow-wrap: normal;
+}
+.keep-together {
+  display: inline-block;
+  white-space: nowrap;
+}
 .hero-copy h1 span {
   text-wrap: balance;
   word-break: keep-all;

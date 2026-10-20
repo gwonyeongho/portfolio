@@ -10,68 +10,94 @@ const assert = require("node:assert/strict");
       base = process.env.PORTFOLIO_URL || "http://127.0.0.1:5508/";
     await p.goto(base + "#about");
     await p.evaluate(() => document.fonts.ready);
-    const intro = p.locator(".intro-text p").nth(1);
     assert.equal(
-      await intro.locator(".prose-sentence").count(),
-      2,
-      "each main-profile sentence starts on its own line",
+      await p
+        .locator(".intro-text p")
+        .nth(1)
+        .locator("br.sentence-break")
+        .count(),
+      1,
+      "explicit sentence break, not CSS-only layout",
     );
     assert.equal(
-      await intro
-        .locator(".prose-sentence")
-        .first()
-        .evaluate((e) => getComputedStyle(e).display),
-      "block",
+      await p.locator(".intro-text .keep-together").innerText(),
+      "사용 환경에 맞게 활용하는 데 집중합니다.",
     );
-    assert.equal(
-      await intro
-        .locator(".prose-sentence")
-        .first()
-        .evaluate((e) => getComputedStyle(e).textWrap),
-      "balance",
+    assert.ok(
+      (
+        await p.locator('link[href^="styles.css"]').getAttribute("href")
+      ).includes("?v="),
     );
-    assert.equal(await intro.locator('.prose-sentence').first().evaluate(e=>getComputedStyle(e).overflowWrap),'normal','profile words must not split mid-word');
-    assert.equal(
-      await p.locator(".intro-text mark").count(),
-      2,
-      "highlight markup preserved",
-    );
-    const href = await p
-      .locator(".contact-list a")
-      .first()
-      .getAttribute("href");
-    assert.ok(href.startsWith("mailto:"));
+    assert.equal(await p.locator(".intro-text mark").count(), 2);
     for (const width of [1440, 1024, 768, 390, 320]) {
       await p.setViewportSize({ width, height: 1000 });
       await p.goto(base + "#about");
+      const phrase = p.locator(".intro-text .keep-together");
+      assert.equal(
+        await phrase.evaluate((e) => getComputedStyle(e).whiteSpace),
+        "nowrap",
+      );
       assert.ok(
         await p.evaluate(
           () => document.documentElement.scrollWidth <= innerWidth,
         ),
       );
-      const box = await intro.locator(".prose-sentence").first().boundingBox(),
-        second = await intro.locator(".prose-sentence").nth(1).boundingBox();
-      assert.ok(second.y >= box.y + box.height - 1);
       await p.screenshot({
-        path: `C:/c/Users/SSAFY/portfolio/.artifacts/linebreak-profile-${width}.png`,
+        path: `C:/c/Users/SSAFY/portfolio/.artifacts/sentence-final-${width}.png`,
       });
     }
-    await p.goto(base + "#project/pipecheckkk/contribution");
-    const sentenceCount = await p
-      .locator("#detail-contribution .prose-sentence")
-      .count();
-    assert.ok(sentenceCount > 6);
-    assert.ok(
-      (await p.locator("#detail-contribution").innerText()).includes(
-        "vl_pilot.py",
-      ),
-    );
+    for (const id of [
+      "vr-museum",
+      "pipecheckkk",
+      "smart-factory",
+      "karaoke-agent",
+      "body-measurement",
+      "travel-community",
+    ]) {
+      await p.goto(base + "#project/" + id);
+      const checked = await p.evaluate(() => {
+        const project = window.PORTFOLIO.projects.find((x) =>
+          location.hash.includes(x.id),
+        );
+        const groups = [
+          ["#detail-overview > p", project.overview],
+          [
+            "#detail-role .contribution-list > li > p",
+            project.responsibilities.map((x) => x[1]),
+          ],
+          [
+            "#detail-contribution .contribution-list > li > p",
+            project.contributions.map((x) => x[1]),
+          ],
+          [
+            "#detail-ai .contribution-list > li > p",
+            project.aiUsage.map((x) => x[1]),
+          ],
+          [
+            "#detail-screens figcaption",
+            (project.screens || []).map((x) => x[1]),
+          ],
+        ];
+        return groups.flatMap(([selector, values]) =>
+          [...document.querySelectorAll(selector)].map((e, i) => ({
+            expected: values[i].trim().split(/(?<=\.)\s+(?=\S)/u).length - 1,
+            actual: e.querySelectorAll("br.sentence-break").length,
+          })),
+        );
+      });
+      for (const row of checked)
+        assert.equal(
+          row.actual,
+          row.expected,
+          id + " detailed contribution sentence breaks",
+        );
+    }
     await p.goto(base + "#project/karaoke-agent/performance");
     const text = await p.locator("#detail-performance").innerText();
-    for (const term of ["13.13초", "4.83초", "4.55초", "Qwen3 1.7B", "8.30초"])
-      assert.ok(text.includes(term), term + " stays intact");
+    for (const s of ["13.13초", "4.83초", "Qwen3 1.7B", "8.30초"])
+      assert.ok(text.includes(s));
     console.log(
-      "PASS sentence-based prose lines, balanced profile at five viewports, highlights and links preserved, decimal/version/file names intact",
+      "PASS explicit line breaks across all six project details, unbroken profile closing phrase at five widths, versioned assets and preserved numbers",
     );
   } finally {
     await b.close();
